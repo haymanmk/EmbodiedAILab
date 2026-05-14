@@ -2,7 +2,7 @@
 type: entity
 domain: research
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-05-14
 aliases: ["Hugging Face LeRobot", "lerobot"]
 tags: [robotics, robot-learning, open-source, hugging-face]
 ---
@@ -21,7 +21,8 @@ LeRobot is best understood as a robot-learning stack, not as a full replacement 
 - The project includes robot interfaces, teleoperation workflows, dataset tools, training scripts, policy implementations, benchmarks, simulation integration, and deployment tooling.
 - Current docs emphasize accessible hardware such as SO-100/SO-101, Koch, LeKiwi, Reachy 2, Unitree G1, OpenArm, and other supported platforms.
 - The LeRobot paper frames the project as a response to fragmented robotics tooling across motor control, data collection, dataset storage, model training, and inference.
-- LeRobot's most useful entry path for a self-researcher is usually: install LeRobot, use a supported robot or simulation, collect a small dataset, train ACT or fine-tune a compact VLA policy, then iterate.
+- LeRobot's most useful entry path for a self-researcher is usually: install LeRobot, use a supported robot or simulation, collect a small dataset, train [[Action Chunking Transformer|ACT]] or fine-tune a compact VLA policy, then iterate.
+- LeRobot's ACT policy page recommends ACT as the first policy to try because it is lightweight, trains quickly, and works well as an imitation-learning baseline.
 
 ## Mentions
 
@@ -34,12 +35,14 @@ LeRobot is best understood as a robot-learning stack, not as a full replacement 
 
 - [[Robotics Development Stack]]
 - [[Imitation Learning]]
+- [[Action Chunking Transformer]]
 - [[Robot Learning]]
 - [[Vision-Language-Action Models]]
 
 ## External sources
 
 - Hugging Face LeRobot docs: https://huggingface.co/docs/lerobot/index
+- LeRobot ACT docs: https://huggingface.co/docs/lerobot/act
 - LeRobot GitHub repository: https://github.com/huggingface/lerobot
 - LeRobot paper: https://arxiv.org/abs/2602.22818
 - Robot Learning tutorial paper: https://arxiv.org/abs/2510.12403

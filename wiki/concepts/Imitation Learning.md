@@ -2,7 +2,7 @@
 type: concept
 domain: research
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-05-14
 aliases: ["behavioral cloning", "BC", "learning from demonstrations"]
 tags: [robotics, imitation-learning, behavioral-cloning]
 ---
@@ -18,18 +18,20 @@ For a self-researcher, imitation learning is usually the first practical robot-l
 ## Origins / sources
 
 - LeRobot's real-world tutorial centers on recording and visualizing a dataset, training a policy, and evaluating the result on a robot.
-- ACT, short for Action Chunking with Transformers, is presented in the LeRobot docs as a beginner-friendly imitation-learning policy with fast training and relatively low compute needs.
+- [[Action Chunking Transformer|ACT]], short for Action Chunking with Transformers, is presented in the LeRobot docs as a beginner-friendly imitation-learning policy with fast training and relatively low compute needs.
+- [[Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware - Zhao et al]] introduced ACT for fine-grained bimanual manipulation and frames action chunking as a way to reduce compounding error in behavioral cloning.
 - Human-in-the-loop workflows such as DAgger-style correction can improve a policy by recording interventions when the autonomous policy starts failing.
 
 ## Variations / debates
 
 - Pure behavioral cloning is simple but can accumulate errors when the robot drifts into states absent from the demonstrations.
-- Action chunking predicts a short sequence of future actions instead of a single next action, which can make behavior smoother and easier to deploy at control rate.
+- [[Action Chunking Transformer|Action chunking]] predicts a short sequence of future actions instead of a single next action, which can make behavior smoother and easier to deploy at control rate.
 - Diffusion and VLA policies can handle richer multimodal action distributions but usually need more compute and more careful inference engineering.
 
 ## Related concepts
 
 - [[Robot Learning]]
+- [[Action Chunking Transformer]]
 - [[Vision-Language-Action Models]]
 - [[Robotics Development Stack]]
 
@@ -38,6 +40,7 @@ For a self-researcher, imitation learning is usually the first practical robot-l
 - [[LeRobot]]
 - [[LeRobot Documentation Index]]
 - [[Modern Robotics Development - synthesis]]
+- [[Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware - Zhao et al]]
 
 ## External sources
 

@@ -2,7 +2,7 @@
 type: concept
 domain: research
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-05-14
 aliases: ["robotics stack", "robot development stack", "robotics tooling"]
 tags: [robotics, tools, ros2, simulation, controls]
 ---
@@ -19,6 +19,7 @@ The robotics development stack is the layered set of theory, hardware, middlewar
 |---|---|---|
 | Mechanics and electronics | What physical machine is being controlled? | CAD, motors, encoders, cameras, grippers, embedded boards |
 | Kinematics and dynamics | How does the robot move in space? | Modern Robotics, rigid-body transforms, Jacobians, inverse kinematics, dynamics |
+| Optimization math | How do constraints shape motion and control? | [[Lagrange Multipliers]], [[Karush-Kuhn-Tucker Conditions]], [[Moore-Penrose Pseudoinverse]], least squares |
 | Control | How are actions stabilized and executed? | PID, impedance control, trajectory tracking, motor drivers |
 | Middleware | How do processes communicate? | ROS 2, DDS, topics, services, actions, launch, parameters |
 | Planning and manipulation | How are collision-free motions generated? | MoveIt 2, OMPL, planning scenes, grasping pipelines |
@@ -38,6 +39,9 @@ The robotics development stack is the layered set of theory, hardware, middlewar
 
 - [[Robot Learning]]
 - [[Imitation Learning]]
+- [[Karush-Kuhn-Tucker Conditions]]
+- [[Lagrange Multipliers]]
+- [[Moore-Penrose Pseudoinverse]]
 - [[Vision-Language-Action Models]]
 
 ## Mentions
@@ -45,6 +49,7 @@ The robotics development stack is the layered set of theory, hardware, middlewar
 - [[LeRobot]]
 - [[Modern Robotics Development - synthesis]]
 - [[LeRobot Documentation Index]]
+- [[Deriving the Pseudoinverse Where the Formulas Come From - Heptabase AI Tutor]]
 
 ## External sources
 

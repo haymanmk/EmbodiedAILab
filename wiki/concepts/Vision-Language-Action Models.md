@@ -2,7 +2,7 @@
 type: concept
 domain: research
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-05-14
 aliases: ["VLA", "robot foundation models", "vision-language-action policies"]
 tags: [robotics, vla, foundation-models, multimodal-ai]
 ---
@@ -24,12 +24,13 @@ Vision-language-action models are robot policies that condition on visual observ
 
 - VLA policies can be more general than task-specific policies, but they are harder to debug because failures can come from perception, language grounding, action representation, timing, dataset mismatch, or hardware calibration.
 - Fine-tuning an existing VLA is plausible for a self-researcher. Training a generalist VLA from scratch is usually not plausible without large datasets, GPUs, engineering time, and safety infrastructure.
-- For many first projects, ACT or another small imitation-learning policy is a better learning vehicle than a large VLA.
+- For many first projects, [[Action Chunking Transformer|ACT]] or another small imitation-learning policy is a better learning vehicle than a large VLA.
 
 ## Related concepts
 
 - [[Robot Learning]]
 - [[Imitation Learning]]
+- [[Action Chunking Transformer]]
 - [[Robotics Development Stack]]
 
 ## Mentions

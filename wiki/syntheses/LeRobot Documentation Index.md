@@ -2,7 +2,7 @@
 type: synthesis
 domain: research
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-05-14
 aliases: ["LeRobot docs index", "LeRobot study index"]
 tags: [robotics, lerobot, documentation, study-plan]
 ---
@@ -20,7 +20,7 @@ Snapshot checked: 2026-05-13. Official docs: https://huggingface.co/docs/lerobot
 1. Start with "LeRobot" and "Installation" to understand the project scope and environment.
 2. Read "Imitation Learning for Robots" before policy pages, because it explains the core record-train-evaluate loop.
 3. Read "Using LeRobotDataset" early; dataset shape is the backbone of the whole stack.
-4. Use "ACT" as the first policy page unless there is a specific reason to start with a VLA.
+4. Use "ACT" as the first policy page unless there is a specific reason to start with a VLA; file deeper notes under [[Action Chunking Transformer]].
 5. Read "Bring Your Own Hardware" only after the basic loop is clear.
 6. Read simulation, benchmark, and VLA pages when you want to compare methods or avoid buying hardware too early.
 
@@ -77,6 +77,7 @@ Phase 2 - First project:
 Phase 3 - Generalization:
 
 - [[Vision-Language-Action Models]]
+- [[Action Chunking Transformer]]
 - SmolVLA, Pi0, Pi0-FAST, Pi0.5
 - Open X-Embodiment and Octo
 - Benchmarks such as LIBERO and Meta-World
@@ -90,4 +91,5 @@ Phase 3 - Generalization:
 
 ## Last revised
 
+2026-05-14 - Added [[Action Chunking Transformer]] as the dedicated ACT concept page.
 2026-05-13 - Created as the initial local search index for LeRobot study.

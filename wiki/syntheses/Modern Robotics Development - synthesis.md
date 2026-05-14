@@ -2,7 +2,7 @@
 type: synthesis
 domain: research
 created: 2026-05-13
-updated: 2026-05-13
+updated: 2026-05-14
 aliases: ["Modern robotics whole picture", "robotics development overview"]
 tags: [robotics, robot-learning, lerobot, self-study]
 ---
@@ -37,7 +37,7 @@ An amateur can make progress by avoiding the hardest version of every layer at o
 | Hugging Face Hub | Model and dataset hosting | Lets robotics projects share policies and datasets like NLP/CV projects |
 | LeRobot | Robot-learning library | Connects hardware, datasets, policy training, evaluation, and rollout |
 | LeRobotDataset | Standard robot episode format | Handles multimodal, temporal, episodic robot data |
-| ACT | Lightweight imitation-learning policy | Good first baseline for real-world manipulation |
+| [[Action Chunking Transformer|ACT]] | Lightweight imitation-learning policy | Good first baseline for real-world manipulation |
 | SmolVLA / Pi0 / Octo | Generalist or VLA-style policy families | Show the direction of language-conditioned robot foundation models |
 | Open X-Embodiment | Multi-robot dataset and RT-X work | Shows why cross-robot data is important |
 
@@ -68,12 +68,13 @@ Practical path:
 1. Learn the classical basics enough to understand frames, joints, kinematics, and control limits.
 2. Run LeRobot in simulation or with a supported low-cost arm.
 3. Record 30-100 high-quality demonstrations for a narrow task.
-4. Train ACT first; evaluate failures; collect targeted correction data.
+4. Train [[Action Chunking Transformer|ACT]] first; evaluate failures; collect targeted correction data.
 5. Only then try fine-tuning a compact VLA or using a language model as a high-level planner.
 
 ## Supporting sources
 
 - [[LeRobot]] and [[LeRobot Documentation Index]]
+- [[Action Chunking Transformer]] and [[Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware - Zhao et al]]
 - Hugging Face LeRobot docs: https://huggingface.co/docs/lerobot/index
 - Robot Learning tutorial paper: https://arxiv.org/abs/2510.12403
 - LeRobot paper: https://arxiv.org/abs/2602.22818
@@ -102,4 +103,5 @@ None yet in the vault. Expected future tensions:
 
 ## Last revised
 
+2026-05-14 - Linked ACT to the dedicated [[Action Chunking Transformer]] concept and primary ACT paper source.
 2026-05-13 - Created initial whole-picture synthesis and self-researcher answer.
