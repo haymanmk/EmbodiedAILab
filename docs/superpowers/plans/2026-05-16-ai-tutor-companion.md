@@ -31,7 +31,7 @@
 - `wiki/concepts/<new>.md` (created in Task 7 from Chapter 2 study)
 
 **Required user-supplied input (Task 6):**
-- `raw/Modern Robotics - Lynch Park 2017.pdf` — user places this file before running Task 6
+- `raw/ModernRobotics-v2.pdf` — user places this file before running Task 6
 
 ---
 
@@ -1041,7 +1041,7 @@ git commit -m "Add /tutor skill with everyday-analogy protocol and visual aids g
 This task validates the end-to-end ingestion workflow. It has **manual steps** that require running Claude Code with the `/tutor` skill loaded, because the actual ingestion is an LLM action (reading the PDF and producing summary pages). The tests verify structural correctness of the resulting artifacts.
 
 **Files:**
-- Required input (user-supplied): `raw/Modern Robotics - Lynch Park 2017.pdf`
+- Required input (user-supplied): `raw/ModernRobotics-v2.pdf`
 - Created by tutor: `wiki/sources/Modern Robotics - Lynch & Park.md`
 - Created by tutor: `wiki/ingestion/Modern Robotics - chapters.md`
 - Updated by tutor: `wiki/syntheses/learning-tracker.md`, `index.md`, `log.md`
@@ -1049,14 +1049,14 @@ This task validates the end-to-end ingestion workflow. It has **manual steps** t
 
 - [ ] **Step 1: Verify the Modern Robotics PDF is in place**
 
-The user must obtain a copy of *Modern Robotics: Mechanics, Planning, and Control* by Kevin Lynch and Frank Park (2017) and place it at `raw/Modern Robotics - Lynch Park 2017.pdf`.
+The user has placed *Modern Robotics: Mechanics, Planning, and Control* by Kevin Lynch and Frank Park at `raw/ModernRobotics-v2.pdf` (~7MB).
 
 Verify:
 ```bash
-ls -la /home/hayman/Workspace/EmbodiedAILab/raw/ | grep -i "modern robotics"
+ls -la /home/hayman/Workspace/EmbodiedAILab/raw/ | grep -i "modernrobotics"
 ```
 
-Expected: one PDF file listed. If absent, the user must add it before continuing.
+Expected: `ModernRobotics-v2.pdf` listed.
 
 - [ ] **Step 2: Append failing tests for the ingestion artifacts**
 
@@ -1155,7 +1155,7 @@ ingest Modern Robotics
 The `/tutor` skill (loaded automatically because the trigger phrase auto-activates tutor mode per `AGENTS.md`) will:
 
 1. Read `wiki/about-me.md` and `wiki/syntheses/learning-tracker.md` for context.
-2. Read `raw/Modern Robotics - Lynch Park 2017.pdf` — at minimum the table of contents and first/last chapters.
+2. Read `raw/ModernRobotics-v2.pdf` — at minimum the table of contents and first/last chapters.
 3. Produce `wiki/sources/Modern Robotics - Lynch & Park.md` with the extended frontmatter (including correct `total_pages`).
 4. Produce `wiki/ingestion/Modern Robotics - chapters.md` with one row per chapter, all `Status: not started`.
 5. Update `index.md` to add entries for the new source and ingestion index pages.
@@ -1301,7 +1301,7 @@ The `/tutor` skill (auto-activated by the trigger phrase) will:
 
 1. Read profile + tracker if not already loaded.
 2. Read `wiki/ingestion/Modern Robotics - chapters.md` to find Chapter 2's page range.
-3. Read those pages of `raw/Modern Robotics - Lynch Park 2017.pdf`.
+3. Read those pages of `raw/ModernRobotics-v2.pdf`.
 4. Produce or extend concept pages — at minimum a C-space page; likely also extends `Constraint Gradients and Tangent Spaces.md`.
 5. **Apply the everyday-analogy protocol** for any active-gap concept (Chapter 2 introduces topology of configuration spaces — likely a new concept requiring an analogy with breakdown).
 6. **Apply visual aids appropriately** — for a topological / geometric concept, hand-written inline SVG is the natural choice (no formula evaluation needed for typical C-space illustrations). Matplotlib only if a function plot is genuinely needed.
