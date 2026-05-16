@@ -46,6 +46,7 @@ unless RL becomes the primary thread later.
 | Concept | Source | Last studied | Mastery |
 |---|---|---|---|
 | [[Configuration Space]] | Modern Robotics Ch. 2 | 2026-05-16 | building |
+| [[Sigmoid Function]] | /tutor explain (dimmer-switch analogy) | 2026-05-16 | working |
 | [[Lagrange Multipliers]] | Modern Robotics App. D | 2026-05-14 | working |
 | [[Karush-Kuhn-Tucker Conditions]] | Modern Robotics App. D | 2026-05-14 | working |
 | [[Constraint Gradients and Tangent Spaces]] | Modern Robotics §2.4 + App. D | 2026-05-16 | working |
@@ -106,3 +107,10 @@ Append-only. One entry per tutor workflow.
   "Connection to robotics: holonomic constraints" section bridging the
   optimization-math view to the C-space view. Flipped Ch. 2 status to
   `covered` in [[Modern Robotics - chapters]].
+- 2026-05-16 — `/tutor explain the sigmoid function`: created
+  [[Sigmoid Function]] with dimmer-switch analogy and explicit
+  breakdown (linear-dial vs. saturating-output asymmetry, foreshadowing
+  vanishing gradients). Matplotlib plot at
+  `wiki/assets/sigmoid/sigmoid.py` → `sigmoid.png` (sigmoid + its
+  derivative, σ(0)=1/2 marked, saturation labels) embedded in the
+  concept page. Validates the matplotlib convention end-to-end.

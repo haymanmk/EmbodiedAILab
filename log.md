@@ -166,3 +166,23 @@ pp. 11–56 (PDF pp. 32–60) of `raw/ModernRobotics-v2.pdf`.
   coverage map (building); refreshed active focus; appended session
   log entry; noted manifolds/topology basics in Gaps detected.
 - `index.md` — added Configuration Space under Concepts.
+
+## [2026-05-16] query | /tutor explain the sigmoid function
+
+Tutor-mode end-to-end run validating the formula-driven visual path
+(matplotlib convention) and the everyday-analogy + bridges protocol.
+
+- `wiki/assets/sigmoid/sigmoid.py` — small numpy + matplotlib script
+  producing the plot. Runs via `cd wiki/assets/sigmoid && python3 sigmoid.py`;
+  saves `sigmoid.png` next to itself (relative path per convention).
+- `wiki/assets/sigmoid/sigmoid.png` — generated plot: sigmoid curve,
+  its derivative, σ(0)=½ marked, saturation labels at ±8.
+- `wiki/concepts/Sigmoid Function.md` — new concept page with
+  dimmer-switch analogy and explicit breakdown (linear dial vs.
+  saturating sigmoid → foreshadows vanishing gradients), embedded PNG,
+  closed-form derivative, symmetry, $\tanh$ relation, practical
+  pitfalls (vanishing gradients, overflow, BCE-with-logits), and
+  context for ACT / VLA models.
+- `wiki/syntheses/learning-tracker.md` — added Sigmoid Function to
+  coverage map (working); appended session log.
+- `index.md` — added Sigmoid Function under Concepts.
