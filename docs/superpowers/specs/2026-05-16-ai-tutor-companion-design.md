@@ -27,6 +27,7 @@ The EmbodiedAILab vault is the user's research notebook for modern robotics and 
 ## 3. Non-Goals (Phase 1)
 
 - Vector embeddings, chunked search, RAG infrastructure — deferred to Phase 2; design must accommodate but not implement.
+- **Agent-generated image visuals** (matplotlib plots, custom geometric illustrations) — deferred to Phase 1b, triggered by first need. Phase 1 uses Mermaid + ASCII + textbook figure citations only (Option B from brainstorm).
 - MCP server / cross-tool native integration — deferred indefinitely; copy-paste for non-Claude tools is acceptable for now.
 - Audio/video resource ingestion (lectures, podcasts).
 - Multi-user or sharing features — single-user.
@@ -250,15 +251,20 @@ tags: [learning, tracker, curriculum]
   gradient math.
 - **Active project**: (none currently named)
 
-## Recommendations (next 3 things, ranked, with rationale)
+## Recommendations (ranked, with rationale)
 
-1. **Sutton & Barto Ch. 13 (Policy Gradient Methods)** — builds directly on
-   the optimization thread; turns the math into RL signal.
-2. **Modern Robotics Ch. 4 (Forward Kinematics) + Ch. 5 (Velocity
-   Kinematics & Jacobians)** — closes the "what does a robot do" loop
-   before IL/RL papers assume it.
-3. **ACT paper deep-read** — by this point, both the transformer training
-   math and the kinematics target make it readable end-to-end.
+1. **Modern Robotics Ch. 3–5** (Rigid-Body Motions → Forward Kinematics →
+   Velocity Kinematics & Jacobians) — closes the "what does a robot do"
+   loop. Foundational language the IL papers assume.
+2. **ACT paper deep-read** — once kinematics is in place, the action-space
+   side of ACT becomes readable; transformer mechanics are the new piece.
+3. **Diffusion Policy paper deep-read** — natural next step after ACT;
+   contrast the two action representations head-to-head.
+
+**Reference (not a study target)**: [[Sutton & Barto - RL]] — keep
+accessible for RL theory lookups when ACT/Diffusion Policy reference
+policy-gradient or behavior-cloning concepts. Not a deep-read target
+unless RL becomes the primary thread later.
 
 ## Coverage map
 
@@ -368,6 +374,28 @@ run the canonical workflow for that phrase.
 - Wiki concepts: `[[wikilink]]`
 - PDF source: "see [[Source Page]] p. <page>"
 - Docs site: URL section link
+
+## Visual aids
+
+Include visuals when they meaningfully aid understanding. Allowed visual
+formats in Phase 1:
+
+- **Mermaid diagrams** for system architectures, workflows, concept
+  hierarchies, state machines, decision trees. Embed both in concept pages
+  (persistent, reviewable) and in responses (ephemeral teaching aids).
+- **ASCII / unicode art** for inline visuals — matrices, simple geometric
+  shapes, number lines, axes, small tables. Keep brief; if precision
+  matters, prefer a Mermaid diagram or a figure citation.
+- **PDF figure citations** when the source has a great existing visual:
+  *"see [[Modern Robotics]] Fig. 3.20 p. 89"*. Don't redraw what the
+  textbook already drew well.
+
+If a visual would genuinely help but none of the above can express it
+(e.g., a function plot, a manifold illustration the textbook doesn't
+draw), **state that explicitly and proceed without faking it**. Don't
+contort ASCII into pictures that need real images. Agent-generated PNG/SVG
+via Python+matplotlib is a Phase 1b capability — when this gap blocks
+teaching repeatedly, that's the signal to add it.
 
 ## Auto-commit protocol
 
@@ -542,9 +570,42 @@ No wiki content will need to be re-touched.
 >
 > **Definition.** A set $C \subseteq \mathbb{R}^n$ is convex if, for any two points $x, y \in C$ and any $\lambda \in [0, 1]$, the point $\lambda x + (1-\lambda) y$ is also in $C$. In words: the entire line segment between any two points in the set stays inside the set.
 >
-> [continued explanation with diagrams in ASCII, examples — half-spaces, balls, polytopes; non-examples — annulus, union of two disjoint balls. Python `matplotlib` snippet showing why a convex feasible region matters for optimization...]
+> **Visual.** Side-by-side contrast:
 >
-> **Why this matters for your current thread**: KKT conditions characterize optima of constrained optimization problems. When the feasible set is convex AND the objective is convex, KKT points are globally optimal. When either fails, KKT only tells you local stationarity. That's the gap between "we found a stationary point" and "we found *the* answer."
+> ```
+> Convex (line segment stays inside):    Non-convex ("C" shape):
+>
+>   ┌─────────────┐                        ┌─────────┐
+>   │             │                        │   •x    │
+>   │  •x         │                        │       •y│
+>   │      •y     │                        │  ┌──────┘
+>   │             │                        │  │  ← segment xy
+>   │             │                        │  │     leaves the set
+>   └─────────────┘                        └──┘
+> ```
+>
+> **Examples (convex)**: half-spaces $\{x : a^\top x \le b\}$, balls
+> $\{x : \|x\| \le r\}$, polytopes (intersections of half-spaces).
+> **Non-examples**: annulus (a ring), union of two disjoint balls, the
+> unit sphere $\{x : \|x\|_2 = 1\}$ (surface only — a chord cuts through
+> the interior).
+>
+> **Why this matters for your current thread** — the conceptual chain
+> back to KKT:
+>
+> ```mermaid
+> graph LR
+>   A[Convex feasible set] --> C[Convex optimization problem]
+>   B[Convex objective function] --> C
+>   C --> D[KKT point = global optimum]
+>   E[Either is non-convex] --> F[KKT point = local stationarity only]
+> ```
+>
+> KKT conditions characterize stationary points of constrained
+> optimization. When the feasible set is convex AND the objective is
+> convex, KKT points are globally optimal. When either fails, KKT only
+> tells you local stationarity — the gap between "we found a stationary
+> point" and "we found *the* answer."
 
 6. Creates `wiki/concepts/Convex Sets.md` linking to `[[Karush-Kuhn-Tucker Conditions]]`, `[[Lagrange Multipliers]]`.
 7. Updates `learning-tracker.md`:
