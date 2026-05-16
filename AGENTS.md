@@ -72,8 +72,13 @@ created: 2026-05-09
 updated: 2026-05-09
 source_url: https://...
 source_path: raw/article-slug.md
+source_format: pdf | paper | docs-site | web | video
+total_pages: 615           # for PDFs only
 author: Name
 published: 2024-11-01
+chunks_indexed: false      # Phase 2 hook — flips true after vector indexing
+indexed_at:                # Phase 2 hook — date when chunks were indexed
+study_status: not-started  # not-started | in-progress | covered | reference-only
 tags: [...]
 ---
 ```
@@ -95,6 +100,26 @@ Cross-source analyses. Filename: `{Topic} - synthesis.md`. Body: **Thesis** (cur
 ### Journal pages (`wiki/journal/`)
 
 Personal entries. Filename: `YYYY-MM-DD.md`. Free-form. Link liberally to entities/concepts. Domain is always `personal`.
+
+### Ingestion Index pages (`wiki/ingestion/`)
+
+Used **only** for resources too large to summarize on a single page
+(textbooks). Each gets one chapter-level index. Papers and docs sites
+do NOT get an ingestion index — their source page is sufficient.
+
+Filename: `{Resource Title} - chapters.md`.
+
+````yaml
+---
+type: ingestion-index
+source: [[Resource Source Page]]
+created: YYYY-MM-DD
+updated: YYYY-MM-DD
+---
+````
+
+Body: a single table with columns `# | Title | Pages | Concepts | Status`.
+Status values: `not started` | `queued` | `next` | `covered`.
 
 ## Linking Conventions
 
@@ -139,6 +164,50 @@ When the user asks for a lint pass, scan and **report** (do not auto-fix):
 - Open questions worth filling with a web search or new source
 
 User prioritizes; you execute the chosen fixes.
+
+## Tutor Mode
+
+This vault supports an AI tutor workflow built on top of the standard
+operations above. Tutor mode is invoked in two ways:
+
+- **Explicitly** via `/tutor` (Claude Code) — loads `.claude/skills/tutor/SKILL.md`.
+- **Implicitly** when a trigger phrase is detected — auto-scoped to the
+  workflow.
+
+Outside tutor mode, behave as a standard Claude Code / wiki-maintainer
+session — do NOT auto-load the profile or tracker, do NOT apply teaching
+style, do NOT auto-commit.
+
+For tools that don't support skills (ChatGPT, Cursor, Obsidian AI), paste
+these three files at session start to simulate tutor context:
+
+- `wiki/about-me.md`
+- `wiki/syntheses/learning-tracker.md`
+- `.claude/skills/tutor/SKILL.md`
+
+### Trigger phrases (recognized intents)
+
+When in tutor mode (or when one of these phrases is detected, which
+auto-activates tutor mode for the duration of the workflow):
+
+| Phrase | Workflow |
+|---|---|
+| `ingest <resource>` | Read resource in `raw/`; produce `wiki/sources/<resource>.md` with extended frontmatter; for textbooks only, also produce `wiki/ingestion/<resource> - chapters.md`. Update `index.md`, `log.md`, tracker. |
+| `study Chapter N of <resource>` | Read that chapter from the PDF; produce/extend `wiki/concepts/` pages; flip chapter row in ingestion index to `covered`; update tracker. |
+| `deep-read <paper>` | Read paper end-to-end; produce/extend source + concept pages; update tracker. |
+| `I'm working on <project>` | Enter project mode for the session; add/update under "Current projects" in `wiki/about-me.md`. |
+| `what should I study next` | Discuss tracker recommendations (don't just dump). |
+
+### Ingestion conventions (Phase 2 readiness)
+
+All `wiki/sources/` pages MUST include the extended frontmatter fields
+(`source_format`, `source_path`, `total_pages` for PDFs, `chunks_indexed:
+false`, `indexed_at:`, `study_status`). These are baked in so a future
+vector-index layer can find unindexed sources without touching wiki
+content.
+
+Textbooks additionally get a chapter-level index at
+`wiki/ingestion/<resource> - chapters.md`. Papers and docs sites do not.
 
 ## Special Files
 

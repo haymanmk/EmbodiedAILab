@@ -118,3 +118,50 @@ def test_tracker_records_existing_wiki_concepts(vault):
     ):
         assert concept in text, \
             f"coverage map missing existing wiki concept: {concept}"
+
+
+# ---------- AGENTS.md additions ----------
+
+def test_agents_has_tutor_mode_section(vault):
+    text = (vault / "AGENTS.md").read_text(encoding="utf-8")
+    assert "## Tutor Mode" in text
+
+
+def test_agents_has_trigger_phrases_subsection(vault):
+    text = (vault / "AGENTS.md").read_text(encoding="utf-8")
+    assert "Trigger phrases" in text or "Trigger Phrases" in text
+
+
+def test_agents_source_frontmatter_includes_new_fields(vault):
+    """The source-page frontmatter example in AGENTS.md must include the
+    Phase-2-readiness fields baked in for the tutor system."""
+    text = (vault / "AGENTS.md").read_text(encoding="utf-8")
+    for field in ("source_format", "chunks_indexed", "indexed_at",
+                  "total_pages", "study_status"):
+        assert field in text, \
+            f"AGENTS.md source-frontmatter example missing field: {field}"
+
+
+def test_agents_documents_ingestion_index_page_type(vault):
+    text = (vault / "AGENTS.md").read_text(encoding="utf-8")
+    assert "ingestion-index" in text or "Ingestion Index" in text, \
+        "AGENTS.md must document the ingestion-index page type"
+    assert "wiki/ingestion" in text, \
+        "AGENTS.md must mention wiki/ingestion/ directory"
+
+
+def test_agents_preserves_original_sections(vault):
+    """Sanity check: the original AGENTS.md sections must still exist."""
+    text = (vault / "AGENTS.md").read_text(encoding="utf-8")
+    for section in (
+        "## Focus",
+        "## Three Layers",
+        "## Directory Layout",
+        "## Page Types and Frontmatter",
+        "## Linking Conventions",
+        "## Operations",
+        "## Special Files",
+        "## Hard Rules",
+        "## Schema Evolution",
+    ):
+        assert section in text, f"original section lost: {section}"

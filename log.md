@@ -114,3 +114,5 @@ Created the learning tracker synthesis document with:
 - Session log (append-only entry point for tutor workflow records)
 
 Reflects existing wiki concepts: Lagrange Multipliers, KKT, Constraint Gradients, ACT. Updated `index.md` to list tracker in Syntheses section.
+
+## [2026-05-16] modify | AGENTS.md — added Tutor Mode, trigger phrases, ingestion-index page type, extended source frontmatter
