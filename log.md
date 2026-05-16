@@ -102,3 +102,15 @@ Updated `index.md` so the concept is discoverable.
 Created the user profile document with frontmatter (role, goals, horizon, learning preferences, constraints) and narrative sections: who I am, where I'm going, solid ground vs. active gaps, how I learn best (everyday analogies, tracking, project mode, Socratic follow-up), current projects, constraints, and pointers.
 
 Updated `index.md` with a new Profile section linking to `[[about-me]]`.
+
+## [2026-05-16] create | wiki/syntheses/learning-tracker.md — bootstrapped from existing wiki coverage
+
+Created the learning tracker synthesis document with:
+
+- Active focus (foundation thread: optimization math)
+- Recommendations (ranked per user preference: Modern Robotics → ACT → Diffusion Policy, with Sutton & Barto as reference)
+- Coverage map (concepts covered with mastery signal, resource progress table)
+- Gaps detected (agent-maintained list of missing prerequisites)
+- Session log (append-only entry point for tutor workflow records)
+
+Reflects existing wiki concepts: Lagrange Multipliers, KKT, Constraint Gradients, ACT. Updated `index.md` to list tracker in Syntheses section.

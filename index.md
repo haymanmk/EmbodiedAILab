@@ -33,6 +33,7 @@ Content catalog for this vault. Every wiki page is listed here under its categor
 
 - [[LeRobot Documentation Index]] — Searchable local map of the official LeRobot docs and a recommended reading path.
 - [[Modern Robotics Development - synthesis]] — Whole-picture overview of modern robotics development, core tools, and realistic self-researcher paths.
+- [[learning-tracker]] — curriculum, coverage map, recommendations, session log (agent-maintained)
 
 ## Journal
 
