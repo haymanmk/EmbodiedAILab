@@ -67,3 +67,38 @@ Expanded the teaching notes for:
 - `wiki/sources/Deriving the Pseudoinverse Where the Formulas Come From - Heptabase AI Tutor.md`
 
 Added step-by-step derivations, geometric intuition, a small constrained-optimization example, row-space/null-space interpretation, SVD unification, and Mecharm-specific inverse-kinematics interpretation.
+
+## [2026-05-15] query | Lagrange multipliers geometric figures
+
+Added visual explanations of the geometric intuition behind Lagrange multipliers:
+
+- `wiki/concepts/Lagrange Multipliers.md`
+- `wiki/assets/lagrange-line-contour-tangency.svg`
+- `wiki/assets/lagrange-tangent-component-before-optimum.svg`
+- `wiki/assets/lagrange-stationarity-at-optimum.svg`
+
+Updated `index.md` to note that the concept page now includes stationarity figures.
+
+## [2026-05-15] query | Lagrange multipliers tangent and normal figures
+
+Added two targeted figures to the geometric-intuition section:
+
+- `wiki/assets/lagrange-feasible-surface-no-tangent-improvement.svg`
+- `wiki/assets/lagrange-objective-and-constraint-gradients-parallel.svg`
+
+These figures illustrate why feasible motion is tangent to $h(x)=0$ and why $\nabla f(x^\star)$ and $\nabla h(x^\star)$ are parallel normals at a constrained optimum.
+
+## [2026-05-15] query | constraint gradients and tangent spaces
+
+Created a durable concept page for the relation between equality-constraint gradients and tangent lines/planes:
+
+- `wiki/concepts/Constraint Gradients and Tangent Spaces.md`
+- `wiki/concepts/Lagrange Multipliers.md`
+
+Updated `index.md` so the concept is discoverable.
+
+## [2026-05-16] create | wiki/about-me.md — AI tutor profile per design spec
+
+Created the user profile document with frontmatter (role, goals, horizon, learning preferences, constraints) and narrative sections: who I am, where I'm going, solid ground vs. active gaps, how I learn best (everyday analogies, tracking, project mode, Socratic follow-up), current projects, constraints, and pointers.
+
+Updated `index.md` with a new Profile section linking to `[[about-me]]`.
