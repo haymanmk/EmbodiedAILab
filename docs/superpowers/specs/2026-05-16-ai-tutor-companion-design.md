@@ -27,7 +27,7 @@ The EmbodiedAILab vault is the user's research notebook for modern robotics and 
 ## 3. Non-Goals (Phase 1)
 
 - Vector embeddings, chunked search, RAG infrastructure — deferred to Phase 2; design must accommodate but not implement.
-- **Agent-generated image visuals** (matplotlib plots, custom geometric illustrations) — deferred to Phase 1b, triggered by first need. Phase 1 uses Mermaid + ASCII + textbook figure citations only (Option B from brainstorm).
+- **Agent-generated binary images** (matplotlib PNG plots requiring a Python process) — deferred to Phase 1b, triggered by first need. Phase 1 uses text-authored visuals only: Mermaid, hand-written SVG (inline or as files in `wiki/assets/`), JSON Canvas (via the `json-canvas` skill), Obsidian callouts, ASCII art, and textbook figure citations (Option B+ from brainstorm).
 - MCP server / cross-tool native integration — deferred indefinitely; copy-paste for non-Claude tools is acceptable for now.
 - Audio/video resource ingestion (lectures, podcasts).
 - Multi-user or sharing features — single-user.
@@ -59,7 +59,9 @@ EmbodiedAILab/
 │   ├── concepts/                          # EXISTING: per-concept pages
 │   ├── syntheses/
 │   │   └── learning-tracker.md            # NEW: curriculum + progress, agent-maintained
-│   └── ingestion/                         # NEW: chapter-level indices for textbooks only
+│   ├── ingestion/                         # NEW: chapter-level indices for textbooks only
+│   ├── assets/                            # EXISTING: SVG/PNG/image storage (reusable diagrams)
+│   └── canvases/                          # NEW (optional): JSON Canvas (.canvas) whiteboard files
 ├── raw/                                   # EXISTING: user-owned, immutable
 ├── .claude/
 │   └── skills/
@@ -377,24 +379,46 @@ run the canonical workflow for that phrase.
 
 ## Visual aids
 
-Include visuals when they meaningfully aid understanding. Allowed visual
-formats in Phase 1:
+Include visuals when they meaningfully aid understanding. Pick the right
+format for the content — don't default to one.
 
-- **Mermaid diagrams** for system architectures, workflows, concept
-  hierarchies, state machines, decision trees. Embed both in concept pages
-  (persistent, reviewable) and in responses (ephemeral teaching aids).
-- **ASCII / unicode art** for inline visuals — matrices, simple geometric
-  shapes, number lines, axes, small tables. Keep brief; if precision
-  matters, prefer a Mermaid diagram or a figure citation.
-- **PDF figure citations** when the source has a great existing visual:
-  *"see [[Modern Robotics]] Fig. 3.20 p. 89"*. Don't redraw what the
-  textbook already drew well.
+| Format | Use for | Renders in |
+|---|---|---|
+| **Mermaid** | Flowcharts, hierarchies, state machines, simple block diagrams | Obsidian (native), GitHub, Cursor, most viewers |
+| **Hand-written inline SVG** | Custom geometric illustrations where precision matters (manifolds, tangent planes, vector fields, set diagrams). Embed `<svg>...</svg>` directly in markdown. | Obsidian (native), GitHub (inline SVG), most viewers |
+| **SVG files in `wiki/assets/`** | Reusable diagrams referenced from multiple pages: `![Tangent plane](../assets/tangent-plane.svg)` | Obsidian, GitHub, most viewers |
+| **JSON Canvas (`.canvas`)** | Whiteboard-style synthesis: full-chapter concept maps, multi-source topic syntheses, mind maps. Use the `json-canvas` skill. Save to `wiki/canvases/`. | Obsidian only |
+| **Obsidian callouts** | Definition / warning / example / quote boxes for polish. Use the `obsidian-markdown` skill. | Obsidian (styled); degrades to blockquote elsewhere |
+| **ASCII / unicode** | Inline quick visuals in responses — matrices, small shapes, number lines. | Everywhere |
+| **PDF figure citations** | When the source has the best version: *"see [[Modern Robotics]] Fig. 3.20 p. 89"*. Don't redraw. | N/A |
+
+### Choosing the format
+
+- **Mermaid by default** for diagrams (cheapest to author, most portable).
+- **Inline SVG** when geometric precision matters and Mermaid can't express
+  it (set diagrams, manifolds, geometric proofs).
+- **SVG file in `wiki/assets/`** when the same diagram will be reused
+  across multiple pages.
+- **JSON Canvas** only on explicit ask (e.g., *"give me a canvas view of
+  this chapter"*) or when a topic clearly needs a whiteboard (full-chapter
+  concept maps, multi-source synthesis). Default off because it's
+  Obsidian-only.
+- **Callouts** sparingly, for definitions, warnings, and examples.
+- **ASCII** for inline visuals in responses where a real diagram is
+  overkill.
+- **PDF citations** when the textbook figure is already the best version.
+
+### Related skills
+
+- `obsidian-markdown` — callouts, embeds, wikilinks, frontmatter
+- `json-canvas` — `.canvas` whiteboard files
+
+### When to give up gracefully
 
 If a visual would genuinely help but none of the above can express it
-(e.g., a function plot, a manifold illustration the textbook doesn't
-draw), **state that explicitly and proceed without faking it**. Don't
-contort ASCII into pictures that need real images. Agent-generated PNG/SVG
-via Python+matplotlib is a Phase 1b capability — when this gap blocks
+(e.g., a real function plot with data, a high-fidelity rendered scene),
+**state that explicitly and proceed without faking it**. Agent-generated
+PNG via Python+matplotlib is a Phase 1b capability — when this gap blocks
 teaching repeatedly, that's the signal to add it.
 
 ## Auto-commit protocol
@@ -570,18 +594,30 @@ No wiki content will need to be re-touched.
 >
 > **Definition.** A set $C \subseteq \mathbb{R}^n$ is convex if, for any two points $x, y \in C$ and any $\lambda \in [0, 1]$, the point $\lambda x + (1-\lambda) y$ is also in $C$. In words: the entire line segment between any two points in the set stays inside the set.
 >
-> **Visual.** Side-by-side contrast:
+> **Visual** (inline SVG; Obsidian renders this as the side-by-side
+> diagram):
 >
-> ```
-> Convex (line segment stays inside):    Non-convex ("C" shape):
+> ```html
+> <svg viewBox="0 0 400 210" xmlns="http://www.w3.org/2000/svg" width="500">
+>   <!-- LEFT: Convex set (disk) -->
+>   <circle cx="100" cy="100" r="70" fill="#e8f0fc" stroke="#2255aa" stroke-width="2"/>
+>   <circle cx="58" cy="78" r="3.5" fill="#222"/>
+>   <circle cx="142" cy="122" r="3.5" fill="#222"/>
+>   <line x1="58" y1="78" x2="142" y2="122" stroke="#c02020" stroke-width="2"/>
+>   <text x="44" y="76" font-size="14" font-family="serif" font-style="italic">x</text>
+>   <text x="148" y="130" font-size="14" font-family="serif" font-style="italic">y</text>
+>   <text x="32" y="200" font-size="12" font-family="sans-serif">convex (segment stays inside)</text>
 >
->   ┌─────────────┐                        ┌─────────┐
->   │             │                        │   •x    │
->   │  •x         │                        │       •y│
->   │      •y     │                        │  ┌──────┘
->   │             │                        │  │  ← segment xy
->   │             │                        │  │     leaves the set
->   └─────────────┘                        └──┘
+>   <!-- RIGHT: Non-convex set (U-shape) -->
+>   <path d="M 240 50 L 305 50 L 305 80 L 275 80 L 275 120 L 305 120 L 305 150 L 240 150 Z"
+>         fill="#e8f0fc" stroke="#2255aa" stroke-width="2"/>
+>   <circle cx="295" cy="65" r="3.5" fill="#222"/>
+>   <circle cx="295" cy="135" r="3.5" fill="#222"/>
+>   <line x1="295" y1="65" x2="295" y2="135" stroke="#c02020" stroke-width="2"/>
+>   <text x="305" y="69" font-size="14" font-family="serif" font-style="italic">x</text>
+>   <text x="305" y="140" font-size="14" font-family="serif" font-style="italic">y</text>
+>   <text x="222" y="200" font-size="12" font-family="sans-serif">non-convex (segment leaves)</text>
+> </svg>
 > ```
 >
 > **Examples (convex)**: half-spaces $\{x : a^\top x \le b\}$, balls
