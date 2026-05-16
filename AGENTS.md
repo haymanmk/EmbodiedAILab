@@ -35,10 +35,14 @@ Cross-domain links are encouraged when they serve this focus. For example, a tex
 │   ├── assets/            # downloaded images, PDFs, attachments
 │   └── *.md               # source documents (clipped articles, transcripts, notes)
 └── wiki/
+    ├── about-me.md        # user profile (loaded by /tutor skill)
     ├── sources/           # one summary page per source
     ├── entities/          # people, places, organizations, books, products
     ├── concepts/          # ideas, theories, frameworks, methodologies
-    ├── syntheses/         # cross-source analyses, evolving theses
+    ├── syntheses/         # cross-source analyses, evolving theses (incl. learning-tracker)
+    ├── ingestion/         # chapter-level indices for large multi-chapter resources (textbooks)
+    ├── assets/            # SVG/PNG/image storage (reusable diagrams, matplotlib plots)
+    ├── canvases/          # JSON Canvas (.canvas) whiteboard files (optional, Obsidian-only)
     └── journal/           # personal journal entries (domain: personal only)
 ```
 

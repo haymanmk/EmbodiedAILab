@@ -133,7 +133,7 @@ At each commit boundary:
 4. Regenerate recommendations if scope shifted.
 5. Update "Gaps detected" if a new prerequisite missing was noticed.
 6. Bump `updated:` on touched wiki pages.
-7. `git add wiki/ && git commit -m "tutor: <concept or workflow summary>"`
+7. `git add wiki/ index.md log.md && git commit -m "tutor: <concept or workflow summary>"`
 
 ## Exit
 
