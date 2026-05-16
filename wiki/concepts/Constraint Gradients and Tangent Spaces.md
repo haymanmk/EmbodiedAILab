@@ -53,6 +53,44 @@ $$
 
 This is the core geometric fact behind [[Lagrange Multipliers]]: if a constrained optimum has no improving direction along the tangent space, then the objective gradient must also be normal to the feasible set.
 
+### The contour-and-gradient picture
+
+The hiker analogy made visual. Below: contour lines of
+$h(x,y) = \tfrac{1}{2}x^2 + \tfrac{3}{2}y^2 + 0.4\,xy$, with the level
+set $h = 1$ highlighted in red as "the constraint." At sample points
+all the way around that constraint, red gradient arrows point
+**outward, perpendicular to the curve**. Blue: a tangent direction
+plus a right-angle marker at one sample point.
+
+![Gradient arrows perpendicular to the constraint level set h(x,y)=1](../assets/constraint-gradient/contour_field.png)
+
+The gradient always points in the *uphill* direction (toward larger
+$h$), and the contour is the locus where $h$ doesn't change — so
+gradients and contours meet at right angles wherever $\nabla h \ne 0$.
+
+### What "perpendicular to first order" actually means
+
+The Taylor argument above can be visualized as two side-by-side
+experiments at the same point $x$ on the contour $h = 1$. Step the
+same Euclidean distance $\epsilon = 0.18$ in two different directions:
+
+![Tangent step stays on the contour to first order; normal step leaves it linearly](../assets/constraint-gradient/tangent_decomposition.png)
+
+- **Left (tangent step).** Move along $v$ with $\nabla h(x)^\top v = 0$.
+  The endpoint sits at $h = 1.047$ — almost back on the contour. The
+  small leftover drift is **second-order** in $\epsilon$ (the contour
+  curves away from its tangent line). Shrink $\epsilon$ and the drift
+  shrinks faster than the step.
+- **Right (normal step).** Move along $\nabla h$ itself. The endpoint
+  sits at $h = 1.270$ — visibly off the contour, in the higher
+  level-set band. This change scales **linearly** with $\epsilon$:
+  $h(x + \epsilon\,\hat{\nabla h}) \approx 1 + \epsilon\,\|\nabla h(x)\|$.
+
+That contrast — quadratic-drift vs. linear-drift — is what
+"perpendicular to first order" means concretely. Tangent steps preserve
+the constraint up to a vanishing correction; any non-tangent step
+violates it proportionally to its component along $\nabla h$.
+
 ## Why the gradient is normal
 
 Take a small feasible step from $x$ in direction $v$. A first-order Taylor expansion gives:
@@ -103,6 +141,78 @@ $$
 $$
 
 The objective gradient is balanced by a linear combination of constraint normals.
+
+### Two constraints in 3D: a worked schematic
+
+When two equality constraints $h_1(x) = 0$ and $h_2(x) = 0$ meet at a
+regular point in $\mathbb{R}^3$, each is a surface and the feasible set
+is the curve where the surfaces intersect. The feasible *tangent
+direction* must lie in **both** surfaces' tangent planes — that is, it
+must be perpendicular to **both** gradients $\nabla h_1$ and
+$\nabla h_2$. The normal space (the space of "constraint pressures") is
+the plane spanned by those two gradients.
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 320" width="560" height="320" font-family="sans-serif" font-size="13">
+  <defs>
+    <marker id="cg-arr-1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d62728"/>
+    </marker>
+    <marker id="cg-arr-2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9467bd"/>
+    </marker>
+    <marker id="cg-arr-t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f77b4"/>
+    </marker>
+  </defs>
+
+  <!-- surface 1 (drawn as a tilted parallelogram) -->
+  <polygon points="60,180 240,90 380,150 200,240" fill="#fde2e2" stroke="#d62728" stroke-width="1.5" opacity="0.7"/>
+  <text x="80" y="200" fill="#a01818" font-size="12" font-style="italic">h₁(x) = 0</text>
+
+  <!-- surface 2 (other tilted parallelogram, intersecting surface 1) -->
+  <polygon points="160,60 440,90 520,240 240,210" fill="#ece6f5" stroke="#9467bd" stroke-width="1.5" opacity="0.65"/>
+  <text x="450" y="115" fill="#5e3b8a" font-size="12" font-style="italic">h₂(x) = 0</text>
+
+  <!-- intersection curve (drawn as a straight line through both shapes) -->
+  <line x1="200" y1="225" x2="380" y2="135" stroke="#1f77b4" stroke-width="2.5"/>
+  <text x="135" y="260" fill="#1f77b4" font-size="12" font-style="italic">feasible set: h₁ = 0 AND h₂ = 0</text>
+
+  <!-- point on the intersection -->
+  <circle cx="290" cy="180" r="5" fill="#222"/>
+  <text x="295" y="200" fill="#222" font-size="11">x</text>
+
+  <!-- gradient of h1 (perpendicular to surface 1 — roughly upward-left) -->
+  <line x1="290" y1="180" x2="240" y2="120" stroke="#d62728" stroke-width="2.4" marker-end="url(#cg-arr-1)"/>
+  <text x="200" y="115" fill="#d62728" font-weight="bold">∇h₁</text>
+
+  <!-- gradient of h2 (perpendicular to surface 2 — roughly upward-right) -->
+  <line x1="290" y1="180" x2="370" y2="100" stroke="#9467bd" stroke-width="2.4" marker-end="url(#cg-arr-2)"/>
+  <text x="378" y="95" fill="#9467bd" font-weight="bold">∇h₂</text>
+
+  <!-- tangent direction (along the intersection curve, both ways) -->
+  <line x1="290" y1="180" x2="350" y2="150" stroke="#1f77b4" stroke-width="2.4" marker-end="url(#cg-arr-t)"/>
+  <line x1="290" y1="180" x2="230" y2="210" stroke="#1f77b4" stroke-width="2.4" marker-end="url(#cg-arr-t)"/>
+
+  <!-- Side panel: explanatory text -->
+  <g transform="translate(20,275)">
+    <text fill="#444" font-size="11">
+      <tspan x="0" dy="0">Tangent space at x: directions v with</tspan>
+      <tspan x="0" dy="14">∇h₁(x)·v = 0  AND  ∇h₂(x)·v = 0</tspan>
+      <tspan x="320" dy="-14">Normal space at x: span(∇h₁, ∇h₂)  ⊂  ℝ³</tspan>
+      <tspan x="320" dy="14">(a 2D plane of "constraint pressures")</tspan>
+    </text>
+  </g>
+</svg>
+
+In 3D with two constraints, $\operatorname{null}(J_h)$ is 1-dimensional
+(the blue tangent line) and the row space of $J_h$ is 2-dimensional
+(the red-and-purple plane). Together they span all of $\mathbb{R}^3$ —
+every direction can be decomposed into "stay on the constraint set" +
+"violate the constraints." [[Karush-Kuhn-Tucker Conditions]] uses this
+decomposition: stationarity says $\nabla f$ has no component in the
+tangent space, equivalently $\nabla f$ lies entirely in the normal
+space, equivalently $\nabla f$ is a linear combination of the
+$\nabla h_i$ — those coefficients are the Lagrange multipliers.
 
 ## Variations / debates
 

@@ -120,3 +120,13 @@ Append-only. One entry per tutor workflow.
   [[Constraint Gradients and Tangent Spaces]] as a `## Bridges from`
   section so future sessions reuse it. Mastery on Constraint Gradients
   bumped to working.
+- 2026-05-16 — Added three visual aids to
+  [[Constraint Gradients and Tangent Spaces]]: (1) matplotlib contour
+  field of an elliptical bowl with $\nabla h$ arrows perpendicular to
+  the $h=1$ level set at multiple sample points; (2) side-by-side
+  matplotlib panels contrasting a tangent step (h: 1.000→1.047,
+  second-order drift) with a normal step of equal Euclidean length
+  (h: 1.000→1.270, first-order drift), making the "perpendicular to
+  first order" statement concrete; (3) inline SVG of two constraint
+  surfaces $h_1=h_2=0$ intersecting in $\mathbb{R}^3$, with tangent in
+  $\operatorname{null}(J_h)$ and normal space as $\operatorname{span}(\nabla h_1, \nabla h_2)$.
