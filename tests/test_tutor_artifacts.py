@@ -224,3 +224,173 @@ def test_skill_lists_trigger_phrases(vault):
         "what should I study next",
     ):
         assert phrase in text, f"missing trigger phrase: {phrase}"
+
+
+# ---------- First ingestion: Modern Robotics ----------
+
+MR_SOURCE = "wiki/sources/Modern Robotics - Lynch & Park.md"
+MR_INDEX = "wiki/ingestion/Modern Robotics - chapters.md"
+
+
+def test_mr_source_page_exists(vault):
+    assert (vault / MR_SOURCE).exists(), f"{MR_SOURCE} not found"
+
+
+def test_mr_source_frontmatter(vault, fm):
+    data = fm(vault / MR_SOURCE)
+    assert data is not None
+    assert data.get("type") == "source"
+    assert data.get("source_format") == "pdf"
+    assert data.get("source_path", "").startswith("raw/")
+    assert data.get("source_path", "").endswith(".pdf")
+    assert data.get("total_pages", 0) > 100, \
+        "total_pages should be set to actual page count"
+    assert data.get("chunks_indexed") is False, \
+        "Phase-2 hook chunks_indexed must be present and False"
+    # indexed_at must be PRESENT in frontmatter (even if empty / null)
+    assert "indexed_at" in data
+    assert data.get("study_status") in (
+        "not-started", "in-progress", "covered", "reference-only"
+    )
+
+
+def test_mr_source_has_required_body_sections(vault):
+    text = (vault / MR_SOURCE).read_text(encoding="utf-8")
+    # Per AGENTS.md source-page convention
+    for section in ("## Summary", "## Key claims", "## Connections"):
+        assert section in text, f"missing section: {section}"
+
+
+def test_mr_chapter_index_exists(vault):
+    assert (vault / MR_INDEX).exists(), f"{MR_INDEX} not found"
+
+
+def test_mr_chapter_index_frontmatter(vault, fm):
+    data = fm(vault / MR_INDEX)
+    assert data is not None
+    assert data.get("type") == "ingestion-index"
+    assert "Modern Robotics" in str(data.get("source", ""))
+
+
+def test_mr_chapter_index_has_table(vault):
+    text = (vault / MR_INDEX).read_text(encoding="utf-8")
+    # Verify the table header columns
+    assert "Title" in text and "Pages" in text and "Concepts" in text \
+        and "Status" in text, "chapter index table missing required columns"
+    # Verify at least 4 chapter rows (Modern Robotics has 13 chapters)
+    table_rows = [
+        line for line in text.splitlines()
+        if line.startswith("|") and "---" not in line
+    ]
+    # Subtract 1 for the header row
+    data_rows = len(table_rows) - 1
+    assert data_rows >= 4, f"expected at least 4 chapter rows, got {data_rows}"
+
+
+def test_mr_tracker_resource_progress_updated(vault):
+    text = (vault / "wiki/syntheses/learning-tracker.md").read_text(encoding="utf-8")
+    # The resource row for Modern Robotics should no longer say "Not yet ingested"
+    assert "Modern Robotics" in text
+    # After ingestion: status should be "queued" (chapter index built but not studied yet)
+    # or already "in-progress" if Task 7 ran first. Both acceptable.
+    assert "Not yet ingested" not in text, \
+        "tracker still reports 'Not yet ingested' — was ingestion workflow run?"
+
+
+# ---------- Study Chapter 2 of Modern Robotics ----------
+
+def test_mr_chapter2_marked_covered(vault):
+    """After studying Chapter 2, its row in the ingestion index must be
+    marked 'covered'."""
+    text = (vault / MR_INDEX).read_text(encoding="utf-8")
+    # Find lines describing Chapter 2 — should contain '2' as the first col
+    # and 'covered' (not 'not started' / 'queued') as the last col.
+    lines = [
+        line for line in text.splitlines()
+        if line.startswith("|") and "Configuration Space" in line
+    ]
+    assert len(lines) >= 1, "no Chapter 2 row found in chapter index"
+    assert "covered" in lines[0].lower(), \
+        f"Chapter 2 row not marked covered: {lines[0]}"
+
+
+def test_mr_chapter2_produced_cspace_concept(vault):
+    """Chapter 2 introduces C-space. There should be a concept page for it
+    (or a substantively-extended existing page)."""
+    candidates = [
+        vault / "wiki/concepts/C-Space.md",
+        vault / "wiki/concepts/Configuration Space.md",
+    ]
+    assert any(p.exists() for p in candidates), \
+        "no concept page found for C-space / Configuration Space"
+
+
+def test_mr_chapter2_concept_links_back_to_source(vault):
+    """The C-space concept page must wikilink back to the Modern Robotics
+    source page."""
+    for candidate in (
+        vault / "wiki/concepts/C-Space.md",
+        vault / "wiki/concepts/Configuration Space.md",
+    ):
+        if candidate.exists():
+            text = candidate.read_text(encoding="utf-8")
+            assert "Modern Robotics" in text, \
+                f"{candidate.name} missing wikilink back to source"
+            return
+
+
+def test_tracker_session_log_records_chapter2(vault):
+    text = (vault / "wiki/syntheses/learning-tracker.md").read_text(encoding="utf-8")
+    log_section = text.split("## Session log", 1)
+    assert len(log_section) == 2, "tracker missing Session log section"
+    log_text = log_section[1]
+    assert "Chapter 2" in log_text or "Ch. 2" in log_text or "C-Space" in log_text \
+        or "Configuration Space" in log_text, \
+        "session log does not record Chapter 2 study"
+
+
+# ---------- End-to-end: /tutor explain the sigmoid function ----------
+
+SIG_CONCEPT = "wiki/concepts/Sigmoid Function.md"
+SIG_PY = "wiki/assets/sigmoid/sigmoid.py"
+SIG_PNG = "wiki/assets/sigmoid/sigmoid.png"
+
+
+def test_sigmoid_concept_exists(vault):
+    assert (vault / SIG_CONCEPT).exists()
+
+
+def test_sigmoid_concept_has_bridges_from_section(vault):
+    text = (vault / SIG_CONCEPT).read_text(encoding="utf-8")
+    assert "## Bridges from" in text, \
+        "concept page must record analogy in '## Bridges from' section"
+
+
+def test_sigmoid_concept_includes_breakdown_language(vault):
+    text = (vault / SIG_CONCEPT).read_text(encoding="utf-8").lower()
+    assert "break" in text, \
+        "concept page must state where the analogy breaks down"
+
+
+def test_sigmoid_matplotlib_artifacts_exist(vault):
+    assert (vault / SIG_PY).exists(), \
+        "matplotlib convention requires the .py script alongside the .png"
+    assert (vault / SIG_PNG).exists(), \
+        "matplotlib convention requires the .png saved next to the script"
+
+
+def test_sigmoid_concept_embeds_the_png(vault):
+    text = (vault / SIG_CONCEPT).read_text(encoding="utf-8")
+    # Relative embed from wiki/concepts/ -> wiki/assets/sigmoid/sigmoid.png
+    assert "../assets/sigmoid/sigmoid.png" in text or \
+        "assets/sigmoid/sigmoid.png" in text, \
+        "concept page must embed the generated PNG"
+
+
+def test_sigmoid_script_writes_png_locally(vault):
+    """The .py script should save the PNG via plt.savefig('sigmoid.png',
+    ...) — i.e., relative path, so 'cd wiki/assets/sigmoid && python ...'
+    works."""
+    text = (vault / SIG_PY).read_text(encoding="utf-8")
+    assert 'savefig("sigmoid.png"' in text or "savefig('sigmoid.png'" in text, \
+        "script must save sigmoid.png locally (no absolute path)"
