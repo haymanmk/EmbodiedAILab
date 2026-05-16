@@ -165,3 +165,62 @@ def test_agents_preserves_original_sections(vault):
         "## Schema Evolution",
     ):
         assert section in text, f"original section lost: {section}"
+
+
+# ---------- /tutor skill (.claude/skills/tutor/SKILL.md) ----------
+
+SKILL_PATH = ".claude/skills/tutor/SKILL.md"
+
+
+def test_skill_exists(vault):
+    assert (vault / SKILL_PATH).exists(), f"{SKILL_PATH} not found"
+
+
+def test_skill_frontmatter(vault, fm):
+    data = fm(vault / SKILL_PATH)
+    assert data is not None
+    assert data.get("name") == "tutor"
+    assert data.get("description"), "skill description empty"
+
+
+def test_skill_has_required_sections(vault):
+    text = (vault / SKILL_PATH).read_text(encoding="utf-8")
+    for section in (
+        "## Bootstrap",
+        "## Teaching style",
+        "## Default explanation pattern",
+        "## Trigger phrases",
+        "## Citation discipline",
+        "## Visual aids",
+        "## Auto-commit protocol",
+        "## Exit",
+    ):
+        assert section in text, f"missing section: {section}"
+
+
+def test_skill_includes_everyday_analogy_rule(vault):
+    text = (vault / SKILL_PATH).read_text(encoding="utf-8").lower()
+    assert "everyday" in text, "skill must enforce everyday-analogy preference"
+    assert "breaks down" in text or "breakdown" in text, \
+        "skill must require analogy-breakdown discipline"
+    assert "automation" in text or "background" in text, \
+        "skill must explicitly forbid background-based analogies"
+
+
+def test_skill_documents_matplotlib_convention(vault):
+    text = (vault / SKILL_PATH).read_text(encoding="utf-8")
+    assert "matplotlib" in text.lower()
+    assert "wiki/assets" in text, \
+        "matplotlib convention must use wiki/assets/<topic>/ layout"
+
+
+def test_skill_lists_trigger_phrases(vault):
+    text = (vault / SKILL_PATH).read_text(encoding="utf-8")
+    for phrase in (
+        "ingest",
+        "study Chapter",
+        "deep-read",
+        "I'm working on",
+        "what should I study next",
+    ):
+        assert phrase in text, f"missing trigger phrase: {phrase}"

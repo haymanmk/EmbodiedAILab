@@ -116,3 +116,5 @@ Created the learning tracker synthesis document with:
 Reflects existing wiki concepts: Lagrange Multipliers, KKT, Constraint Gradients, ACT. Updated `index.md` to list tracker in Syntheses section.
 
 ## [2026-05-16] modify | AGENTS.md — added Tutor Mode, trigger phrases, ingestion-index page type, extended source frontmatter
+
+## [2026-05-16] create | .claude/skills/tutor/SKILL.md — /tutor slash command for vault-scoped tutor mode
