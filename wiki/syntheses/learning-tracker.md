@@ -13,9 +13,15 @@ tags: [learning, tracker, curriculum]
 
 ## Active focus (this week / next 2 weeks)
 
-- **Foundation thread**: Optimization math (KKT, Lagrange, constraint
-  gradients). Currently working through [[Constraint Gradients and Tangent Spaces]].
-  Next: convex analysis basics, then onward to manipulator kinematics.
+- **Foundation thread**: Pivoting from optimization math into manipulator
+  kinematics now that [[Modern Robotics - Lynch & Park]] is ingested.
+  Next chapter to study: **Ch. 3 — Rigid-Body Motions** ($SO(3)$, $SE(3)$,
+  twists, exponential coordinates). Chapter-level status lives in
+  [[Modern Robotics - chapters]].
+- **Optimization math** stays in working state — [[Lagrange Multipliers]],
+  [[Karush-Kuhn-Tucker Conditions]], [[Constraint Gradients and Tangent Spaces]]
+  are accessible references; revisit when Ch. 6 (IK) and Ch. 8
+  (Lagrangian dynamics) come up.
 - **Active project**: (none currently named)
 
 ## Recommendations (ranked, with rationale)
@@ -55,7 +61,7 @@ Mastery levels: **overview-only** (skimmed) → **building** (working through)
 
 | Resource | Format | Progress | Status |
 |---|---|---|---|
-| [[Modern Robotics - Lynch & Park]] | textbook | Not yet ingested | queued |
+| [[Modern Robotics - Lynch & Park]] | textbook | Ingested 2026-05-16; chapter index at [[Modern Robotics - chapters]]; Ch. 3 = next | in-progress |
 | [[Sutton & Barto - RL]] | textbook | Not started | reference |
 | [[LeRobot Documentation Index]] | docs-site | Reference-only browsing | reference |
 | ACT paper | paper | Overview read | revisit later |
@@ -79,3 +85,9 @@ prerequisites for queued material:
 Append-only. One entry per tutor workflow.
 
 - 2026-05-16 — Bootstrapped learning tracker from existing wiki coverage.
+- 2026-05-16 — `ingest Modern Robotics`: created source page
+  [[Modern Robotics - Lynch & Park]] and chapter index
+  [[Modern Robotics - chapters]] (13 chapters + appendices A–D, App. D
+  marked covered, Ch. 3 marked next). Updated resource progress to
+  `in-progress` and pivoted active focus from optimization math to
+  manipulator kinematics.

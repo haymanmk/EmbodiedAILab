@@ -118,3 +118,26 @@ Reflects existing wiki concepts: Lagrange Multipliers, KKT, Constraint Gradients
 ## [2026-05-16] modify | AGENTS.md — added Tutor Mode, trigger phrases, ingestion-index page type, extended source frontmatter
 
 ## [2026-05-16] create | .claude/skills/tutor/SKILL.md — /tutor slash command for vault-scoped tutor mode
+
+## [2026-05-16] ingest | Modern Robotics - Lynch & Park (textbook)
+
+Ingested the Modern Robotics PDF (`raw/ModernRobotics-v2.pdf`, 644 pages,
+Dec 2019 preprint of Cambridge 2017 first edition). Tutor-mode `ingest`
+workflow:
+
+- `wiki/sources/Modern Robotics - Lynch & Park.md` — source page with
+  extended frontmatter (`source_format: pdf`, `total_pages: 644`,
+  `study_status: in-progress`, `chunks_indexed: false`), per-chapter key
+  claims, and a recommended reading path anchored to the foundation
+  thread.
+- `wiki/ingestion/Modern Robotics - chapters.md` — chapter-level index
+  (13 chapters + appendices A–D) with planned concept pages per chapter
+  and status column. Ch. 3 marked `next`; App. D marked `covered`
+  because the optimization-math thread already produced the relevant
+  pages from other sources.
+- `wiki/syntheses/learning-tracker.md` — flipped Modern Robotics
+  resource progress from `queued` to `in-progress (ingested)`, added
+  pointer to the chapter index, refreshed the active focus and session
+  log.
+- `index.md` — added the source under Sources and a new "Ingestion
+  indices" section linking the chapter index.

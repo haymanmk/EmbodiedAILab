@@ -12,6 +12,11 @@ Content catalog for this vault. Every wiki page is listed here under its categor
 
 - [[Deriving the Pseudoinverse Where the Formulas Come From - Heptabase AI Tutor]] — Heptabase AI Tutor lesson deriving Jacobian pseudoinverse formulas from optimization and KKT/Lagrange stationarity.
 - [[Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware - Zhao et al]] — Primary ACT/ALOHA paper introducing action chunking, temporal ensembling, and low-cost bimanual imitation learning.
+- [[Modern Robotics - Lynch & Park]] — Lynch & Park textbook (Cambridge, 2017): geometric/PoE treatment of kinematics, dynamics, planning, control, grasping, and mobile robots; backbone of the foundation thread.
+
+## Ingestion indices
+
+- [[Modern Robotics - chapters]] — chapter-level status for the Modern Robotics textbook (13 chapters + 4 appendices).
 
 ## Entities
 
