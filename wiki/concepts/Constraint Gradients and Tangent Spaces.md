@@ -9,6 +9,26 @@ tags: [optimization, constrained-optimization, differential-geometry, robotics-m
 
 # Constraint Gradients and Tangent Spaces
 
+## Bridges from
+
+- **A hiker walking along a contour line on a topographic map.** Let
+  $h(x, y)$ be elevation. A contour line is the level set $h = c$, and
+  $\nabla h$ at any point on the map is the *direction of steepest
+  ascent* — straight uphill, perpendicular to the contour. A hiker
+  who wants to stay at the same elevation has to walk **perpendicular
+  to uphill** — any step with a component along $\nabla h$ would
+  change their elevation. So the tangent direction along any contour
+  is exactly the direction perpendicular to $\nabla h$.
+
+  *Where the analogy breaks down:* at a summit, saddle, or basin
+  bottom, $\nabla h = 0$ — there is no well-defined "uphill," and the
+  contour through that point degenerates to a single point or crosses
+  itself. The perpendicularity statement requires a *regular point*
+  ($\nabla h \ne 0$). And the picture is genuinely 2D-on-a-surface; in
+  $n$ dimensions a single $\nabla h$ vector is perpendicular to a
+  whole $(n{-}1)$-dimensional hyperplane of tangent directions, which
+  the contour-map intuition can't quite render.
+
 ## Definition
 
 For an equality constraint

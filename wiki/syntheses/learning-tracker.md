@@ -114,3 +114,9 @@ Append-only. One entry per tutor workflow.
   `wiki/assets/sigmoid/sigmoid.py` → `sigmoid.png` (sigmoid + its
   derivative, σ(0)=1/2 marked, saturation labels) embedded in the
   concept page. Validates the matplotlib convention end-to-end.
+- 2026-05-16 — Re-taught $\nabla h(x) \perp$ tangent of $h(x)=0$ via the
+  hiker-on-contour-line analogy with breakdown (regular points only;
+  $n$-dim hyperplane vs. 2D picture). Folded the analogy into
+  [[Constraint Gradients and Tangent Spaces]] as a `## Bridges from`
+  section so future sessions reuse it. Mastery on Constraint Gradients
+  bumped to working.
