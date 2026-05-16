@@ -3,6 +3,7 @@ type: ingestion-index
 source: [[Modern Robotics - Lynch & Park]]
 created: 2026-05-16
 updated: 2026-05-16
+last_chapter_studied: 2
 ---
 
 # Modern Robotics — Chapter Ingestion Index
@@ -22,8 +23,8 @@ viewer page = printed page + 19 for chapter content).
 | #   | Title                              | Pages    | Concepts (planned / actual)                                                                                                                                       | Status      |
 | --- | ---------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
 | 1   | Preview                            | 1–10     | book-wide roadmap; read once for orientation, no concept pages expected                                                                                           | queued      |
-| 2   | Configuration Space                | 11–56    | [[Configuration Space]], [[Degrees of Freedom]], [[Grübler's Formula]], [[Holonomic and Nonholonomic Constraints]], [[Task Space and Workspace]]                  | queued      |
-| 3   | Rigid-Body Motions                 | 57–134   | [[SO(3) Rotation Group]], [[SE(3) Rigid-Body Group]], [[Twist]], [[Wrench]], [[Exponential Coordinates of Rotation]], [[Exponential Coordinates of Rigid-Body Motion]] | **next**    |
+| 2   | Configuration Space                | 11–56    | [[Configuration Space]] (covers dof, Grübler's formula, topology, holonomic vs. nonholonomic, task space vs. workspace); extends [[Constraint Gradients and Tangent Spaces]] | covered     |
+| 3   | Rigid-Body Motions                 | 57–134   | [[SO(3) Rotation Group]], [[SE(3) Rigid-Body Group]], [[Twist]], [[Wrench]], [[Exponential Coordinates of Rotation]], [[Exponential Coordinates of Rigid-Body Motion]] | next        |
 | 4   | Forward Kinematics                 | 135–168  | [[Product of Exponentials Formula]], [[Screw Axis]], [[URDF]], [[Denavit-Hartenberg Parameters]] (see App. C)                                                     | queued      |
 | 5   | Velocity Kinematics and Statics    | 169–216  | [[Manipulator Jacobian]], [[Space Jacobian]], [[Body Jacobian]], [[Kinematic Singularity]], [[Manipulability Ellipsoid]], [[Static Force Analysis]]               | queued      |
 | 6   | Inverse Kinematics                 | 217–242  | [[Analytic Inverse Kinematics]], [[Numerical Inverse Kinematics]], [[Newton–Raphson IK]], [[Redundant Manipulator]] — extends [[Moore-Penrose Pseudoinverse]]     | queued      |

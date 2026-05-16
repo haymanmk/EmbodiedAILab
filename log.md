@@ -141,3 +141,28 @@ workflow:
   log.
 - `index.md` — added the source under Sources and a new "Ingestion
   indices" section linking the chapter index.
+
+## [2026-05-16] study | Modern Robotics Ch. 2 (Configuration Space)
+
+Tutor-mode `study Chapter 2 of Modern Robotics` workflow. Read printed
+pp. 11–56 (PDF pp. 32–60) of `raw/ModernRobotics-v2.pdf`.
+
+- `wiki/concepts/Configuration Space.md` — new concept page with
+  house-address everyday analogy and explicit breakdown; covers dof
+  definition, Grübler's formula with joint cheat sheet and sanity
+  checks, topology ($\mathbb{R}^n$, $S^n$, $T^n$, cylinder), why
+  topology matters (representation singularities, atlas vs. implicit
+  representations), holonomic vs. nonholonomic constraints with the
+  rolling-coin integrability test, and task-space vs. workspace vs.
+  C-space distinction. Embedded inline SVG of a 2R planar arm and its
+  torus C-space.
+- `wiki/concepts/Constraint Gradients and Tangent Spaces.md` —
+  extended with "Connection to robotics: holonomic constraints"
+  section bridging the optimization-math view to the C-space view via
+  the loop-closure-equation Jacobian.
+- `wiki/ingestion/Modern Robotics - chapters.md` — Ch. 2 row flipped
+  to `covered`; added `last_chapter_studied: 2` to frontmatter.
+- `wiki/syntheses/learning-tracker.md` — added Configuration Space to
+  coverage map (building); refreshed active focus; appended session
+  log entry; noted manifolds/topology basics in Gaps detected.
+- `index.md` — added Configuration Space under Concepts.

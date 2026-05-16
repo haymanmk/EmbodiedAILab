@@ -25,6 +25,7 @@ Content catalog for this vault. Every wiki page is listed here under its categor
 ## Concepts
 
 - [[Action Chunking Transformer]] — Transformer-based imitation-learning policy that predicts chunks of future robot actions for smoother, shorter-horizon control.
+- [[Configuration Space]] — Robot's C-space: dof, Grübler's formula, joint types, topology, holonomic vs. nonholonomic constraints, and task space vs. workspace (from [[Modern Robotics - Lynch & Park]] Ch. 2).
 - [[Constraint Gradients and Tangent Spaces]] — Geometric relation between equality-constraint gradients, tangent directions, normal spaces, and constrained stationarity.
 - [[Imitation Learning]] — Training robot policies from demonstrations, usually the most practical first method for a self-researcher.
 - [[Karush-Kuhn-Tucker Conditions]] — First-order constrained-optimization conditions generalizing Lagrange multipliers to equality and inequality constraints.

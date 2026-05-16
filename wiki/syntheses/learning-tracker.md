@@ -13,11 +13,11 @@ tags: [learning, tracker, curriculum]
 
 ## Active focus (this week / next 2 weeks)
 
-- **Foundation thread**: Pivoting from optimization math into manipulator
-  kinematics now that [[Modern Robotics - Lynch & Park]] is ingested.
-  Next chapter to study: **Ch. 3 — Rigid-Body Motions** ($SO(3)$, $SE(3)$,
-  twists, exponential coordinates). Chapter-level status lives in
-  [[Modern Robotics - chapters]].
+- **Foundation thread**: Working through manipulator kinematics in
+  [[Modern Robotics - Lynch & Park]]. Ch. 2 ([[Configuration Space]]) is
+  covered. Next chapter to study: **Ch. 3 — Rigid-Body Motions**
+  ($SO(3)$, $SE(3)$, twists, exponential coordinates). Chapter-level
+  status lives in [[Modern Robotics - chapters]].
 - **Optimization math** stays in working state — [[Lagrange Multipliers]],
   [[Karush-Kuhn-Tucker Conditions]], [[Constraint Gradients and Tangent Spaces]]
   are accessible references; revisit when Ch. 6 (IK) and Ch. 8
@@ -45,9 +45,10 @@ unless RL becomes the primary thread later.
 
 | Concept | Source | Last studied | Mastery |
 |---|---|---|---|
-| [[Lagrange Multipliers]] | Modern Robotics §2 | 2026-05-14 | working |
-| [[Karush-Kuhn-Tucker Conditions]] | Modern Robotics §2 | 2026-05-14 | working |
-| [[Constraint Gradients and Tangent Spaces]] | Modern Robotics §2 | 2026-05-15 | building |
+| [[Configuration Space]] | Modern Robotics Ch. 2 | 2026-05-16 | building |
+| [[Lagrange Multipliers]] | Modern Robotics App. D | 2026-05-14 | working |
+| [[Karush-Kuhn-Tucker Conditions]] | Modern Robotics App. D | 2026-05-14 | working |
+| [[Constraint Gradients and Tangent Spaces]] | Modern Robotics §2.4 + App. D | 2026-05-16 | working |
 | [[Action Chunking Transformer]] | ACT paper | 2026-05-10 | overview-only |
 | [[Vision-Language-Action Models]] | reading | 2026-05-09 | overview-only |
 | [[Robot Learning]] | reading | 2026-05-09 | overview-only |
@@ -79,6 +80,10 @@ prerequisites for queued material:
   explicitly indexed in the wiki.
 - **SE(3) / rigid-body transforms** — prerequisite for Modern Robotics
   Ch. 3 onward; will be covered when that chapter is studied.
+- **Manifolds / topology basics** — Ch. 2 introduced topology of C-space
+  ($S^1$, $T^n$, $S^n$) at a level the user could absorb. A dedicated
+  page on topological equivalence / charts / atlas would help if Ch. 3
+  pushes deeper into $SO(3)$'s manifold structure.
 
 ## Session log
 
@@ -91,3 +96,13 @@ Append-only. One entry per tutor workflow.
   marked covered, Ch. 3 marked next). Updated resource progress to
   `in-progress` and pivoted active focus from optimization math to
   manipulator kinematics.
+- 2026-05-16 — `study Chapter 2 of Modern Robotics` (Configuration
+  Space): created [[Configuration Space]] concept page with house-address
+  everyday analogy + breakdown, covering dof, Grübler's formula, joint
+  types, topology ($S^1$, $T^n$, $S^n$, atlas vs. implicit
+  representations), holonomic vs. nonholonomic constraints, and task
+  space vs. workspace. Embedded inline SVG of 2R arm and its torus
+  C-space. Extended [[Constraint Gradients and Tangent Spaces]] with a
+  "Connection to robotics: holonomic constraints" section bridging the
+  optimization-math view to the C-space view. Flipped Ch. 2 status to
+  `covered` in [[Modern Robotics - chapters]].
