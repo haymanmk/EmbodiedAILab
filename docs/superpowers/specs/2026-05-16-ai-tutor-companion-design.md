@@ -27,7 +27,7 @@ The EmbodiedAILab vault is the user's research notebook for modern robotics and 
 ## 3. Non-Goals (Phase 1)
 
 - Vector embeddings, chunked search, RAG infrastructure — deferred to Phase 2; design must accommodate but not implement.
-- **Agent-generated binary images** (matplotlib PNG plots requiring a Python process) — deferred to Phase 1b, triggered by first need. Phase 1 uses text-authored visuals only: Mermaid, hand-written SVG (inline or as files in `wiki/assets/`), JSON Canvas (via the `json-canvas` skill), Obsidian callouts, ASCII art, and textbook figure citations (Option B+ from brainstorm).
+- **3D rendering, animation, and simulation visualizations** — out of scope until they block teaching repeatedly. Phase 1 supports formula-driven plots via matplotlib (PNG), but not 3D scene rendering, video, or interactive animation (Option B++ from brainstorm).
 - MCP server / cross-tool native integration — deferred indefinitely; copy-paste for non-Claude tools is acceptable for now.
 - Audio/video resource ingestion (lectures, podcasts).
 - Multi-user or sharing features — single-user.
@@ -132,6 +132,12 @@ vision-language-action models, modern simulation (MuJoCo, Isaac).
 ## How I learn best
 
 - **Default**: direct explanation with concrete examples and runnable code.
+- **Everyday analogies**: lead new concepts with an analogy from physical
+  or common experience (a hiker on contour lines, water flowing downhill,
+  a dimmer switch, line-of-sight in a room). Always state where the
+  analogy breaks down — that's the most valuable part. **Do not draw
+  analogies from my automation/control background** — everyday analogies
+  travel better.
 - **Tracking** (always on): maintain a running record of what I've covered
   and recommend what's next — see [[learning-tracker]].
 - **Project mode**: when I name a project I'm working on, anchor concepts to
@@ -366,6 +372,41 @@ You are now the user's learning tutor for this EmbodiedAILab vault.
 - **Always-on**: curriculum tracking — flag missing prerequisites; update
   the tracker.
 
+## Default explanation pattern (for active-gap concepts)
+
+When teaching a concept in active gaps, structure the explanation:
+
+1. **Everyday analogy** (if a natural one exists): use a physical,
+   spatial, or common-experience analogy — something happening around
+   us, not domain-specific knowledge. Examples:
+   - *A hiker walking along a contour line* to explain why $\nabla h(x)$
+     is perpendicular to the constraint surface $h(x)=c$ (the hiker
+     stays at constant elevation, so they walk perpendicular to the
+     steepest-ascent direction).
+   - *A dimmer switch* for the sigmoid function (smooth transition from
+     off to on, unlike a binary switch).
+   - *Line-of-sight in a room* for convex sets (two people can see each
+     other directly iff no wall blocks the line between them).
+
+   Always state where the analogy breaks down. An analogy without a
+   breakdown is a misleading shortcut, not a mental model.
+
+2. **Definition + intuition**: precise statement, plus plain-words
+   meaning.
+
+3. **Worked example or visualization**: as appropriate (see Visual aids).
+
+4. **Connection back to current thread**: how this fits the user's
+   in-flight learning.
+
+If no natural everyday analogy fits, skip step 1 — don't force a weak
+one. **Do NOT draw analogies from the user's automation/control
+background**; everyday analogies travel better and the user prefers them.
+
+When an analogy lands well (user signals understanding), record it on the
+concept page in a `## Bridges from` section so future sessions reuse it
+rather than re-inventing.
+
 ## Trigger phrases
 
 See the invocation table in `AGENTS.md`. When a trigger phrase is detected,
@@ -385,8 +426,9 @@ format for the content — don't default to one.
 | Format | Use for | Renders in |
 |---|---|---|
 | **Mermaid** | Flowcharts, hierarchies, state machines, simple block diagrams | Obsidian (native), GitHub, Cursor, most viewers |
-| **Hand-written inline SVG** | Custom geometric illustrations where precision matters (manifolds, tangent planes, vector fields, set diagrams). Embed `<svg>...</svg>` directly in markdown. | Obsidian (native), GitHub (inline SVG), most viewers |
-| **SVG files in `wiki/assets/`** | Reusable diagrams referenced from multiple pages: `![Tangent plane](../assets/tangent-plane.svg)` | Obsidian, GitHub, most viewers |
+| **Hand-written inline SVG** | Schematic geometric illustrations where precision matters but no math evaluation is needed (sets, manifolds, tangent planes, vector fields drawn by hand). Embed `<svg>...</svg>` directly in markdown — no code fence. | Obsidian (native), GitHub (inline SVG), most viewers |
+| **SVG files in `wiki/assets/`** | Reusable schematic diagrams referenced from multiple pages: `![Tangent plane](../assets/tangent-plane.svg)` | Obsidian, GitHub, most viewers |
+| **Matplotlib → PNG** | **Formula-driven plots** — visuals that require evaluating a mathematical expression to compute pixel positions: $f(x) = \sin(x)$, gradient fields, level sets, loss landscapes, decision boundaries, sampled distributions. Agent writes `.py` script in `wiki/assets/<topic>/`, runs via Bash, saves `.png` next to it; both committed (reproducible/editable). | Everywhere (static PNG) |
 | **JSON Canvas (`.canvas`)** | Whiteboard-style synthesis: full-chapter concept maps, multi-source topic syntheses, mind maps. Use the `json-canvas` skill. Save to `wiki/canvases/`. | Obsidian only |
 | **Obsidian callouts** | Definition / warning / example / quote boxes for polish. Use the `obsidian-markdown` skill. | Obsidian (styled); degrades to blockquote elsewhere |
 | **ASCII / unicode** | Inline quick visuals in responses — matrices, small shapes, number lines. | Everywhere |
@@ -394,18 +436,26 @@ format for the content — don't default to one.
 
 ### Choosing the format
 
-- **Mermaid by default** for diagrams (cheapest to author, most portable).
-- **Inline SVG** when geometric precision matters and Mermaid can't express
-  it (set diagrams, manifolds, geometric proofs).
+The core decision: **does drawing this require evaluating a mathematical
+expression to compute pixel positions?**
+
+- **Yes (formula-driven)** → matplotlib. Function plots, gradient fields,
+  level sets, loss landscapes, sampled data, decision boundaries.
+- **No (schematic/conceptual)** → SVG (hand-written) or Mermaid.
+
+Then within "schematic":
+
+- **Mermaid** for structural diagrams (flowchart, hierarchy, state machine).
+- **Inline SVG** when geometric precision matters (set diagrams, manifold
+  schematics, vector diagrams) — embedded directly in markdown, no code
+  fence.
 - **SVG file in `wiki/assets/`** when the same diagram will be reused
-  across multiple pages.
-- **JSON Canvas** only on explicit ask (e.g., *"give me a canvas view of
-  this chapter"*) or when a topic clearly needs a whiteboard (full-chapter
-  concept maps, multi-source synthesis). Default off because it's
-  Obsidian-only.
-- **Callouts** sparingly, for definitions, warnings, and examples.
-- **ASCII** for inline visuals in responses where a real diagram is
-  overkill.
+  across pages.
+- **JSON Canvas** only on explicit ask or when a topic clearly needs a
+  whiteboard (full-chapter concept maps, multi-source synthesis). Default
+  off — Obsidian-only.
+- **Callouts** sparingly, for definitions/warnings/examples.
+- **ASCII** for inline visuals where a real diagram is overkill.
 - **PDF citations** when the textbook figure is already the best version.
 
 ### Related skills
@@ -413,13 +463,26 @@ format for the content — don't default to one.
 - `obsidian-markdown` — callouts, embeds, wikilinks, frontmatter
 - `json-canvas` — `.canvas` whiteboard files
 
+### Matplotlib invocation convention
+
+When matplotlib is the right tool:
+
+1. Create directory `wiki/assets/<topic>/` (e.g., `wiki/assets/sigmoid/`).
+2. Write a small Python script at `wiki/assets/<topic>/<name>.py`
+   producing `<name>.png` next to it (use `plt.savefig("<name>.png",
+   dpi=120)`).
+3. Run via Bash: `cd wiki/assets/<topic> && python <name>.py`.
+4. Embed in the concept page: `![<caption>](../assets/<topic>/<name>.png)`.
+5. Commit both `.py` and `.png` (script keeps the plot reproducible/
+   editable; PNG renders everywhere).
+
 ### When to give up gracefully
 
 If a visual would genuinely help but none of the above can express it
-(e.g., a real function plot with data, a high-fidelity rendered scene),
-**state that explicitly and proceed without faking it**. Agent-generated
-PNG via Python+matplotlib is a Phase 1b capability — when this gap blocks
-teaching repeatedly, that's the signal to add it.
+(e.g., a high-fidelity 3D rendered scene, an interactive animation),
+**state that explicitly and proceed without faking it**. Phase 1b
+capabilities (3D rendering pipelines, animation, simulation visualizations)
+are out of scope until the gap blocks teaching repeatedly.
 
 ## Auto-commit protocol
 
@@ -516,6 +579,7 @@ Without the user re-explaining themselves:
 4. `study Chapter N of <resource>` updates the tracker (mastery, last-studied, chapter status, gaps detected) and auto-commits with a meaningful message.
 5. `what should I study next` returns a ranked list with rationale that the user actually finds useful.
 6. After a week of use, the tracker reflects truth without manual editing.
+7. Active-gap concepts are taught with an everyday analogy bridge (or explicit note that none fits naturally), and the analogy includes where it breaks down.
 
 If any of these are broken, that's a Phase 1 bug, not a Phase 2 deferral.
 
@@ -592,14 +656,24 @@ No wiki content will need to be re-touched.
 
 > Good one to nail down — you've got KKT and Lagrange in flight, and convex sets are the geometric substrate underneath both.
 >
+> **Everyday analogy**: a convex set is like a room with no jutting walls
+> or interior obstacles — line-of-sight between any two people in the room
+> is always unobstructed. Make the room non-convex by adding an L-shaped
+> partition partway across (creating an alcove): two people can both be
+> in the room but unable to see each other directly, because the line
+> between them now passes through the partition.
+>
+> **Where the analogy breaks down**: rooms are bounded by walls in
+> physical space. Convex sets in optimization are often unbounded along
+> some dimensions, and "inside" is defined by mathematical inequalities
+> rather than physical walls.
+>
 > **Definition.** A set $C \subseteq \mathbb{R}^n$ is convex if, for any two points $x, y \in C$ and any $\lambda \in [0, 1]$, the point $\lambda x + (1-\lambda) y$ is also in $C$. In words: the entire line segment between any two points in the set stays inside the set.
 >
-> **Visual** (inline SVG; Obsidian renders this as the side-by-side
-> diagram):
+> **Visual** (the agent writes the SVG directly into the response — no
+> code fence — and Obsidian renders it inline):
 >
-> ```html
 > <svg viewBox="0 0 400 210" xmlns="http://www.w3.org/2000/svg" width="500">
->   <!-- LEFT: Convex set (disk) -->
 >   <circle cx="100" cy="100" r="70" fill="#e8f0fc" stroke="#2255aa" stroke-width="2"/>
 >   <circle cx="58" cy="78" r="3.5" fill="#222"/>
 >   <circle cx="142" cy="122" r="3.5" fill="#222"/>
@@ -607,10 +681,7 @@ No wiki content will need to be re-touched.
 >   <text x="44" y="76" font-size="14" font-family="serif" font-style="italic">x</text>
 >   <text x="148" y="130" font-size="14" font-family="serif" font-style="italic">y</text>
 >   <text x="32" y="200" font-size="12" font-family="sans-serif">convex (segment stays inside)</text>
->
->   <!-- RIGHT: Non-convex set (U-shape) -->
->   <path d="M 240 50 L 305 50 L 305 80 L 275 80 L 275 120 L 305 120 L 305 150 L 240 150 Z"
->         fill="#e8f0fc" stroke="#2255aa" stroke-width="2"/>
+>   <path d="M 240 50 L 305 50 L 305 80 L 275 80 L 275 120 L 305 120 L 305 150 L 240 150 Z" fill="#e8f0fc" stroke="#2255aa" stroke-width="2"/>
 >   <circle cx="295" cy="65" r="3.5" fill="#222"/>
 >   <circle cx="295" cy="135" r="3.5" fill="#222"/>
 >   <line x1="295" y1="65" x2="295" y2="135" stroke="#c02020" stroke-width="2"/>
@@ -618,7 +689,6 @@ No wiki content will need to be re-touched.
 >   <text x="305" y="140" font-size="14" font-family="serif" font-style="italic">y</text>
 >   <text x="222" y="200" font-size="12" font-family="sans-serif">non-convex (segment leaves)</text>
 > </svg>
-> ```
 >
 > **Examples (convex)**: half-spaces $\{x : a^\top x \le b\}$, balls
 > $\{x : \|x\| \le r\}$, polytopes (intersections of half-spaces).
@@ -643,7 +713,7 @@ No wiki content will need to be re-touched.
 > tells you local stationarity — the gap between "we found a stationary
 > point" and "we found *the* answer."
 
-6. Creates `wiki/concepts/Convex Sets.md` linking to `[[Karush-Kuhn-Tucker Conditions]]`, `[[Lagrange Multipliers]]`.
+6. Creates `wiki/concepts/Convex Sets.md` linking to `[[Karush-Kuhn-Tucker Conditions]]` and `[[Lagrange Multipliers]]`. Includes a `## Bridges from` section recording the room/line-of-sight analogy for reuse in future sessions.
 7. Updates `learning-tracker.md`:
    - Coverage map: adds `[[Convex Sets]]` (mastery: `building`)
    - Gaps detected: removes "convex sets" line (no longer a gap)
@@ -657,3 +727,80 @@ No wiki content will need to be re-touched.
 > 2. The set $\{x : \|x\|_2 = 1\}$ (the unit sphere, not the unit ball) — convex or not? What's the contrast?
 
 10. Exits tutor mode (one-shot `/tutor <question>` form).
+
+### Example 3 — Matplotlib (formula-driven plot): `/tutor explain the sigmoid function`
+
+**User input**:
+> /tutor explain the sigmoid function
+
+**Agent behavior**:
+
+1. `/tutor` slash command → bootstrap (reads profile + tracker).
+2. Notes from tracker: sigmoid is a foundational deep-learning concept; user is in active gaps for DL internals.
+3. Decides: this is a formula-driven visual (sigmoid is defined by an expression to be evaluated across $x$). Matplotlib is the right tool — hand-written SVG would only approximate the curve.
+4. Responds:
+
+> **Everyday analogy**: a sigmoid is like a dimmer switch. A regular wall
+> switch is binary — fully off or fully on. A dimmer adds a smooth ramp:
+> turning the knob takes the bulb from off, through every brightness in
+> between, up to fully on. The sigmoid does the same to a number — it
+> smoothly maps any real input into the range (0, 1).
+>
+> **Where the analogy breaks down**: a real dimmer hits a physical stop
+> at each end. The sigmoid never quite reaches 0 or 1 — it asymptotes.
+> Very large negative input → output approaches 0; very large positive
+> → output approaches 1; input 0 → output exactly 0.5.
+>
+> **Definition.**
+>
+> $$\sigma(x) = \frac{1}{1 + e^{-x}}$$
+>
+> **Plot** (generated and saved to `wiki/assets/sigmoid/sigmoid.png`):
+>
+> ![Sigmoid function](../assets/sigmoid/sigmoid.png)
+>
+> Sigmoid was the canonical activation function for early neural networks
+> because it's differentiable everywhere (a hard switch isn't), so
+> gradients can flow during training. Modern deep networks mostly use
+> ReLU instead — why, is a Socratic question below.
+
+5. Agent writes the plotting script at `wiki/assets/sigmoid/sigmoid.py`:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(-6, 6, 200)
+y = 1 / (1 + np.exp(-x))
+
+fig, ax = plt.subplots(figsize=(6, 3.5))
+ax.plot(x, y, color="#2255aa", linewidth=2)
+ax.axhline(0, color="#888", linewidth=0.5)
+ax.axhline(1, color="#888", linewidth=0.5, linestyle="--")
+ax.axvline(0, color="#888", linewidth=0.5)
+ax.scatter([0], [0.5], color="#c02020", zorder=5)
+ax.annotate(r"$\sigma(0) = 0.5$", xy=(0, 0.5), xytext=(1.5, 0.35), fontsize=10)
+ax.set_xlabel("x")
+ax.set_ylabel(r"$\sigma(x)$")
+ax.set_title(r"Sigmoid: $\sigma(x) = 1 / (1 + e^{-x})$")
+ax.grid(alpha=0.3)
+plt.tight_layout()
+plt.savefig("sigmoid.png", dpi=120)
+```
+
+6. Runs via Bash: `cd wiki/assets/sigmoid && python sigmoid.py`.
+7. Creates `wiki/concepts/Sigmoid Function.md` containing the explanation, embedded PNG, definition, and a `## Bridges from` section recording the dimmer-switch analogy.
+8. Updates `learning-tracker.md`:
+   - Coverage map: adds `[[Sigmoid Function]]` (mastery: `building`)
+   - Session log: appends entry
+9. Commits both `.py` and `.png` alongside the wiki updates: `tutor: covered sigmoid function (dimmer-switch analogy, matplotlib plot)`.
+10. Socratic follow-up:
+
+> Two questions:
+>
+> 1. The derivative of the sigmoid is $\sigma(x) \cdot (1 - \sigma(x))$. What does this tell you about gradient flow when $x$ is very large positive or very large negative — i.e., when the dimmer is near "fully off" or "fully on"? (This is the seed of why ReLU replaced sigmoid in modern nets.)
+> 2. If you replaced the smooth dimmer with a hard switch (step function), why couldn't gradient descent train a network of those?
+
+11. Exits tutor mode.
+
+**Why this example matters for the design**: it demonstrates the matplotlib invocation convention (script + PNG committed together), the everyday-analogy protocol (dimmer switch + breakdown), and the `Bridges from` concept-page convention — all in one workflow.
