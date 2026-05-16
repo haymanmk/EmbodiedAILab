@@ -167,6 +167,24 @@ pp. 11–56 (PDF pp. 32–60) of `raw/ModernRobotics-v2.pdf`.
   log entry; noted manifolds/topology basics in Gaps detected.
 - `index.md` — added Configuration Space under Concepts.
 
+## [2026-05-16] ingest | Constraint gradient perpendicular to tangent - Claude explanation
+
+Ingested `raw/Explain Why Constraint gradient is perpendicular to Tangent of h(x)=0.md`
+— a short AI-generated explanation the user added. The valuable new
+content is the **chain-rule proof** of $\nabla h \perp$ tangent
+(differentiating $h(\gamma(t)) = 0$ along an arbitrary feasible
+curve), which complements the existing first-order Taylor argument.
+
+- `wiki/sources/Constraint gradient perpendicular to tangent - Claude explanation.md`
+  — new source page with extended frontmatter, Summary, Key claims,
+  Notable quotes, Connections, Open questions.
+- `wiki/concepts/Constraint Gradients and Tangent Spaces.md` —
+  restructured "Why the gradient is normal" into two parallel
+  arguments (Taylor + chain rule), with a closing paragraph on why
+  both finish via the same "arbitrary" step. Added a Sources section
+  and a `sources:` frontmatter list.
+- `index.md` — added source under Sources.
+
 ## [2026-05-16] query | /tutor explain the sigmoid function
 
 Tutor-mode end-to-end run validating the formula-driven visual path

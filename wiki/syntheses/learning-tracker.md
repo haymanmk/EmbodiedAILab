@@ -130,3 +130,10 @@ Append-only. One entry per tutor workflow.
   first order" statement concrete; (3) inline SVG of two constraint
   surfaces $h_1=h_2=0$ intersecting in $\mathbb{R}^3$, with tangent in
   $\operatorname{null}(J_h)$ and normal space as $\operatorname{span}(\nabla h_1, \nabla h_2)$.
+- 2026-05-16 — `ingest` of `raw/Explain Why Constraint gradient is
+  perpendicular to Tangent of h(x)=0.md`: created
+  [[Constraint gradient perpendicular to tangent - Claude explanation]]
+  source page and merged the **chain-rule proof** into
+  [[Constraint Gradients and Tangent Spaces]] alongside the existing
+  Taylor argument. Both proofs end at $\nabla h^\top v = 0$ through
+  different formalism — added a "Why both arguments agree" closer.

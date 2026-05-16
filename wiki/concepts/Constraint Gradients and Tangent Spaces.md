@@ -5,6 +5,8 @@ created: 2026-05-15
 updated: 2026-05-16
 aliases: ["constraint gradient", "tangent plane of a constraint", "tangent space of a level set", "level set normal"]
 tags: [optimization, constrained-optimization, differential-geometry, robotics-math]
+sources:
+  - "[[Constraint gradient perpendicular to tangent - Claude explanation]]"
 ---
 
 # Constraint Gradients and Tangent Spaces
@@ -93,6 +95,10 @@ violates it proportionally to its component along $\nabla h$.
 
 ## Why the gradient is normal
 
+Two short proofs, both ending at the same equation $\nabla h(x)^\top v = 0$. They give the same geometric fact through different formalism — the Taylor version is *stepwise* (compare $h$ before and after a tiny step), and the chain-rule version is *parametric* (follow an arbitrary feasible trajectory and differentiate). Either alone is enough; together they pin down the picture.
+
+### Argument 1: First-order Taylor expansion
+
 Take a small feasible step from $x$ in direction $v$. A first-order Taylor expansion gives:
 
 $$
@@ -107,6 +113,34 @@ $$
 $$
 
 That equation says every feasible tangent direction is perpendicular to $\nabla h(x)$. Therefore $\nabla h(x)$ is a normal vector to the constraint surface.
+
+### Argument 2: Chain rule along any feasible curve
+
+(After [[Constraint gradient perpendicular to tangent - Claude explanation]].)
+
+Let $\gamma(t)$ be *any* smooth curve lying entirely on the constraint set, with $\gamma(0) = x$. Because every point of the curve is feasible:
+
+$$
+h(\gamma(t)) = 0 \quad \text{for all } t.
+$$
+
+The left side is a composition of $h$ with $\gamma$, so the multivariable chain rule gives:
+
+$$
+\frac{d}{dt}\, h(\gamma(t)) \;=\; \nabla h(\gamma(t))^\top \gamma'(t).
+$$
+
+The right side of the identity is the constant $0$, whose derivative is $0$. Evaluating at $t = 0$:
+
+$$
+\nabla h(x)^\top \gamma'(0) \;=\; 0.
+$$
+
+Here is the key step: since $\gamma$ was an **arbitrary** smooth curve through $x$ on the level set, its initial velocity $\gamma'(0)$ ranges over **every** tangent direction at $x$. So $\nabla h(x)$ is perpendicular to every tangent vector — equivalently, normal to the entire tangent line (or tangent plane, or tangent hyperplane in higher dimensions).
+
+### Why both arguments agree
+
+The Taylor argument lands on $\nabla h(x)^\top v = 0$ for one direction $v$, and you finish by saying "$v$ was arbitrary." The chain-rule argument lands on $\nabla h(x)^\top \gamma'(0) = 0$ for one curve $\gamma$, and you finish by saying "$\gamma$ was arbitrary." The two "arbitrary" steps are doing the same work: ranging over the whole tangent space. The intuition is the same in both: walking along $h = 0$ doesn't change $h$, so your direction of motion has no component along the direction $h$ changes fastest — perpendicularity in the geometric sense, or dot-product-zero in the algebraic sense.
 
 ## Dimensions
 
@@ -254,6 +288,12 @@ gradient is $A(\theta)$; if you can't, the constraint is nonholonomic.
 - [[Moore-Penrose Pseudoinverse]]
 - [[Configuration Space]]
 - [[Modern Robotics - Lynch & Park]]
+
+## Sources
+
+- [[Constraint gradient perpendicular to tangent - Claude explanation]] —
+  AI-generated explanation contributing the chain-rule proof and the
+  shoreline-of-a-flooded-valley framing of the contour analogy.
 
 ## Mentions
 

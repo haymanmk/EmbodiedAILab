@@ -10,6 +10,7 @@ Content catalog for this vault. Every wiki page is listed here under its categor
 
 ## Sources
 
+- [[Constraint gradient perpendicular to tangent - Claude explanation]] — Self-contained AI explanation of why $\nabla h \perp$ tangent of $h(x)=0$, contributing the chain-rule proof now merged into the concept page.
 - [[Deriving the Pseudoinverse Where the Formulas Come From - Heptabase AI Tutor]] — Heptabase AI Tutor lesson deriving Jacobian pseudoinverse formulas from optimization and KKT/Lagrange stationarity.
 - [[Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware - Zhao et al]] — Primary ACT/ALOHA paper introducing action chunking, temporal ensembling, and low-cost bimanual imitation learning.
 - [[Modern Robotics - Lynch & Park]] — Lynch & Park textbook (Cambridge, 2017): geometric/PoE treatment of kinematics, dynamics, planning, control, grasping, and mobile robots; backbone of the foundation thread.
