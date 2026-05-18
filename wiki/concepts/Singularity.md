@@ -34,6 +34,26 @@ The rest of this page is the grown-up version of that idea, one domain at a time
 
   *Where the analogy breaks down:* mathematical singularities are not always visually dramatic. Sometimes the object still looks ordinary, but a matrix inverse becomes unstable, a coordinate chart becomes ambiguous, or a Jacobian loses rank. The common signal is not "looks broken"; it is "the usual local model fails."
 
+## Reading the analogy across domains
+
+Across every domain on this page, the word **map** is used in the mathematical sense: a rule that pairs each point in one space with a point in another. A matrix is a map (vectors → vectors); a coordinate chart is a map (physical points → numerical coordinates); a robot's forward kinematics is a map (joint angles → end-effector poses).
+
+The analogy is not "a matrix is like a way to look things up on a map" — that understates it. A *good* map preserves neighborhoods: take a small step in the room, take a small step on the map. That local consistency is the property that usually holds, and a singularity is exactly the point where it stops holding in some tiny neighborhood.
+
+To read the rest of the page, here is the "room" vs. "map" split in each domain:
+
+| Domain | The "room" (the place) | The "map" |
+|---|---|---|
+| Linear algebra | Input vector space | The matrix $A$ (vectors → vectors) |
+| Geometric | The curve or surface itself | A local parametrization of a small patch |
+| Representation | The smooth sphere | Latitude / longitude coordinates |
+| Robotics | End-effector poses the arm can reach | Forward kinematics $f(\theta)$ (joint angles → poses) |
+
+A singularity is always a failure of the *map* in some tiny neighborhood. But there is a subtler split — sometimes only the map is broken (the room is fine), and sometimes the room itself has the damage. That distinction is exactly the geometric-vs.-representation bullet under [Variations / debates](#variations--debates).
+
+> [!question] Check yourself
+> In the table above, which row is the case where the room is fine and only the map is broken? Which row is the case where the room itself has the damage?
+
 ## Definition
 
 A **singularity** is a point or configuration where the usual local description of an object stops behaving normally. The word appears in several domains, but the shared pattern is:
