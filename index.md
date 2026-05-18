@@ -37,6 +37,7 @@ Content catalog for this vault. Every wiki page is listed here under its categor
 - [[Sigmoid Function]] — Logistic squash $1/(1+e^{-x})$: smooth $\mathbb{R} \to (0,1)$ probability/gate, with the dimmer-switch analogy and vanishing-gradient pitfall.
 - [[Singularity]] — Cross-domain concept linking linear-algebra rank loss, geometric tangent failures, coordinate singularities, and robotics Jacobian singularities.
 - [[Vision-Language-Action Models]] — Robot policies that condition on vision and language and output actions for physical control.
+- [[VR Teleoperation in Simulation]] — VR-headset teleop pipeline for collecting LeRobot-format demos in sim: OpenXR, retargeting, IK, dataset writer; LeIsaac vs. scaffolding from scratch.
 
 ## Syntheses
 

@@ -41,6 +41,7 @@ tags: [learning, tracker, curriculum]
 | [[Robot Learning]] | reading | 2026-05-09 | overview-only |
 | [[Imitation Learning]] | reading | 2026-05-09 | overview-only |
 | [[Moore-Penrose Pseudoinverse]] | reading | 2026-05-09 | overview-only |
+| [[VR Teleoperation in Simulation]] | /tutor deep-research (LeIsaac vs scratch, prereqs, core tech) | 2026-05-18 | overview-only |
 
 Mastery levels: **overview-only** (skimmed) → **building** (working through) → **working** (can apply) → **fluent** (can teach/derive).
 
@@ -62,6 +63,8 @@ Things the agent has noticed are missing from coverage but are prerequisites for
 - **Multivariate calculus refresher (Jacobians, Hessians)** — referenced by both optimization and ML training. Likely background but not explicitly indexed in the wiki.
 - **SE(3) / rigid-body transforms** — prerequisite for Modern Robotics Ch. 3 onward; will be covered when that chapter is studied.
 - **Manifolds / topology basics** — Ch. 2 introduced topology of C-space ($S^1$, $T^n$, $S^n$) at a level the user could absorb. A dedicated page on topological equivalence / charts / atlas would help if Ch. 3 pushes deeper into $SO(3)$'s manifold structure.
+- **Quaternions + SLERP** — surfaced by [[VR Teleoperation in Simulation]] (orientation smoothing in the teleop loop). Will be covered as part of Ch. 3 ($SO(3)$ representations) — confirm Lynch & Park's coverage is sufficient, supplement otherwise.
+- **Inverse kinematics methods** — Modern Robotics Ch. 6 is the primary source; DLS + analytic IK are the two flavors that show up in real teleop loops.
 
 ## Session log
 
@@ -78,3 +81,4 @@ Append-only. One entry per tutor workflow.
 - 2026-05-17 — `/tutor` created [[Singularity]] as a cross-domain concept page connecting linear-algebra rank loss, geometric failures of a clean tangent model, representation singularities in coordinates, and robotics Jacobian singularities. Backlinked it from [[Constraint Gradients and Tangent Spaces]], [[Configuration Space]], and [[Moore-Penrose Pseudoinverse]].
 - 2026-05-18 — `/tutor` amended [[Singularity]] with an `## Explain like I'm 5` section at the top: room-map analogy ("a bad spot where the map stops being helpful") followed by four kid-language one-liners covering the number-machine, shape, Earth-map, and robot-arm cases — each one previewing the corresponding domain section below. Sits before "Bridges from" so the simplest framing is the reader's first contact.
 - 2026-05-18 — `/tutor` added `## Reading the analogy across domains` section to [[Singularity]] after a comprehension check from the user. Clarifies that "map" is being used in the *mathematical* (function-between-spaces) sense, not lookup-table sense, and gives a per-domain "room vs. map" table (input vector space ↔ matrix; curve ↔ parametrization; sphere ↔ lat/long; reachable poses ↔ forward kinematics). Closes with an Obsidian `[!question]` Socratic callout asking which row is map-only-broken vs. room-broken — pointing the reader at the geometric-vs.-representation distinction.
+- 2026-05-18 — `/tutor` deep-research on **VR teleoperation in simulation for policy training**. Created [[VR Teleoperation in Simulation]] concept page with puppeteer-on-video-call analogy + breakdown (no force feedback), full data-flow Mermaid diagram, layered "use the stack vs. scaffold from scratch" decision matrix, hardware/skills prerequisites table (with bridges to user's active Ch. 3 gap), and per-technology deep-dives: OpenXR, CloudXR, frame conversion, retargeting (Gram-Schmidt hand frame, BEAVR-style), IK (analytic vs DLS vs GPU/cuRobo), smoothing (SLERP + moving-average), Isaac Sim vs MuJoCo, LeRobot dataset schema. Pulled live docs from `/lightwheelai/leisaac` and `/isaac-sim/isaaclab` via context7. Flagged **quaternions+SLERP** and **IK methods** as gaps now adjacent to active Ch. 3 work.
