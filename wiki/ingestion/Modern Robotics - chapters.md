@@ -8,15 +8,9 @@ last_chapter_studied: 2
 
 # Modern Robotics — Chapter Ingestion Index
 
-Chapter-level tracker for [[Modern Robotics - Lynch & Park]]. Trigger
-phrase `study Chapter N of Modern Robotics` reads that chapter from the
-PDF, produces/extends concept pages, flips the row to `covered`, and
-updates [[learning-tracker]].
+Chapter-level tracker for [[Modern Robotics - Lynch & Park]]. Trigger phrase `study Chapter N of Modern Robotics` reads that chapter from the PDF, produces/extends concept pages, flips the row to `covered`, and updates [[learning-tracker]].
 
-PDF: `raw/ModernRobotics-v2.pdf` (644 pages, Dec 2019 preprint of 2017
-Cambridge first edition). Page numbers below are the printed page numbers
-(which match PDF pages once the front matter is accounted for — the PDF
-viewer page = printed page + 19 for chapter content).
+PDF: `raw/ModernRobotics-v2.pdf` (644 pages, Dec 2019 preprint of 2017 Cambridge first edition). Page numbers below are the printed page numbers (which match PDF pages once the front matter is accounted for — the PDF viewer page = printed page + 19 for chapter content).
 
 ## Chapters
 
@@ -47,23 +41,13 @@ viewer page = printed page + 19 for chapter content).
 - **next** — the next chapter to study under [[learning-tracker]].
 - **covered** — concept pages written / extended for this chapter.
 - **deferred** — knowingly skipped for now; revisit if a project demands.
-- **reference** — appendix or supplementary; consult on demand, no full
-  read planned.
+- **reference** — appendix or supplementary; consult on demand, no full read planned.
 
 ## Reading path (current)
 
-Foundation thread per [[learning-tracker]]:
-**Ch. 3 → Ch. 4 → Ch. 5 → Ch. 6**, then revisit ACT / Diffusion Policy
-deep-reads. Ch. 2 is a brief warm-up before Ch. 3 if the manifold framing
-feels unfamiliar. Ch. 8 (dynamics) is queued after IK for any
-torque-level control or model-based RL work.
+Foundation thread per [[learning-tracker]]: **Ch. 3 → Ch. 4 → Ch. 5 → Ch. 6**, then revisit ACT / Diffusion Policy deep-reads. Ch. 2 is a brief warm-up before Ch. 3 if the manifold framing feels unfamiliar. Ch. 8 (dynamics) is queued after IK for any torque-level control or model-based RL work.
 
 ## Notes
 
-- The wikilinks above are *aspirational* — most are red links until the
-  corresponding chapter is studied. They are listed so the `study
-  Chapter N` workflow has unambiguous targets to create/extend.
-- App. D is marked `covered` because the optimization-math thread
-  already produced the relevant pages from other sources (Boyd &
-  Vandenberghe snapshot, Heptabase pseudoinverse lesson). Re-reading
-  App. D when Ch. 8 is studied may still surface refinements.
+- The wikilinks above are *aspirational* — most are red links until the corresponding chapter is studied. They are listed so the `study Chapter N` workflow has unambiguous targets to create/extend.
+- App. D is marked `covered` because the optimization-math thread already produced the relevant pages from other sources (Boyd & Vandenberghe snapshot, Heptabase pseudoinverse lesson). Re-reading App. D when Ch. 8 is studied may still surface refinements.

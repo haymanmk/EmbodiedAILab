@@ -275,7 +275,7 @@ This is the geometric meaning of the tall formula.
 - Full row rank, fat $J$: infinitely many exact solutions exist; the pseudoinverse returns the minimum-norm joint velocity.
 - Full column rank, tall $J$: exact solutions usually do not exist; the pseudoinverse returns the least-squares best joint velocity.
 - Square full-rank $J$: the pseudoinverse equals the ordinary inverse.
-- Rank-deficient or near-singular $J$: the SVD-based pseudoinverse is the unified tool, but near-zero singular values can produce very large joint velocities. Robotics controllers often use damped least squares near singularities.
+- Rank-deficient or near-[[Singularity|singular]] $J$: the SVD-based pseudoinverse is the unified tool, but near-zero singular values can produce very large joint velocities. Robotics controllers often use damped least squares near singularities.
 
 ## Robotics interpretation
 
@@ -336,6 +336,7 @@ The conceptual rule:
 
 - [[Karush-Kuhn-Tucker Conditions]]
 - [[Lagrange Multipliers]]
+- [[Singularity]]
 - [[Robotics Development Stack]]
 
 ## Mentions

@@ -35,6 +35,7 @@ Content catalog for this vault. Every wiki page is listed here under its categor
 - [[Robot Learning]] — Data-driven robotics methods that learn policies from rewards, demonstrations, or multimodal robot datasets.
 - [[Robotics Development Stack]] — Layered map of robotics theory, hardware, middleware, simulation, data, learning, deployment, and safety.
 - [[Sigmoid Function]] — Logistic squash $1/(1+e^{-x})$: smooth $\mathbb{R} \to (0,1)$ probability/gate, with the dimmer-switch analogy and vanishing-gradient pitfall.
+- [[Singularity]] — Cross-domain concept linking linear-algebra rank loss, geometric tangent failures, coordinate singularities, and robotics Jacobian singularities.
 - [[Vision-Language-Action Models]] — Robot policies that condition on vision and language and output actions for physical control.
 
 ## Syntheses

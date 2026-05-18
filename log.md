@@ -204,3 +204,34 @@ Tutor-mode end-to-end run validating the formula-driven visual path
 - `wiki/syntheses/learning-tracker.md` — added Sigmoid Function to
   coverage map (working); appended session log.
 - `index.md` — added Sigmoid Function under Concepts.
+
+## [2026-05-17] query | vanishing correction in constraint tangent spaces
+
+Clarified the phrase "vanishing correction" inside the existing
+[[Constraint Gradients and Tangent Spaces]] concept page.
+
+- `wiki/concepts/Constraint Gradients and Tangent Spaces.md` —
+  added a unit-circle example showing that a tangent step from
+  $(1,0)$ to $(1,\epsilon)$ violates $h(x,y)=x^2+y^2-1=0$ by
+  $\epsilon^2$, so the exact projection back to the constraint needs
+  only a higher-order inward correction.
+- `wiki/syntheses/learning-tracker.md` — bumped the concept's last
+  studied date and appended the tutor session note.
+
+## [2026-05-17] query | singularity across domains
+
+Created a cross-domain concept page explaining how "singularity" is used
+in linear algebra, geometry, coordinate representations, and robotics.
+
+- `wiki/concepts/Singularity.md` — new concept page with analogy,
+  domain comparison table, examples, robotics Jacobian interpretation,
+  and distinctions between geometric vs. representation singularities.
+- `wiki/concepts/Constraint Gradients and Tangent Spaces.md` —
+  linked feasible-set singularities to [[Singularity]].
+- `wiki/concepts/Configuration Space.md` — linked representation
+  singularities to [[Singularity]].
+- `wiki/concepts/Moore-Penrose Pseudoinverse.md` — linked
+  near-singular Jacobian behavior to [[Singularity]].
+- `index.md` — added [[Singularity]] under Concepts.
+- `wiki/syntheses/learning-tracker.md` — added [[Singularity]] to the
+  coverage map and appended the tutor session note.
