@@ -125,6 +125,24 @@ updated: YYYY-MM-DD
 Body: a single table with columns `# | Title | Pages | Concepts | Status`.
 Status values: `not started` | `queued` | `next` | `covered`.
 
+## Markdown Formatting
+
+This vault is read primarily through Obsidian, which **reflows prose to fit the editor pane**. Hard-wrapping paragraphs at a fixed column makes lines ragged on wide screens and produces noisy diffs whenever a sentence is edited mid-paragraph.
+
+**Do NOT hard-wrap prose, list-item text, or blockquotes at ~72/80 columns.** Let paragraphs run as one long line; the editor wraps visually. This applies to all wiki pages — concept, source, synthesis, journal, ingestion-index — and to `index.md`, `log.md`, and this file.
+
+Keep as-is (do NOT join onto one line):
+
+- **Table rows** — one row per line, already the convention.
+- **Code blocks** (` ``` `) — preserve exact line breaks; never reflow.
+- **List items** — one item per line; if an item's text is long, let it stay on one line (don't break it across multiple physical lines).
+- **YAML frontmatter** — one field per line.
+- **Mermaid / ASCII / inline SVG blocks** — preserve exactly.
+
+Common failure mode to avoid: wrapping prose at ~72 columns because that's the "developer comment" or "terminal-prose" convention. This is wrong for Obsidian markdown — that convention belongs to source code, not vault content.
+
+Long URLs, long table cells, and long inline code spans are fine on a single line. Readability comes from headings, list structure, and tables — not from line length.
+
 ## Linking Conventions
 
 - **All cross-references use wikilinks**: `[[Page Name]]`. Use display text when needed: `[[Page Name|alias]]`.
