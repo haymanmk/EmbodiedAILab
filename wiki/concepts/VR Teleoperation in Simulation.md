@@ -30,17 +30,17 @@ You're a puppeteer holding two invisible handles in the air. A marionette sits o
 ## The end-to-end data flow
 
 ```mermaid
-flowchart LR
-    HMD[VR Headset<br/>Quest 3 / Pico 4 Ultra]
-    SDK[Headset SDK<br/>OpenXR hand & controller pose]
-    NET[Streaming<br/>CloudXR / WebSocket / ZMQ]
-    XFM[Frame Transform<br/>Y-up VR -> Z-up robot]
-    RT[Retargeter<br/>human pose -> EE target SE_3]
-    IK[Inverse Kinematics<br/>EE target -> joint angles]
-    SIM[Physics Sim<br/>Isaac Sim PhysX / MuJoCo]
-    CAM[Sim cameras<br/>RGB / depth tensors]
-    DS[Dataset Writer<br/>LeRobot Parquet schema]
-    POL[Policy Training<br/>ACT / Diffusion Policy / VLA]
+flowchart TD
+    HMD(VR Headset<br/>Quest 3 / Pico 4 Ultra)
+    SDK(Headset SDK<br/>OpenXR hand & controller pose)
+    NET(Streaming<br/>CloudXR / WebSocket / ZMQ)
+    XFM(Frame Transform<br/>Y-up VR -> Z-up robot)
+    RT(Retargeter<br/>human pose -> EE target SE_3)
+    IK(Inverse Kinematics<br/>EE target -> joint angles)
+    SIM(Physics Sim<br/>Isaac Sim PhysX / MuJoCo)
+    CAM(Sim cameras<br/>RGB / depth tensors)
+    DS(Dataset Writer<br/>LeRobot Parquet schema)
+    POL(Policy Training<br/>ACT / Diffusion Policy / VLA)
 
     HMD --> SDK --> NET --> XFM --> RT --> IK --> SIM
     SIM --> CAM --> DS
