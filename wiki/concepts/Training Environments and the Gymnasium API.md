@@ -153,7 +153,7 @@ The comparison is **action vs. action**, not state-trajectory similarity — tho
 
 Because the IL policy only ever sees the *demonstrated* state distribution, it has no training signal for *recovery* if it drifts off-distribution at deployment. A 1% per-step error compounds catastrophically over a long horizon. ACT's two mitigations — **action chunking** (predict $k$ steps ahead → fewer independent decisions) and **temporal ensembling** (average overlapping predictions for smoothness) — exist for this exact reason. [[Imitation Learning]] frames the same problem from the policy-learning side.
 
-This is also precisely why HIL-SERL exists: human-in-the-loop interventions inject corrective data at the off-distribution states where a pure IL policy would fail. The two paradigms can be combined — IL pretrains the policy, then RL with human interventions fine-tunes it through the failure modes IL alone can't cover.
+This is also precisely why HIL-SERL exists: human-in-the-loop interventions inject corrective data at the off-distribution states where a pure IL policy would fail. The two paradigms can be combined — IL pretrains the policy, then RL with human interventions fine-tunes it through the failure modes IL alone can't cover. The trade-offs (DAgger-style "stay in IL" vs. HIL-SERL-style "switch to RL"), plus the architectural friction that ACT and Diffusion Policy specifically have with RL fine-tuning, are covered in [[Imitation Learning#Correcting an IL policy with human interventions]].
 
 ## Practical mapping for the LeIsaac onramp
 
