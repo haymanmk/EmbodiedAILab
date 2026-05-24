@@ -218,6 +218,30 @@ Clarified the phrase "vanishing correction" inside the existing
 - `wiki/syntheses/learning-tracker.md` — bumped the concept's last
   studied date and appended the tutor session note.
 
+## [2026-05-24] query | Genesis physics simulator — deep web research
+
+Tutor-mode deep-research workflow to capture raw materials on the Genesis
+(`genesis-world` / Genesis-Embodied-AI) physics simulator. Extends the
+existing Genesis-vs-Isaac evaluation thread.
+
+- `raw/genesis-world-research-snapshot.md` — new 333-line raw-materials
+  capture with frontmatter; covers what Genesis is, the headline speed
+  claims and their independent pushback (Stone Tao / ManiSkill, MuJoCo
+  team), v0.4.7 architecture (in-house Quadrants compiler since v0.4.0),
+  generative-framework status (still closed, spun out to Genesis AI;
+  $105M seed July 2025; GENE-26.5 robotics foundation model May 2026),
+  VR/teleop status (confirmed no first-party support, issue #1626),
+  comparison table vs Isaac Lab / MuJoCo MJX / Brax / SAPIEN, adoption
+  signals, known limitations, and a numbered references list. No wiki
+  pages yet — ingestion deferred until user runs `ingest`.
+
+Headline correction: the "43M FPS / 10–80× faster" claim collapsed ~150×
+under realistic settings in Stone Tao's independent benchmark; Genesis
+is at parity with Isaac Lab on locomotion and 3–10× slower than
+ManiSkill on manipulation. Real differentiator is multi-physics breadth
+(rigid + MPM + SPH + FEM + PBD + Stable Fluid in one engine), not
+throughput.
+
 ## [2026-05-17] query | singularity across domains
 
 Created a cross-domain concept page explaining how "singularity" is used
