@@ -26,20 +26,20 @@ An amateur can make progress by avoiding the hardest version of every layer at o
 
 ## Development tools and their functions
 
-| Tool / resource | Function | Why it matters |
-|---|---|---|
-| Modern Robotics | Textbook/video foundation for kinematics, dynamics, planning, and control | Gives the math needed to reason about physical motion |
-| ROS 2 | Middleware and application framework for robot processes | Standard way to connect sensors, actuators, planning, and UI |
-| MoveIt 2 | Manipulation, motion planning, kinematics, and planning scenes | Useful for classical arm planning and hybrid systems |
-| Gazebo | Open-source robot simulation and worlds | Useful for basic simulation, ROS integration, and robot model testing |
-| Isaac Sim / Isaac Lab | High-fidelity NVIDIA simulation and synthetic data workflows | Useful for advanced sim, GPU workflows, and large-scale learning experiments |
-| PyTorch | ML framework | Core training substrate for many robot policies |
-| Hugging Face Hub | Model and dataset hosting | Lets robotics projects share policies and datasets like NLP/CV projects |
-| LeRobot | Robot-learning library | Connects hardware, datasets, policy training, evaluation, and rollout |
-| LeRobotDataset | Standard robot episode format | Handles multimodal, temporal, episodic robot data |
-| [[Action Chunking Transformer|ACT]] | Lightweight imitation-learning policy | Good first baseline for real-world manipulation |
-| SmolVLA / Pi0 / Octo | Generalist or VLA-style policy families | Show the direction of language-conditioned robot foundation models |
-| Open X-Embodiment | Multi-robot dataset and RT-X work | Shows why cross-robot data is important |
+| Tool / resource                      | Function                                                                  | Why it matters                                                               |     |
+| ------------------------------------ | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | --- |
+| Modern Robotics                      | Textbook/video foundation for kinematics, dynamics, planning, and control | Gives the math needed to reason about physical motion                        |     |
+| ROS 2                                | Middleware and application framework for robot processes                  | Standard way to connect sensors, actuators, planning, and UI                 |     |
+| MoveIt 2                             | Manipulation, motion planning, kinematics, and planning scenes            | Useful for classical arm planning and hybrid systems                         |     |
+| Gazebo                               | Open-source robot simulation and worlds                                   | Useful for basic simulation, ROS integration, and robot model testing        |     |
+| Isaac Sim / Isaac Lab                | High-fidelity NVIDIA simulation and synthetic data workflows              | Useful for advanced sim, GPU workflows, and large-scale learning experiments |     |
+| PyTorch                              | ML framework                                                              | Core training substrate for many robot policies                              |     |
+| Hugging Face Hub                     | Model and dataset hosting                                                 | Lets robotics projects share policies and datasets like NLP/CV projects      |     |
+| LeRobot                              | Robot-learning library                                                    | Connects hardware, datasets, policy training, evaluation, and rollout        |     |
+| LeRobotDataset                       | Standard robot episode format                                             | Handles multimodal, temporal, episodic robot data                            |     |
+| [[Action Chunking Transformer\|ACT]] | Lightweight imitation-learning policy                                     | Good first baseline for real-world manipulation                              |     |
+| SmolVLA / Pi0 / Octo                 | Generalist or VLA-style policy families                                   | Show the direction of language-conditioned robot foundation models           |     |
+| Open X-Embodiment                    | Multi-robot dataset and RT-X work                                         | Shows why cross-robot data is important                                      |     |
 
 ## How LeRobot fits
 

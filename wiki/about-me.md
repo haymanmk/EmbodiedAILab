@@ -40,7 +40,7 @@ Hybrid trajectory:
 
 ## Current projects
 
-(User-maintained. Empty until I name one.)
+- **LeIsaac onramp** (2026-05-19): Working towards being productive on [LeIsaac](https://github.com/lightwheelai/leisaac), the LeRobot-shaped teleop framework built on Isaac Lab. Goal: collect VR-teleop demos in sim and train a small policy on them. Active curriculum: Isaac Lab as a framework first (per user's choice of "Framework first" entry point), then back-fill the math when retargeting/IK forces it. Stack survey already in [[VR Teleoperation in Simulation]].
 
 ## Constraints / preferences
 

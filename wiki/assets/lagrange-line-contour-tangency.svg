@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="460" viewBox="0 0 760 460" role="img" aria-labelledby="title desc">
+  <title id="title">Lagrange multiplier contour tangency</title>
+  <desc id="desc">Objective contours centered at the origin are tangent to the equality constraint line x plus y equals one at the constrained optimum.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#1f2937"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="460" fill="#ffffff"/>
+  <rect x="56" y="34" width="648" height="372" rx="8" fill="#f8fafc" stroke="#d1d5db"/>
+
+  <g stroke="#e5e7eb" stroke-width="1">
+    <line x1="110" y1="370" x2="650" y2="370"/>
+    <line x1="110" y1="310" x2="650" y2="310"/>
+    <line x1="110" y1="250" x2="650" y2="250"/>
+    <line x1="110" y1="190" x2="650" y2="190"/>
+    <line x1="110" y1="130" x2="650" y2="130"/>
+    <line x1="170" y1="70" x2="170" y2="390"/>
+    <line x1="230" y1="70" x2="230" y2="390"/>
+    <line x1="290" y1="70" x2="290" y2="390"/>
+    <line x1="350" y1="70" x2="350" y2="390"/>
+    <line x1="410" y1="70" x2="410" y2="390"/>
+    <line x1="470" y1="70" x2="470" y2="390"/>
+    <line x1="530" y1="70" x2="530" y2="390"/>
+  </g>
+
+  <g stroke="#374151" stroke-width="1.5" marker-end="url(#arrow)">
+    <line x1="120" y1="330" x2="655" y2="330"/>
+    <line x1="210" y1="390" x2="210" y2="68"/>
+  </g>
+  <text x="660" y="335" font-family="Inter, Arial, sans-serif" font-size="14" fill="#374151">x</text>
+  <text x="199" y="65" font-family="Inter, Arial, sans-serif" font-size="14" fill="#374151">y</text>
+  <text x="194" y="350" font-family="Inter, Arial, sans-serif" font-size="13" fill="#374151">0</text>
+
+  <g fill="none" stroke="#93c5fd" stroke-width="2">
+    <circle cx="210" cy="330" r="70"/>
+    <circle cx="210" cy="330" r="127"/>
+    <circle cx="210" cy="330" r="180"/>
+  </g>
+  <text x="465" y="360" font-family="Inter, Arial, sans-serif" font-size="14" fill="#2563eb">objective contours f(x,y)</text>
+
+  <line x1="92" y1="448" x2="568" y2="-28" stroke="#059669" stroke-width="4"/>
+  <text x="435" y="122" font-family="Inter, Arial, sans-serif" font-size="15" fill="#047857">constraint h(x,y)=x+y-1=0</text>
+
+  <circle cx="300" cy="240" r="7" fill="#111827"/>
+  <text x="308" y="232" font-family="Inter, Arial, sans-serif" font-size="15" fill="#111827">x*</text>
+
+  <line x1="300" y1="240" x2="370" y2="170" stroke="#dc2626" stroke-width="3" marker-end="url(#arrow-red)"/>
+  <text x="378" y="168" font-family="Inter, Arial, sans-serif" font-size="15" fill="#b91c1c">grad f</text>
+
+  <line x1="288" y1="252" x2="358" y2="182" stroke="#2563eb" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#arrow-blue)"/>
+  <text x="360" y="198" font-family="Inter, Arial, sans-serif" font-size="15" fill="#1d4ed8">grad h</text>
+
+  <line x1="250" y1="290" x2="350" y2="190" stroke="#1f2937" stroke-width="2" stroke-dasharray="4 5"/>
+  <line x1="240" y1="200" x2="360" y2="320" stroke="#6b7280" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="366" y="325" font-family="Inter, Arial, sans-serif" font-size="14" fill="#4b5563">feasible tangent</text>
+
+  <text x="76" y="62" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">At the constrained optimum, a contour just touches the constraint</text>
+  <text x="76" y="88" font-family="Inter, Arial, sans-serif" font-size="14" fill="#374151">There is no direction along the green line that immediately lowers f, so grad f is normal to the line.</text>
+</svg>

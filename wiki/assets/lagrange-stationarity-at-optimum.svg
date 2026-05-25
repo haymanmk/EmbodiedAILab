@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="460" viewBox="0 0 760 460" role="img" aria-labelledby="title desc">
+  <title id="title">Stationarity at a constrained optimum</title>
+  <desc id="desc">At a constrained optimum, the objective gradient has no tangent component; it is fully balanced by a scaled constraint gradient.</desc>
+  <defs>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="460" fill="#ffffff"/>
+  <rect x="56" y="34" width="648" height="372" rx="8" fill="#f8fafc" stroke="#d1d5db"/>
+
+  <text x="76" y="62" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">At the optimum, only the normal direction remains</text>
+  <text x="76" y="88" font-family="Inter, Arial, sans-serif" font-size="14" fill="#374151">The tangent component is zero, so the constraint gradient can exactly balance the objective gradient.</text>
+
+  <path d="M92,300 C188,210 292,166 398,194 C506,223 570,192 668,108" fill="none" stroke="#059669" stroke-width="4"/>
+  <text x="480" y="175" font-family="Inter, Arial, sans-serif" font-size="15" fill="#047857">constraint surface</text>
+
+  <g fill="none" stroke="#c7d2fe" stroke-width="2">
+    <ellipse cx="394" cy="193" rx="86" ry="48" transform="rotate(-12 394 193)"/>
+    <ellipse cx="394" cy="193" rx="145" ry="82" transform="rotate(-12 394 193)"/>
+    <ellipse cx="394" cy="193" rx="205" ry="116" transform="rotate(-12 394 193)"/>
+  </g>
+
+  <circle cx="394" cy="193" r="7" fill="#111827"/>
+  <text x="405" y="186" font-family="Inter, Arial, sans-serif" font-size="15" fill="#111827">x*</text>
+
+  <line x1="324" y1="176" x2="464" y2="210" stroke="#4b5563" stroke-width="2.5" marker-end="url(#arrow-gray)"/>
+  <text x="473" y="217" font-family="Inter, Arial, sans-serif" font-size="15" fill="#4b5563">tangent</text>
+
+  <line x1="394" y1="193" x2="425" y2="96" stroke="#dc2626" stroke-width="4" marker-end="url(#arrow-red)"/>
+  <text x="433" y="100" font-family="Inter, Arial, sans-serif" font-size="15" fill="#b91c1c">grad f</text>
+
+  <line x1="394" y1="193" x2="363" y2="290" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow-blue)"/>
+  <text x="233" y="300" font-family="Inter, Arial, sans-serif" font-size="15" fill="#1d4ed8">lambda grad h</text>
+
+  <line x1="250" y1="348" x2="510" y2="348" stroke="#d1d5db" stroke-width="2"/>
+  <text x="280" y="335" font-family="Inter, Arial, sans-serif" font-size="16" fill="#111827">grad f + lambda grad h = 0</text>
+  <text x="260" y="374" font-family="Inter, Arial, sans-serif" font-size="14" fill="#374151">The multiplier chooses the scale needed for cancellation.</text>
+</svg>

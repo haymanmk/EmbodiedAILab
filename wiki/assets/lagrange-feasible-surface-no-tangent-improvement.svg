@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="460" viewBox="0 0 820 460" role="img" aria-labelledby="title desc">
+  <title id="title">Feasible surface and tangent motion at a constrained optimum</title>
+  <desc id="desc">A feasible curve or surface is shown with tangent directions through the optimum. The objective gradient is perpendicular to all feasible tangent directions, so moving along the surface cannot improve the objective to first order.</desc>
+  <defs>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/>
+    </marker>
+  </defs>
+
+  <rect width="820" height="460" fill="#ffffff"/>
+  <rect x="42" y="34" width="736" height="372" rx="8" fill="#f8fafc" stroke="#d1d5db"/>
+
+  <text x="68" y="66" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">At the constrained optimum, every feasible first step is tangent to h(x)=0</text>
+  <text x="68" y="92" font-family="Inter, Arial, sans-serif" font-size="14" fill="#374151">If no tangent step improves f, then grad f must be normal to the feasible surface.</text>
+
+  <path d="M126,294 C194,224 276,198 366,218 C462,240 540,198 674,128" fill="none" stroke="#059669" stroke-width="5"/>
+  <path d="M126,324 C194,254 276,228 366,248 C462,270 540,228 674,158" fill="none" stroke="#bbf7d0" stroke-width="18" opacity="0.8"/>
+  <path d="M126,294 C194,224 276,198 366,218 C462,240 540,198 674,128" fill="none" stroke="#059669" stroke-width="5"/>
+
+  <text x="548" y="185" font-family="Inter, Arial, sans-serif" font-size="15" fill="#047857">feasible set h(x)=0</text>
+
+  <circle cx="392" cy="221" r="8" fill="#111827"/>
+  <text x="404" y="214" font-family="Inter, Arial, sans-serif" font-size="15" fill="#111827">x*</text>
+
+  <line x1="306" y1="202" x2="478" y2="240" stroke="#4b5563" stroke-width="3" marker-end="url(#arrow-gray)"/>
+  <line x1="478" y1="240" x2="306" y2="202" stroke="#4b5563" stroke-width="3" marker-end="url(#arrow-gray)"/>
+  <text x="490" y="252" font-family="Inter, Arial, sans-serif" font-size="15" fill="#374151">feasible tangent directions</text>
+
+  <line x1="392" y1="221" x2="416" y2="112" stroke="#dc2626" stroke-width="4" marker-end="url(#arrow-red)"/>
+  <text x="425" y="116" font-family="Inter, Arial, sans-serif" font-size="15" fill="#b91c1c">grad f</text>
+
+  <path d="M356,318 L426,336 L492,306" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+  <text x="161" y="358" font-family="Inter, Arial, sans-serif" font-size="14" fill="#374151">The gradient points in the steepest direction in ambient space.</text>
+  <text x="161" y="380" font-family="Inter, Arial, sans-serif" font-size="14" fill="#374151">At x*, that direction is unavailable because it leaves the feasible set.</text>
+</svg>

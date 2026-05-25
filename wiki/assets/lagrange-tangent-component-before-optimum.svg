@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="460" viewBox="0 0 760 460" role="img" aria-labelledby="title desc">
+  <title id="title">Before a constrained optimum</title>
+  <desc id="desc">Away from the constrained optimum, the objective gradient has a nonzero component along the feasible tangent, so movement along the constraint can still improve the objective.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#1f2937"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#ea580c"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+
+  <rect width="760" height="460" fill="#ffffff"/>
+  <rect x="56" y="34" width="648" height="372" rx="8" fill="#f8fafc" stroke="#d1d5db"/>
+
+  <g fill="none" stroke="#c7d2fe" stroke-width="2">
+    <ellipse cx="245" cy="295" rx="70" ry="44" transform="rotate(-18 245 295)"/>
+    <ellipse cx="245" cy="295" rx="130" ry="82" transform="rotate(-18 245 295)"/>
+    <ellipse cx="245" cy="295" rx="190" ry="122" transform="rotate(-18 245 295)"/>
+  </g>
+  <text x="76" y="62" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Away from the optimum, the gradient is not purely normal to the constraint</text>
+  <text x="76" y="88" font-family="Inter, Arial, sans-serif" font-size="14" fill="#374151">A tangent component means sliding along the feasible curve can still change the objective.</text>
+
+  <path d="M110,340 C210,230 325,205 430,235 C520,260 590,210 660,118" fill="none" stroke="#059669" stroke-width="4"/>
+  <text x="486" y="184" font-family="Inter, Arial, sans-serif" font-size="15" fill="#047857">feasible set h(x)=0</text>
+
+  <circle cx="375" cy="225" r="7" fill="#111827"/>
+  <text x="386" y="216" font-family="Inter, Arial, sans-serif" font-size="15" fill="#111827">x</text>
+
+  <line x1="375" y1="225" x2="485" y2="247" stroke="#1f2937" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="493" y="253" font-family="Inter, Arial, sans-serif" font-size="15" fill="#374151">tangent direction</text>
+
+  <line x1="375" y1="225" x2="420" y2="128" stroke="#2563eb" stroke-width="3" marker-end="url(#arrow-blue)"/>
+  <text x="427" y="130" font-family="Inter, Arial, sans-serif" font-size="15" fill="#1d4ed8">constraint normal</text>
+
+  <line x1="375" y1="225" x2="475" y2="151" stroke="#ea580c" stroke-width="4" marker-end="url(#arrow-orange)"/>
+  <text x="482" y="151" font-family="Inter, Arial, sans-serif" font-size="15" fill="#c2410c">grad f</text>
+
+  <line x1="375" y1="225" x2="455" y2="241" stroke="#ea580c" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#arrow-orange)"/>
+  <text x="420" y="269" font-family="Inter, Arial, sans-serif" font-size="14" fill="#c2410c">tangent component remains</text>
+
+  <line x1="375" y1="225" x2="417" y2="134" stroke="#ea580c" stroke-width="3" stroke-dasharray="2 6"/>
+  <text x="150" y="382" font-family="Inter, Arial, sans-serif" font-size="14" fill="#374151">Lagrange stationarity fails here because grad f is not parallel to grad h.</text>
+</svg>

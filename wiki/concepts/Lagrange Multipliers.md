@@ -2,7 +2,7 @@
 type: concept
 domain: research
 created: 2026-05-14
-updated: 2026-05-14
+updated: 2026-05-15
 aliases: ["Lagrangian multipliers", "Lagrange multiplier method"]
 tags: [optimization, constrained-optimization, robotics-math]
 ---
@@ -35,13 +35,33 @@ $$
 
 For one equality constraint $h(x)=0$, the feasible points form a curve or surface. At the constrained optimum, you cannot improve $f$ by moving along that surface. That means the objective's gradient is perpendicular to the feasible surface.
 
-The constraint gradient $\nabla h(x)$ is also perpendicular to the surface $h(x)=0$. Therefore, at the optimum, these two gradients must be parallel:
+![[lagrange-feasible-surface-no-tangent-improvement.svg]]
+
+The constraint gradient $\nabla h(x)$ is also perpendicular to the surface $h(x)=0$; this is the basic [[Constraint Gradients and Tangent Spaces|constraint-gradient/tangent-space relation]]. Therefore, at the optimum, these two gradients must be parallel:
+
+![[lagrange-objective-and-constraint-gradients-parallel.svg]]
 
 $$
 \nabla f(x^\star) + \lambda^\star \nabla h(x^\star)=0.
 $$
 
 This is the geometric heart of Lagrange multipliers: **at the best feasible point, the objective gradient is balanced by the constraint gradient**.
+
+![[lagrange-line-contour-tangency.svg]]
+
+For the tiny example below, the objective contours are circles around the origin and the constraint is the line $x+y=1$. The closest feasible point is where a circle first touches the line. At that point, the objective gradient and constraint gradient are parallel normals.
+
+![[lagrange-tangent-component-before-optimum.svg]]
+
+Away from the optimum, $\nabla f$ usually has a component along the feasible tangent. That tangent component means there is still some feasible motion that changes $f$, so the Lagrange stationarity condition is not yet satisfied.
+
+![[lagrange-stationarity-at-optimum.svg]]
+
+At the optimum, the tangent component disappears. The objective gradient is purely normal to the feasible surface, so a scaled constraint gradient can cancel it:
+
+$$
+\nabla f(x^\star)+\lambda^\star \nabla h(x^\star)=0.
+$$
 
 ## Step-by-step method
 
@@ -181,6 +201,7 @@ says "the joint velocity must produce this exact end-effector twist." The multip
 
 ## Related concepts
 
+- [[Constraint Gradients and Tangent Spaces]]
 - [[Karush-Kuhn-Tucker Conditions]]
 - [[Moore-Penrose Pseudoinverse]]
 - [[Robotics Development Stack]]

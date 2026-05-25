@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="460" viewBox="0 0 820 460" role="img" aria-labelledby="title desc">
+  <title id="title">Objective and constraint gradients are parallel at the optimum</title>
+  <desc id="desc">Both the objective gradient and the constraint gradient are normal to the feasible surface at the constrained optimum, so the two vectors must be parallel or antiparallel.</desc>
+  <defs>
+    <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#2563eb"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#4b5563"/>
+    </marker>
+  </defs>
+
+  <rect width="820" height="460" fill="#ffffff"/>
+  <rect x="42" y="34" width="736" height="372" rx="8" fill="#f8fafc" stroke="#d1d5db"/>
+
+  <text x="68" y="66" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Both gradients are normal to the same feasible surface</text>
+  <text x="68" y="92" font-family="Inter, Arial, sans-serif" font-size="14" fill="#374151">If grad f and grad h are each perpendicular to h(x)=0 at x*, they lie on the same normal line.</text>
+
+  <path d="M122,302 C220,212 318,184 410,206 C510,230 592,194 698,116" fill="none" stroke="#059669" stroke-width="5"/>
+  <text x="562" y="172" font-family="Inter, Arial, sans-serif" font-size="15" fill="#047857">h(x)=0</text>
+
+  <circle cx="410" cy="206" r="8" fill="#111827"/>
+  <text x="422" y="199" font-family="Inter, Arial, sans-serif" font-size="15" fill="#111827">x*</text>
+
+  <line x1="330" y1="188" x2="490" y2="224" stroke="#4b5563" stroke-width="3" marker-end="url(#arrow-gray)"/>
+  <text x="500" y="231" font-family="Inter, Arial, sans-serif" font-size="15" fill="#4b5563">tangent plane / tangent line</text>
+
+  <line x1="410" y1="206" x2="441" y2="101" stroke="#dc2626" stroke-width="4" marker-end="url(#arrow-red)"/>
+  <text x="449" y="106" font-family="Inter, Arial, sans-serif" font-size="15" fill="#b91c1c">grad f(x*)</text>
+
+  <line x1="410" y1="206" x2="379" y2="311" stroke="#2563eb" stroke-width="4" marker-end="url(#arrow-blue)"/>
+  <text x="251" y="323" font-family="Inter, Arial, sans-serif" font-size="15" fill="#1d4ed8">grad h(x*)</text>
+
+  <line x1="363" y1="365" x2="457" y2="365" stroke="#9ca3af" stroke-width="2"/>
+  <text x="262" y="352" font-family="Inter, Arial, sans-serif" font-size="16" fill="#111827">parallel normals: grad f(x*) = -lambda grad h(x*)</text>
+  <text x="221" y="384" font-family="Inter, Arial, sans-serif" font-size="14" fill="#374151">The sign and scale are absorbed into the multiplier lambda.</text>
+</svg>
