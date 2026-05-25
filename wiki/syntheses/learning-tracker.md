@@ -2,7 +2,7 @@
 type: synthesis
 domain: personal
 created: 2026-05-16
-updated: 2026-05-24
+updated: 2026-05-25
 tags: [learning, tracker, curriculum]
 ---
 
@@ -32,7 +32,7 @@ tags: [learning, tracker, curriculum]
 |---|---|---|---|
 | [[Configuration Space]] | Modern Robotics Ch. 2 | 2026-05-16 | building |
 | [[Sigmoid Function]] | /tutor explain (dimmer-switch analogy) | 2026-05-16 | working |
-| [[Lagrange Multipliers]] | Modern Robotics App. D | 2026-05-14 | working |
+| [[Lagrange Multipliers]] | Modern Robotics App. D + /tutor page revision | 2026-05-25 | working |
 | [[Karush-Kuhn-Tucker Conditions]] | Modern Robotics App. D | 2026-05-14 | working |
 | [[Constraint Gradients and Tangent Spaces]] | Modern Robotics §2.4 + App. D | 2026-05-17 | working |
 | [[Singularity]] | Modern Robotics Ch. 2/5 + pseudoinverse notes | 2026-05-18 | building |
@@ -86,3 +86,4 @@ Append-only. One entry per tutor workflow.
 - 2026-05-24 — `/tutor` created [[Training Environments and the Gymnasium API]] after the user asked how `gym_hil` relates to physics simulators and whether HIL-SERL's training paradigm transfers to ACT/DP. Verified via WebFetch that `gym_hil` is a thin MuJoCo wrapper. Page leads with the power-outlet/appliance analogy + breakdown (interface portability vs. physics fidelity), Mermaid layer diagram (algorithm → wrapper → engine), the "what `gym.make(...)` does and does not tell you" enumeration, and the **RL-vs-IL stage table** showing when a Gym env is required (RL training), useful (eval, RL collection), or unnecessary (IL training). Closes with ACT's loss form, the distribution-shift / compounding-error motivation for action chunking, and the practical mapping that LeIsaac's IL pipeline rightly bypasses the Gymnasium API during teleop collection. Socratic check covered three questions; user answered Q1 fully, Q2 mostly (corrected: rewards not used by IL even at collection; teleop typically bypasses the Gym API), Q3 in spirit (sharpened: ACT compares predicted *action chunks* to demonstrated actions via L1, not state-trajectory distance). Cross-links to [[Isaac Lab]], [[VR Teleoperation in Simulation]], [[Action Chunking Transformer]], [[Imitation Learning]], [[Robot Learning]].
 - 2026-05-24 — `/tutor` deep-research on **Genesis physics simulator** (`genesis-world`, Genesis-Embodied-AI). Created `raw/genesis-world-research-snapshot.md` (333 lines) — critical, evidence-based capture of speed/fidelity claims and independent pushback. Key findings: the headline "43M FPS / 10–80× faster" claim does not survive Stone Tao's independent benchmark (Genesis at parity with Isaac Lab on locomotion, 3–10× slower than ManiSkill on manipulation); generative framework still closed and effectively spun out into for-profit **Genesis AI** ($105M seed July 2025, GENE-26.5 model May 2026); **no first-party VR/XR** confirmed in issue #1626 — Isaac Lab 2.3.2 (Jan 2026) ships Meta Quest VR teleop, so the LeIsaac onramp track is unaffected. Real differentiator is multi-physics breadth (rigid + MPM + SPH + FEM + PBD + Stable Fluid in one engine). Current version v0.4.7 (2026-05-16) uses in-house Quadrants compiler since v0.4.0. Raw file only; no wiki page yet — ingestion deferred. No coverage-map row (not a covered concept).
 - 2026-05-18 — `/tutor` deep-research on **VR teleoperation in simulation for policy training**. Created [[VR Teleoperation in Simulation]] concept page with puppeteer-on-video-call analogy + breakdown (no force feedback), full data-flow Mermaid diagram, layered "use the stack vs. scaffold from scratch" decision matrix, hardware/skills prerequisites table (with bridges to user's active Ch. 3 gap), and per-technology deep-dives: OpenXR, CloudXR, frame conversion, retargeting (Gram-Schmidt hand frame, BEAVR-style), IK (analytic vs DLS vs GPU/cuRobo), smoothing (SLERP + moving-average), Isaac Sim vs MuJoCo, LeRobot dataset schema. Pulled live docs from `/lightwheelai/leisaac` and `/isaac-sim/isaaclab` via context7. Flagged **quaternions+SLERP** and **IK methods** as gaps now adjacent to active Ch. 3 work.
+- 2026-05-25 — `/tutor` revised [[Lagrange Multipliers]] to comply with the current tutoring rule: added an ELI5 opening, painted-path everyday analogy with explicit breakdown, clearer definition/intuition split, preserved existing visual sequence, moved pseudoinverse material into a robotics connection, added origins/variations sections, and closed with an Obsidian Socratic-check callout. Kept mastery at `working`; this is a reference-page cleanup rather than new coverage.

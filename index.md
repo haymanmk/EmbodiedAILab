@@ -31,7 +31,7 @@ Content catalog for this vault. Every wiki page is listed here under its categor
 - [[Imitation Learning]] — Training robot policies from demonstrations, usually the most practical first method for a self-researcher.
 - [[Isaac Lab]] — NVIDIA's Python framework for robot simulation, training, and teleoperation on top of Isaac Sim and USD; the scripting layer underneath LeIsaac.
 - [[Karush-Kuhn-Tucker Conditions]] — First-order constrained-optimization conditions generalizing Lagrange multipliers to equality and inequality constraints.
-- [[Lagrange Multipliers]] — Auxiliary variables enforcing constraints in optimization, forming the equality-only core of KKT, with geometric figures for stationarity.
+- [[Lagrange Multipliers]] — Equality-constraint optimization method with an ELI5 bridge, gradient-stationarity geometry, pseudoinverse/IK connection, and Socratic checks.
 - [[Moore-Penrose Pseudoinverse]] — Generalized matrix inverse used for minimum-norm and least-squares Jacobian inverse kinematics.
 - [[Robot Learning]] — Data-driven robotics methods that learn policies from rewards, demonstrations, or multimodal robot datasets.
 - [[Robotics Development Stack]] — Layered map of robotics theory, hardware, middleware, simulation, data, learning, deployment, and safety.

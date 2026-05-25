@@ -259,3 +259,11 @@ in linear algebra, geometry, coordinate representations, and robotics.
 - `index.md` — added [[Singularity]] under Concepts.
 - `wiki/syntheses/learning-tracker.md` — added [[Singularity]] to the
   coverage map and appended the tutor session note.
+
+## [2026-05-25] query | revise Lagrange Multipliers for tutor rules
+
+Updated the existing concept page to match the current tutor-mode explanation pattern.
+
+- `wiki/concepts/Lagrange Multipliers.md` — added ELI5 framing, everyday painted-path analogy with explicit breakdown, tightened stationarity geometry, preserved existing diagrams, reframed the pseudoinverse example as the robotics connection, added origins/variations sections, and closed with Socratic-check questions.
+- `wiki/syntheses/learning-tracker.md` — updated the concept's last-studied date and appended the tutor session note.
+- `index.md` — refreshed the one-line concept summary.
