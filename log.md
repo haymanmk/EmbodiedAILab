@@ -267,3 +267,5 @@ Updated the existing concept page to match the current tutor-mode explanation pa
 - `wiki/concepts/Lagrange Multipliers.md` — added ELI5 framing, everyday painted-path analogy with explicit breakdown, tightened stationarity geometry, preserved existing diagrams, reframed the pseudoinverse example as the robotics connection, added origins/variations sections, and closed with Socratic-check questions.
 - `wiki/syntheses/learning-tracker.md` — updated the concept's last-studied date and appended the tutor session note.
 - `index.md` — refreshed the one-line concept summary.
+
+Follow-up correction: revised the same concept page to replace misleading "push back" phrasing with "balance" phrasing, and explicitly distinguished $h(x)=0$ as the constraint, $\nabla h(x)$ as the constraint normal, and $\lambda \nabla h(x)$ as the stationarity balancing term.

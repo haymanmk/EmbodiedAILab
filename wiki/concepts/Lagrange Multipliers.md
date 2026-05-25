@@ -11,11 +11,11 @@ tags: [optimization, constrained-optimization, robotics-math]
 
 ## Explain like I'm 5
 
-A Lagrange multiplier is a helper number for a problem where you want the best answer, but the answer must stay on a rule. The rule might be "stay on this line" or "keep this equation equal to zero." Instead of wandering everywhere, the method asks: "At the best allowed point, which way would the objective like to move, and how hard does the rule have to push back?"
+A Lagrange multiplier is a helper number for a problem where you want the best answer, but the answer must stay on a rule. The rule might be "stay on this line" or "keep this equation equal to zero." Instead of wandering everywhere, the method asks: "At the best allowed point, which way does the objective pull, and how strongly must the constraint direction balance that pull?"
 
 ## Bridges from
 
-Imagine walking on a painted path in a park while trying to get to the lowest nearby ground. If the path still slopes down in the direction you are allowed to walk, you are not at the lowest point on the path yet. At the best point on that path, the downhill direction points straight off the path, so every allowed step along the paint either goes sideways or uphill. The path's "push back" is the constraint direction, and the helper number $\lambda$ tells how much of that direction is needed to balance the objective's downhill pull.
+Imagine walking on a painted path in a park while trying to get to the lowest nearby ground. If the path still slopes down in the direction you are allowed to walk, you are not at the lowest point on the path yet. At the best point on that path, the downhill direction points straight off the path, so every allowed step along the paint either goes sideways or uphill. The constraint direction is the path's normal direction, and the helper number $\lambda$ tells how much of that normal direction is needed to balance the objective's downhill pull.
 
 Where the analogy breaks down: a real constraint can be a high-dimensional surface, not a literal path, and the method assumes a smooth, regular point where the constraint gradient gives a meaningful normal direction. At corners, cusps, or degenerate points, the simple "path has one clean sideways direction" picture can fail.
 
@@ -35,7 +35,7 @@ $$
 L(x,\lambda)=f(x)+\lambda^T h(x).
 $$
 
-The new variable $\lambda$ is the Lagrange multiplier. Plainly: $\lambda$ measures how strongly the constraint must participate in the optimum. At a constrained optimum, the objective gradient cannot have any useful component along the feasible surface, so it must be balanced by the gradients of the active constraints. Algebraically, this is the stationarity condition:
+The new variable $\lambda$ is the Lagrange multiplier. Plainly: $\lambda$ measures how strongly the constraint direction must participate in the optimum. The constraint itself is $h(x)=0$; the gradient $\nabla h(x)$ is the normal direction to that constraint; the term $\lambda \nabla h(x)$ is the balancing term in stationarity. At a constrained optimum, the objective gradient cannot have any useful component along the feasible surface, so it must be balanced by the gradients of the active constraints. Algebraically, this is the stationarity condition:
 
 $$
 \nabla_x L(x^\star,\lambda^\star)=0.
@@ -196,9 +196,9 @@ This says the minimum-norm joint velocity has no null-space component. It lives 
 
 This is why Lagrange multipliers belong next to [[Moore-Penrose Pseudoinverse]], [[Constraint Gradients and Tangent Spaces]], and later inverse-kinematics material in [[Modern Robotics - Lynch & Park]].
 
-## Why it can feel like a constraint push
+## Why it can feel like a constraint force
 
-A physical railing can stop you from stepping sideways off a path. In the math, the constraint does not literally push, but the multiplier plays a similar accounting role: it tells how much normal-direction influence is needed so the best answer stays feasible.
+A physical railing can stop you from stepping sideways off a path. In the optimization math, the constraint does not literally push and there is no trajectory being corrected over time. The multiplier plays an accounting role: it tells how much normal-direction influence is needed for a static balance at the optimum.
 
 In inverse kinematics, the equality constraint
 
@@ -206,7 +206,7 @@ $$
 J\dot{\theta}=\mathcal{V}_d
 $$
 
-says "the joint velocity must produce this exact end-effector twist." The multiplier $\lambda$ is the mathematical object that enforces that requirement in the optimization. It is not a physical force here, but it behaves like one in the equations: it tells how the constraint changes the optimal direction.
+says "the joint velocity must produce this exact end-effector twist." The multiplier $\lambda$ is the mathematical object that enforces that requirement in the optimization. It is not a physical force here, but it behaves like one in the equations: $\lambda \nabla h$ or $J^T\lambda$ is the term that balances the objective's preferred direction.
 
 ## Relationship to KKT
 
