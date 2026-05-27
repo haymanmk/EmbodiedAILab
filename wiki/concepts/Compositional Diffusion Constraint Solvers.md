@@ -3,6 +3,7 @@ type: concept
 domain: research
 created: 2026-05-27
 updated: 2026-05-27
+prerequisites: ["[[Diffusion Models]]"]
 aliases: ["diffusion constraint solvers", "diffusion-based constraint solver", "diffusion CCSP", "SetItUp"]
 tags: [diffusion-models, constraint-satisfaction, robot-learning, spatial-reasoning, planning]
 ---
@@ -33,8 +34,17 @@ In [[Integrated Learning and Planning - Mao]], this appears in the SetItUp table
 - The symbolic layer provides compositionality: relations can be added or removed without retraining a monolithic generator for every task.
 - The learned solver may satisfy aesthetic or commonsense relations but still needs robot feasibility constraints for execution: workspace limits, arm reach, collision-free motion, and sequencing.
 
+## Why composition works mathematically
+
+The "gradient field" picture in [[Diffusion Models]] is what makes this tractable. If each spatial relation has its own learned distribution $p_k(x)$, then the product distribution $p(x) \propto \prod_k p_k(x)$ has score
+
+$$\nabla \log p(x) \;=\; \sum_k \nabla \log p_k(x).$$
+
+A diffusion model trained on relation $k$ already estimates $\nabla \log p_k$ (up to a known scale, via its $\epsilon_\theta$ output). So composing constraints at inference is just **summing the predicted noise vectors** across the relation models at every denoising step — no joint retraining, and new relations can be added by training one more small model. This score-additivity is what the SetItUp paper exploits.
+
 ## Related concepts
 
+- [[Diffusion Models]] — the prerequisite recipe and the score view that makes composition work.
 - [[Constraint Satisfaction]]
 - [[Neuro-Symbolic Concepts]]
 - [[Task and Motion Planning]]
