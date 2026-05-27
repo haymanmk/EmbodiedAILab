@@ -2,7 +2,7 @@
 type: synthesis
 domain: personal
 created: 2026-05-16
-updated: 2026-05-25
+updated: 2026-05-27
 tags: [learning, tracker, curriculum]
 ---
 
@@ -21,6 +21,7 @@ tags: [learning, tracker, curriculum]
 1. **Modern Robotics Ch. 3–5** (Rigid-Body Motions → Forward Kinematics → Velocity Kinematics & Jacobians) — closes the "what does a robot do" loop. Foundational language the IL papers assume.
 2. **ACT paper deep-read** — once kinematics is in place, the action-space side of ACT becomes readable; transformer mechanics are the new piece.
 3. **Diffusion Policy paper deep-read** — natural next step after ACT; contrast the two action representations head-to-head.
+4. **Task and motion planning overview** — now adjacent because [[Integrated Learning and Planning - Mao]] leans heavily on [[Task and Motion Planning]], [[Constraint Satisfaction]], learned samplers, and effect models. Keep it as a short conceptual onramp after Ch. 3–5, not a detour before kinematics.
 
 **Reference (not a study target)**: [[Sutton & Barto - RL]] — keep accessible for RL theory lookups when ACT/Diffusion Policy reference policy-gradient or behavior-cloning concepts. Not a deep-read target unless RL becomes the primary thread later.
 
@@ -43,6 +44,13 @@ tags: [learning, tracker, curriculum]
 | [[Moore-Penrose Pseudoinverse]] | reading | 2026-05-09 | overview-only |
 | [[VR Teleoperation in Simulation]] | /tutor deep-research (LeIsaac vs scratch, prereqs, core tech) | 2026-05-18 | overview-only |
 | [[Training Environments and the Gymnasium API]] | /tutor explain (power-outlet analogy; RL vs IL pipeline mapping) | 2026-05-24 | working |
+| [[Neuro-Symbolic Concepts]] | [[Integrated Learning and Planning - Mao]] | 2026-05-27 | overview-only |
+| [[Task and Motion Planning]] | [[Integrated Learning and Planning - Mao]] | 2026-05-27 | overview-only |
+| [[Constraint Satisfaction]] | [[Integrated Learning and Planning - Mao]] + optimization pages | 2026-05-27 | building |
+| [[Contact Analogy]] | [[Integrated Learning and Planning - Mao]] | 2026-05-27 | overview-only |
+| [[Compositional Diffusion Constraint Solvers]] | [[Integrated Learning and Planning - Mao]] | 2026-05-27 | overview-only |
+| [[Composable Robot Skills]] | [[Integrated Learning and Planning - Mao]] | 2026-05-27 | overview-only |
+| [[Closed-Loop Robot Agents]] | [[Integrated Learning and Planning - Mao]] | 2026-05-27 | overview-only |
 
 Mastery levels: **overview-only** (skimmed) → **building** (working through) → **working** (can apply) → **fluent** (can teach/derive).
 
@@ -53,6 +61,7 @@ Mastery levels: **overview-only** (skimmed) → **building** (working through) �
 | [[Modern Robotics - Lynch & Park]] | textbook | Ingested 2026-05-16; chapter index at [[Modern Robotics - chapters]]; Ch. 3 = next | in-progress |
 | [[Sutton & Barto - RL]] | textbook | Not started | reference |
 | [[LeRobot Documentation Index]] | docs-site | Reference-only browsing | reference |
+| [[Integrated Learning and Planning - Mao]] | video + papers | Ingested 2026-05-27; source page plus 7 concept/entity pages | covered |
 | ACT paper | paper | Overview read | revisit later |
 | Diffusion Policy paper | paper | Not started | queued |
 
@@ -66,6 +75,8 @@ Things the agent has noticed are missing from coverage but are prerequisites for
 - **Manifolds / topology basics** — Ch. 2 introduced topology of C-space ($S^1$, $T^n$, $S^n$) at a level the user could absorb. A dedicated page on topological equivalence / charts / atlas would help if Ch. 3 pushes deeper into $SO(3)$'s manifold structure.
 - **Quaternions + SLERP** — surfaced by [[VR Teleoperation in Simulation]] (orientation smoothing in the teleop loop). Will be covered as part of Ch. 3 ($SO(3)$ representations) — confirm Lynch & Park's coverage is sufficient, supplement otherwise.
 - **Inverse kinematics methods** — Modern Robotics Ch. 6 is the primary source; DLS + analytic IK are the two flavors that show up in real teleop loops.
+- **Diffusion model internals** — [[Compositional Diffusion Constraint Solvers]] and Diffusion Policy both rely on denoising/score-style generation; this should be taught before a serious Diffusion Policy or SetItUp deep-read.
+- **TAMP basics** — [[Task and Motion Planning]] is now indexed, but only at overview level. A deeper pass should cover symbolic action schemas, motion planning, feasibility checking, samplers, and task skeletons.
 
 ## Session log
 
@@ -87,3 +98,4 @@ Append-only. One entry per tutor workflow.
 - 2026-05-24 — `/tutor` deep-research on **Genesis physics simulator** (`genesis-world`, Genesis-Embodied-AI). Created `raw/genesis-world-research-snapshot.md` (333 lines) — critical, evidence-based capture of speed/fidelity claims and independent pushback. Key findings: the headline "43M FPS / 10–80× faster" claim does not survive Stone Tao's independent benchmark (Genesis at parity with Isaac Lab on locomotion, 3–10× slower than ManiSkill on manipulation); generative framework still closed and effectively spun out into for-profit **Genesis AI** ($105M seed July 2025, GENE-26.5 model May 2026); **no first-party VR/XR** confirmed in issue #1626 — Isaac Lab 2.3.2 (Jan 2026) ships Meta Quest VR teleop, so the LeIsaac onramp track is unaffected. Real differentiator is multi-physics breadth (rigid + MPM + SPH + FEM + PBD + Stable Fluid in one engine). Current version v0.4.7 (2026-05-16) uses in-house Quadrants compiler since v0.4.0. Raw file only; no wiki page yet — ingestion deferred. No coverage-map row (not a covered concept).
 - 2026-05-18 — `/tutor` deep-research on **VR teleoperation in simulation for policy training**. Created [[VR Teleoperation in Simulation]] concept page with puppeteer-on-video-call analogy + breakdown (no force feedback), full data-flow Mermaid diagram, layered "use the stack vs. scaffold from scratch" decision matrix, hardware/skills prerequisites table (with bridges to user's active Ch. 3 gap), and per-technology deep-dives: OpenXR, CloudXR, frame conversion, retargeting (Gram-Schmidt hand frame, BEAVR-style), IK (analytic vs DLS vs GPU/cuRobo), smoothing (SLERP + moving-average), Isaac Sim vs MuJoCo, LeRobot dataset schema. Pulled live docs from `/lightwheelai/leisaac` and `/isaac-sim/isaaclab` via context7. Flagged **quaternions+SLERP** and **IK methods** as gaps now adjacent to active Ch. 3 work.
 - 2026-05-25 — `/tutor` revised [[Lagrange Multipliers]] to comply with the current tutoring rule: added an ELI5 opening, painted-path everyday analogy with explicit breakdown, clearer definition/intuition split, preserved existing visual sequence, moved pseudoinverse material into a robotics connection, added origins/variations sections, and closed with an Obsidian Socratic-check callout. Follow-up clarified the notation trap: the rule is $h(x)=0$, the normal direction is $\nabla h(x)$, and the balancing term is $\lambda \nabla h(x)$; revised "push back" wording to "balance" to avoid implying trajectory correction. Kept mastery at `working`; this is a reference-page cleanup rather than new coverage.
+- 2026-05-27 — `ingest Integrated Learning and Planning`: created [[Integrated Learning and Planning - Mao]] plus [[Jiayuan Mao]], [[Neuro-Symbolic Concepts]], [[Task and Motion Planning]], [[Constraint Satisfaction]], [[Contact Analogy]], [[Compositional Diffusion Constraint Solvers]], [[Composable Robot Skills]], and [[Closed-Loop Robot Agents]]. Downloaded and linked local PDFs for Neuro-Symbolic Concepts, PDSketch, MAGIC, SetItUp, Learning Reusable Manipulation Strategies, STACK, and Retriever. Positioned the seminar as a bridge from IL/VLA policy learning to structured planning and learned skill composition; kept mastery overview-only except [[Constraint Satisfaction]] at building because it reinforces existing optimization pages.

@@ -2,7 +2,7 @@
 type: concept
 domain: research
 created: 2026-05-13
-updated: 2026-05-24
+updated: 2026-05-27
 aliases: ["behavioral cloning", "BC", "learning from demonstrations"]
 tags: [robotics, imitation-learning, behavioral-cloning, dagger, hil-serl]
 ---
@@ -21,12 +21,14 @@ For a self-researcher, imitation learning is usually the first practical robot-l
 - [[Action Chunking Transformer|ACT]], short for Action Chunking with Transformers, is presented in the LeRobot docs as a beginner-friendly imitation-learning policy with fast training and relatively low compute needs.
 - [[Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware - Zhao et al]] introduced ACT for fine-grained bimanual manipulation and frames action chunking as a way to reduce compounding error in behavioral cloning.
 - Human-in-the-loop workflows can improve a policy by recording interventions when the autonomous policy starts failing — covered in detail in [§ Correcting an IL policy with human interventions](#correcting-an-il-policy-with-human-interventions) below.
+- [[Integrated Learning and Planning - Mao]] is adjacent rather than a pure IL source: it starts from the observation that demonstrations are expensive and asks how to use [[Neuro-Symbolic Concepts]], [[Constraint Satisfaction]], and [[Task and Motion Planning]] to get more generalization from fewer demonstrations.
 
 ## Variations / debates
 
 - Pure behavioral cloning is simple but can accumulate errors when the robot drifts into states absent from the demonstrations.
 - [[Action Chunking Transformer|Action chunking]] predicts a short sequence of future actions instead of a single next action, which can make behavior smoother and easier to deploy at control rate.
 - Diffusion and VLA policies can handle richer multimodal action distributions but usually need more compute and more careful inference engineering.
+- [[Composable Robot Skills]] split demonstrations into shorter reusable skills with predicted effects, so the learned units can be searched over by a planner rather than executed only as one monolithic policy.
 
 ## Correcting an IL policy with human interventions
 
@@ -108,6 +110,9 @@ For the [[VR Teleoperation in Simulation|LeIsaac onramp]] specifically: when an 
 - [[Robot Learning]]
 - [[Action Chunking Transformer]]
 - [[Vision-Language-Action Models]]
+- [[Neuro-Symbolic Concepts]]
+- [[Composable Robot Skills]]
+- [[Task and Motion Planning]]
 - [[Robotics Development Stack]]
 
 ## Mentions
@@ -116,6 +121,7 @@ For the [[VR Teleoperation in Simulation|LeIsaac onramp]] specifically: when an 
 - [[LeRobot Documentation Index]]
 - [[Modern Robotics Development - synthesis]]
 - [[Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware - Zhao et al]]
+- [[Integrated Learning and Planning - Mao]]
 
 ## External sources
 

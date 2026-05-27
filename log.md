@@ -269,3 +269,31 @@ Updated the existing concept page to match the current tutor-mode explanation pa
 - `index.md` — refreshed the one-line concept summary.
 
 Follow-up correction: revised the same concept page to replace misleading "push back" phrasing with "balance" phrasing, and explicitly distinguished $h(x)=0$ as the constraint, $\nabla h(x)$ as the constraint normal, and $\lambda \nabla h(x)$ as the stationarity balancing term.
+
+## [2026-05-27] ingest | Integrated Learning and Planning
+
+Ingested Jiayuan Mao's Stanford Robotics Seminar on integrated learning and planning with neuro-symbolic concepts.
+
+- `raw/stanford-robotics-seminar-integrated-learning-and-planning.md` — raw manifest created for the YouTube seminar, auto-caption transcript, and downloaded reference PDFs.
+- `raw/assets/stanford-robotics-seminar-integrated-learning-and-planning-3W36pd50Wqw.en.vtt` — YouTube auto-caption transcript.
+- `raw/assets/papers/2025-arxiv-neuro-symbolic-concepts.pdf` — local reference PDF.
+- `raw/assets/papers/2022-neurips-pdsketch-integrated-domain-programming-learning-and-planning.pdf` — local reference PDF.
+- `raw/assets/papers/2025-icra-magic-one-shot-manipulation-contact-analogies.pdf` — local reference PDF.
+- `raw/assets/papers/2024-rss-set-it-up-functional-object-arrangement-compositional-generative-models.pdf` — local reference PDF.
+- `raw/assets/papers/2023-corl-learning-reusable-manipulation-strategies.pdf` — local reference PDF.
+- `raw/assets/papers/2026-icra-stack-learning-composable-skills.pdf` — local reference PDF.
+- `raw/assets/papers/2026-retriever-programming-closed-loop-modular-robot-agent.pdf` — local reference PDF.
+- `wiki/sources/Integrated Learning and Planning - Mao.md` — new source page summarizing the seminar and linking the local reference papers.
+- `wiki/entities/Jiayuan Mao.md` — new entity page.
+- `wiki/concepts/Neuro-Symbolic Concepts.md` — new concept page.
+- `wiki/concepts/Task and Motion Planning.md` — new concept page.
+- `wiki/concepts/Constraint Satisfaction.md` — new concept page connecting the seminar to existing optimization pages.
+- `wiki/concepts/Contact Analogy.md` — new concept page for one-shot contact-based manipulation transfer.
+- `wiki/concepts/Compositional Diffusion Constraint Solvers.md` — new concept page for SetItUp-style spatial-relation composition.
+- `wiki/concepts/Composable Robot Skills.md` — new concept page for STACK-style learned skill samplers and effect models.
+- `wiki/concepts/Closed-Loop Robot Agents.md` — new concept page for Retriever-style multi-rate agent systems.
+- `wiki/concepts/Robot Learning.md`, `wiki/concepts/Imitation Learning.md`, `wiki/concepts/Vision-Language-Action Models.md`, `wiki/concepts/Training Environments and the Gymnasium API.md` — updated with cross-links to the seminar thread.
+- `wiki/syntheses/learning-tracker.md` — added coverage rows, resource progress, gaps, and recommendation update.
+- `index.md` — added new source, entity, and concept pages.
+
+Main knowledge change: this seminar reframes the user's IL/VLA path as part of a larger structured robot-learning stack where foundation models provide perception/language structure, while planning, constraints, learned skill effects, and closed-loop systems engineering remain explicit.

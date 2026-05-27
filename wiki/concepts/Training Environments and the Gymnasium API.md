@@ -2,7 +2,7 @@
 type: concept
 domain: research
 created: 2026-05-24
-updated: 2026-05-24
+updated: 2026-05-27
 aliases: ["Gymnasium", "Gym API", "OpenAI Gym", "training environment", "Gym-compatible environment"]
 tags: [simulation, reinforcement-learning, imitation-learning, training-pipeline, api]
 sources:
@@ -177,6 +177,10 @@ Anchoring this to the active project:
 
 Genesis (see `raw/genesis-world-research-snapshot.md`) doesn't ship first-party Gymnasium envs for every task — you'd write a thin wrapper if you wanted to slot a Genesis scene into an RL training pipeline.
 
+## Relation to closed-loop robot agents
+
+[[Integrated Learning and Planning - Mao]] adds another layer above the Gymnasium discussion: long-horizon robot agents often contain multiple loops running at different rates, such as perception, memory, VLM planning, skill execution, progress monitoring, and low-level control. The Gymnasium API standardizes a single `reset()` / `step()` loop, which is useful for RL and evaluation, but it does not by itself specify how a full [[Closed-Loop Robot Agents|closed-loop robot agent]] coordinates slow planners, medium-rate learned policies, and fast controllers.
+
 ## Connections
 
 - [[Isaac Lab]] — concrete Gymnasium-compatible wrapper around Isaac Sim with manager-based env composition.
@@ -184,6 +188,7 @@ Genesis (see `raw/genesis-world-research-snapshot.md`) doesn't ship first-party 
 - [[Action Chunking Transformer]] — IL training, no env needed during training.
 - [[Imitation Learning]] — paradigm-level overview; this page is the API-layer companion.
 - [[Robot Learning]] — superset that contains both IL and RL.
+- [[Closed-Loop Robot Agents]] — broader agent-systems view where Gym-style stepping is only one possible interface.
 
 ## Sources
 
