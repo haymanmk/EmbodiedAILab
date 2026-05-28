@@ -319,3 +319,17 @@ User answered the three Socratic questions on [[Numerical Inverse Kinematics]]:
 
 - `wiki/concepts/Numerical Inverse Kinematics.md` — added the $[\mathcal{V}]$ vs $[\mathcal{S}]\theta$ clarification to Common Confusions (with the convergence-test caveat), and a new "Space-frame equivalent (via adjoint)" section after the body-frame derivation.
 - `wiki/syntheses/learning-tracker.md` — appended session log entry recording the Socratic outcome and the refinement.
+
+## [2026-05-28] query | /tutor — three uses of $\theta$ in Modern Robotics
+
+User remembered "$\mathcal{V} = \mathcal{S}\dot\theta$" (from Ch. 5 velocity kinematics) and asked whether IK needed $\dot\theta$ to recover the twist from the screw axis. The underlying intuition (unit screw × scalar = full twist) was correct, but Modern Robotics overloads "$\theta$" in three roles and the IK context uses the magnitude-not-rate variant.
+
+Distinguished:
+1. **Magnitude $\theta$ (scalar)** — exp-coord scalar, units radians or meters, in $T = e^{[\mathcal{S}]\theta}$ and matrix-log output. *This is the one §6.2.2 uses.*
+2. **Joint rate $\dot\theta$ (scalar)** — rate along one screw axis, units rad/s or m/s, in Ch. 5 single-joint velocity formula $\mathcal{V} = \mathcal{S}\dot\theta$.
+3. **Joint vector / joint-rate vector $\theta, \dot\theta \in \mathbb{R}^n$** — whole-arm coordinates, in $T_{sb}(\theta)$ and $\mathcal{V}_b = J_b\dot\theta$.
+
+The two scalar contexts reconcile via $\int_0^1 \mathcal{S}\dot\theta\,dt = \mathcal{S}\theta(1)$ — rate × unit duration = magnitude, which is why MR's "apply $\mathcal{V}$ for unit time" convention is internally consistent.
+
+- `wiki/concepts/Numerical Inverse Kinematics.md` — added a new Common Confusions entry untangling the three $\theta$ roles with a small table-style breakdown and the reconciling integral.
+- `wiki/syntheses/learning-tracker.md` — appended session log entry.
