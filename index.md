@@ -41,6 +41,7 @@ Content catalog for this vault. Every wiki page is listed here under its categor
 - [[Lagrange Multipliers]] — Equality-constraint optimization method with an ELI5 bridge, gradient-stationarity geometry, pseudoinverse/IK connection, and Socratic checks.
 - [[Moore-Penrose Pseudoinverse]] — Generalized matrix inverse used for minimum-norm and least-squares Jacobian inverse kinematics.
 - [[Neuro-Symbolic Concepts]] — Reusable robot knowledge units with symbolic interfaces and neural grounding for perception, language, geometry, action, and planning.
+- [[Numerical Inverse Kinematics]] — Newton-Raphson IK on SE(3): why the matrix logarithm produces the body-twist error vector, body Jacobian update, DLS near singularities (Modern Robotics §6.2.2).
 - [[Robot Learning]] — Data-driven robotics methods that learn policies from rewards, demonstrations, or multimodal robot datasets.
 - [[Robotics Development Stack]] — Layered map of robotics theory, hardware, middleware, simulation, data, learning, deployment, and safety.
 - [[Sigmoid Function]] — Logistic squash $1/(1+e^{-x})$: smooth $\mathbb{R} \to (0,1)$ probability/gate, with the dimmer-switch analogy and vanishing-gradient pitfall.

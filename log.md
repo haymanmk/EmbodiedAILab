@@ -297,3 +297,14 @@ Ingested Jiayuan Mao's Stanford Robotics Seminar on integrated learning and plan
 - `index.md` — added new source, entity, and concept pages.
 
 Main knowledge change: this seminar reframes the user's IL/VLA path as part of a larger structured robot-learning stack where foundation models provide perception/language structure, while planning, constraints, learned skill effects, and closed-loop systems engineering remain explicit.
+
+## [2026-05-28] query | /tutor — why the matrix log appears in Modern Robotics §6.2.2 numerical IK
+
+Tutor-mode explainer triggered by the user reading ahead from the queued Ch. 3 thread into Ch. 6.2.2 (Numerical Inverse Kinematics Algorithm). User asked specifically why the body twist $\mathcal{V}_b$ is determined via the matrix logarithm in the SE(3) extension of the iteration.
+
+- `wiki/concepts/Numerical Inverse Kinematics.md` — new concept page. ELI5 + everyday analogy (globe + tangent arrow ≡ log map) with explicit breakdown (Chasles' screw structure; SE(3) log ambiguity near $\pi$-rotations as the sphere-antipode analog). Side-by-side derivation: simplified Newton-Raphson with $e = x_d - f(\theta) \in \mathbb{R}^m$ → SE(3) version with $T_{bd} = T_{sb}^{-1}T_{sd} \to \log \to \mathcal{V}_b \in \mathbb{R}^6$. Explicit "why body twist matches the body Jacobian" framing; full update $\theta^{i+1} = \theta^i + J_b^\dagger \log(T_{sb}^{-1}T_{sd})$; DLS callout linking to [[Singularity]]; common-confusions block (incl. the "$\log$ of a $4\times4$ → why a 6-vector" Lie-algebra-dimension question). Visuals: Mermaid side-by-side flow + inline SVG of sphere with great-circle and tangent arrow representing the log map. Three Socratic questions posed at the bottom.
+- `wiki/ingestion/Modern Robotics - chapters.md` — Ch. 6 row flipped from `queued` to `partial` with a §6.2.2 note; added `partial` to the status legend.
+- `wiki/syntheses/learning-tracker.md` — added Numerical Inverse Kinematics to coverage map (`building`); refreshed the "Inverse kinematics methods" gap-detected entry to record partial coverage; appended session log entry.
+- `index.md` — added [[Numerical Inverse Kinematics]] under Concepts.
+
+Curriculum note: Ch. 3 ([[Twist]], [[Exponential Coordinates of Rigid-Body Motion]]) and Ch. 5 ([[Body Jacobian]]) remain the rigorous prerequisites for the matrix-log derivation; this page covers enough for the user to follow §6.2.2 without first finishing Ch. 3, but Ch. 3 is still the recommended next chapter under [[learning-tracker]].

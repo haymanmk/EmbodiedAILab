@@ -2,7 +2,7 @@
 type: ingestion-index
 source: [[Modern Robotics - Lynch & Park]]
 created: 2026-05-16
-updated: 2026-05-16
+updated: 2026-05-28
 last_chapter_studied: 2
 ---
 
@@ -21,7 +21,7 @@ PDF: `raw/ModernRobotics-v2.pdf` (644 pages, Dec 2019 preprint of 2017 Cambridge
 | 3   | Rigid-Body Motions                 | 57–134   | [[SO(3) Rotation Group]], [[SE(3) Rigid-Body Group]], [[Twist]], [[Wrench]], [[Exponential Coordinates of Rotation]], [[Exponential Coordinates of Rigid-Body Motion]] | next        |
 | 4   | Forward Kinematics                 | 135–168  | [[Product of Exponentials Formula]], [[Screw Axis]], [[URDF]], [[Denavit-Hartenberg Parameters]] (see App. C)                                                     | queued      |
 | 5   | Velocity Kinematics and Statics    | 169–216  | [[Manipulator Jacobian]], [[Space Jacobian]], [[Body Jacobian]], [[Kinematic Singularity]], [[Manipulability Ellipsoid]], [[Static Force Analysis]]               | queued      |
-| 6   | Inverse Kinematics                 | 217–242  | [[Analytic Inverse Kinematics]], [[Numerical Inverse Kinematics]], [[Newton–Raphson IK]], [[Redundant Manipulator]] — extends [[Moore-Penrose Pseudoinverse]]     | queued      |
+| 6   | Inverse Kinematics                 | 217–242  | [[Numerical Inverse Kinematics]] *(§6.2.2 covered 2026-05-28 — body-twist error via matrix log, full Newton-Raphson on SE(3))*; [[Analytic Inverse Kinematics]], [[Newton–Raphson IK]], [[Redundant Manipulator]] pending — extends [[Moore-Penrose Pseudoinverse]]     | partial     |
 | 7   | Kinematics of Closed Chains        | 243–268  | [[Closed Kinematic Chain]], [[Stewart–Gough Platform]], [[Parallel Mechanism]], [[Closed-Chain Singularity]]                                                      | not started |
 | 8   | Dynamics of Open Chains            | 269–326  | [[Lagrangian Dynamics]], [[Manipulator Equation]], [[Mass Matrix]], [[Newton–Euler Recursive Dynamics]], [[Forward Dynamics]], [[Task-Space Dynamics]]            | queued      |
 | 9   | Trajectory Generation              | 327–354  | [[Time Scaling]], [[Polynomial Via-Points]], [[Time-Optimal Time Scaling]]                                                                                        | not started |
@@ -40,6 +40,7 @@ PDF: `raw/ModernRobotics-v2.pdf` (644 pages, Dec 2019 preprint of 2017 Cambridge
 - **queued** — on the recommended reading path, not yet next.
 - **next** — the next chapter to study under [[learning-tracker]].
 - **covered** — concept pages written / extended for this chapter.
+- **partial** — one or more sections covered (e.g., out-of-order spot-reads); the chapter as a whole isn't yet fully studied.
 - **deferred** — knowingly skipped for now; revisit if a project demands.
 - **reference** — appendix or supplementary; consult on demand, no full read planned.
 
