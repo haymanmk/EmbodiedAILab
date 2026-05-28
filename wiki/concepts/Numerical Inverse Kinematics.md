@@ -262,6 +262,23 @@ Same physical point; only the coordinate description changes.
 
 A common pitfall when working through this example by hand: apply the body-frame formula $\text{ICR}_b = (-v_{yb}/\omega_{zb}, v_{xb}/\omega_{zb}) = (-1.183, 0.317)$, then plot the result on a space-frame diagram. The ICR lands on the wrong side of the robot base. Cure: transform with the rotation above (or work everything in the space twist $\mathcal{V}_s$ directly).
 
+### Pitfall: deriving the ICR from $\vec v = \vec\omega \times \vec r$ gives the **wrong sign**
+
+A natural manual derivation starts from $\vec v = \vec\omega \times \vec r$ — the velocity of a point at position $\vec r$ in a rigid body rotating about the **origin** with angular velocity $\vec\omega$. Cross-product expansion in 2D gives:
+$$v_x = -\omega_z r_y, \qquad v_y = +\omega_z r_x$$
+which, solved for $\vec r$, produces
+$$r_x = +\frac{v_y}{\omega_z} = +1.183, \qquad r_y = -\frac{v_x}{\omega_z} = -0.317$$
+i.e. $\vec r = (+1.183, -0.317)$ — exactly the **negative** of the ICR.
+
+This is not a calculation error; it is a setup error. The equation $\vec v = \vec\omega \times \vec r$ assumes the **origin is fixed** and asks "what point at $\vec r$ has velocity $\vec v$?" — so the $\vec r$ it returns is the position of a *moving point*, with the origin as the axis of rotation. In our problem, the *body origin* is the point that moves (with velocity $\vec v_b$), and the **ICR** is what's fixed. The correct relation is
+$$\vec v_b = \vec\omega \times (\text{body origin} - \vec p_{\text{ICR}}) = -\vec\omega \times \vec p_{\text{ICR}}$$
+which expands to
+$$v_x = +\omega_z\, p_{\text{ICR},y}, \qquad v_y = -\omega_z\, p_{\text{ICR},x}$$
+$$\Rightarrow \quad p_{\text{ICR},x} = -\frac{v_y}{\omega_z} = -1.183, \qquad p_{\text{ICR},y} = +\frac{v_x}{\omega_z} = +0.317$$
+i.e. $\vec p_{\text{ICR}} = (-1.183,\, +0.317)$ directly, no sign flip.
+
+Equivalently, the $\vec r$ from the naive derivation is interpretable as the **radial vector from the ICR to the body origin** ($\vec r = \text{body origin} - \vec p_{\text{ICR}}$), so the ICR position itself is $-\vec r$. Both are valid mental models; just be consistent about which $\vec r$ means.
+
 ### If you'd rather work entirely in the space frame
 
 Compute the space twist via the adjoint $\mathcal{V}_s = \mathrm{Ad}_{T_{sb}}\,\mathcal{V}_b$:
