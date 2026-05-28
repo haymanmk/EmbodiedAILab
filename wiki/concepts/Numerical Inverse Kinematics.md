@@ -226,7 +226,57 @@ which interpolates between Newton-Raphson ($\lambda = 0$) and gradient descent (
 
 Modern Robotics §6.2.2's planar-2R example is the cleanest place to see how a body twist's linear component differs from a "go-toward-the-goal" displacement vector.
 
-**Setup** (each link = 1 m, $\theta_d = (30°, 90°)$, initial guess $\theta^0 = (0°, 30°)$):
+### Frame convention reminder
+
+The subscript $b$ in $\mathcal{V}_b = (\omega_b, v_b)$ is doing two jobs at once:
+
+1. **Which twist**: this is the *body* twist, not the space twist $\mathcal{V}_s$.
+2. **Which frame the components live in**: $\omega_b$ and $v_b$ are expressed in **body-frame coordinates** ($\hat{x}_b, \hat{y}_b, \hat{z}_b$), not space-frame coordinates.
+
+So $(v_{xb}, v_{yb}) = (0.498, 1.858)$ from the iteration table are components along $\hat{x}_b$ and $\hat{y}_b$ at that iteration, *not* along $\hat{x}_s$ and $\hat{y}_s$. At $\theta^0 = (0°, 30°)$ the body frame is rotated by $\theta_1 + \theta_2 = 30°$ relative to the space frame, so the two coordinate systems' axes are *not* parallel — you can't drop body-frame numbers onto a space-frame diagram and expect physical correctness.
+
+Body axes in space coordinates at $\theta^0$:
+$$
+\hat{x}_b^{(s)} = (\cos 30°, \sin 30°) = (0.866, 0.500), \qquad
+\hat{y}_b^{(s)} = (-\sin 30°, \cos 30°) = (-0.500, 0.866)
+$$
+and the body origin lives at space coords $(1.866, 0.500)$.
+
+### Same physical scene in two frames
+
+![Example 6.1 iteration 0 in space frame {s} and body frame {b}](../assets/numerical-ik/example-6-1-frames.png)
+
+The two panels show one physical scene from two viewpoints. The screw axis (ICR) is a single point in space:
+
+| | $x$ component | $y$ component |
+|---|---|---|
+| ICR in space coords | $0.683$ | $0.184$ |
+| ICR in body coords at $\theta^0$ | $-1.183$ | $0.317$ |
+
+The space-coords description is what matches Fig. 6.8's dot between the initial and goal poses. Confirm the two descriptions agree by transforming body coords back to space:
+$$
+\text{ICR}_s = p_{sb}(\theta^0) + (-1.183)\,\hat{x}_b^{(s)} + (0.317)\,\hat{y}_b^{(s)}
+\approx (0.683,\; 0.184)\;\;\checkmark
+$$
+Same physical point; only the coordinate description changes.
+
+A common pitfall when working through this example by hand: apply the body-frame formula $\text{ICR}_b = (-v_{yb}/\omega_{zb}, v_{xb}/\omega_{zb}) = (-1.183, 0.317)$, then plot the result on a space-frame diagram. The ICR lands on the wrong side of the robot base. Cure: transform with the rotation above (or work everything in the space twist $\mathcal{V}_s$ directly).
+
+### If you'd rather work entirely in the space frame
+
+Compute the space twist via the adjoint $\mathcal{V}_s = \mathrm{Ad}_{T_{sb}}\,\mathcal{V}_b$:
+$$
+\omega_{zs} = 1.571, \qquad v_{xs} = 0.288, \qquad v_{ys} = -1.073
+$$
+Apply the *same* ICR formula in space coordinates:
+$$
+\text{ICR}_s = \Bigl(-\tfrac{v_{ys}}{\omega_{zs}},\;\tfrac{v_{xs}}{\omega_{zs}}\Bigr) = (0.683, 0.183)
+$$
+Same physical ICR, derived directly in space coords from the space twist. Both routes agree because the underlying screw motion is frame-independent — only its 6-vector representation changes.
+
+### Setup recap
+
+(Each link = 1 m, $\theta_d = (30°, 90°)$, initial guess $\theta^0 = (0°, 30°)$.)
 
 | | Space coords | Body-frame coords at $\theta^0$ |
 |---|---|---|
