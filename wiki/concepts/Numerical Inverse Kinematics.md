@@ -159,6 +159,24 @@ The skeleton is identical; only **"form the error"** changes. The change is stru
   <text x="20" y="310" font-family="serif" font-size="12" fill="#444">The log map at A returns the tangent arrow toward B. SE(3) ↔ globe; body twist ↔ tangent arrow; matrix log ↔ log map.</text>
 </svg>
 
+## Space-frame equivalent (via adjoint)
+
+The body-frame update has a mirror-image space-frame version. Starting from "the space twist that for unit time advances current pose to desired":
+$$
+T_{sd} = e^{[\mathcal{V}_s]}\, T_{sb}(\theta^i)
+\;\;\Longrightarrow\;\;
+[\mathcal{V}_s] = \log\!\bigl(T_{sd}\, T_{sb}^{-1}(\theta^i)\bigr)
+$$
+$$
+\theta^{i+1} = \theta^i + J_s^\dagger(\theta^i)\,\mathcal{V}_s
+$$
+
+The two iterations are numerically equivalent through the adjoint:
+$$
+\mathcal{V}_s = \mathrm{Ad}_{T_{sb}}\,\mathcal{V}_b, \qquad J_s = \mathrm{Ad}_{T_{sb}}\,J_b
+$$
+so $J_s^\dagger\,\mathcal{V}_s$ and $J_b^\dagger\,\mathcal{V}_b$ produce the same joint correction. Modern Robotics presents the body version because $\log(T_{sb}^{-1}T_{sd})$ is slightly cleaner to write and the body Jacobian admits a simple iterative construction (Ch. 5).
+
 ## When the Jacobian is near-singular
 
 At a [[Singularity]], $J_b$ loses rank and $J_b^\dagger$ amplifies the error wildly — the update lurches. Standard fix: **damped least squares** (Levenberg-Marquardt),
@@ -171,6 +189,11 @@ which interpolates between Newton-Raphson ($\lambda = 0$) and gradient descent (
 
 - **"Why not just use ZYX Euler angles to make it a vector problem?"** You can — but Euler-angle representations have their own singularities (gimbal lock), and the Jacobian relating joint rates to Euler-angle rates becomes ill-conditioned there. The SE(3)/twist formulation has the most well-behaved geometry.
 - **"$\log$ of a $4\times 4$ matrix gives a $4\times 4$ matrix — where does the 6-vector come from?"** The matrix log of a $T \in SE(3)$ doesn't land just anywhere in $\mathbb{R}^{4\times 4}$ — it lands in the Lie algebra $\mathfrak{se}(3)$, which is a specific 6-dimensional subspace of $\mathbb{R}^{4\times 4}$. The hat/vee operators $[\cdot]$ and $(\cdot)^\vee$ convert between the 6-vector parameterization and the $4\times 4$ Lie-algebra form.
+- **"Why does §6.2.2 write the log as $[\mathcal{V}_b]$ but §3.3 writes it as $[\mathcal{S}]\theta$?"** These are the **same matrix**, just two ways of writing the same Lie-algebra element. Because $\mathcal{S}\theta = \mathcal{V}$ is scalar-times-vector on a 6-vector, $[\mathcal{S}]\theta = [\mathcal{S}\theta] = [\mathcal{V}]$. Modern Robotics switches between two **factorings**:
+  - *Factored form* $[\mathcal{S}]\theta$: $\mathcal{S}$ is the **normalized screw axis** ($\|\omega_S\|=1$, or $\|v_S\|=1$ for pure translation), $\theta$ is a scalar magnitude (radians for rotational screws, meters for pure translations). Used in Ch. 3's Product of Exponentials because each joint has a **fixed screw axis** $\mathcal{S}_i$ and a **variable joint coordinate** $\theta_i$ — the split is structural.
+  - *Lumped form* $[\mathcal{V}_b]$: one 6-vector, no factoring. Used in §6.2.2 because the IK iteration just wants a tangent-space error vector for $J_b^\dagger$; the normalized-axis-vs-magnitude split isn't useful here.
+  
+  Implementation note: the matrix-log algorithm in §3.3.3 actually computes $\theta$ first (from the trace of the rotation block) and *then* normalizes $\mathcal{S}$. The IK loop in §6.2.2 silently re-lumps them: $\mathcal{V}_b := \mathcal{S}\theta$. As you approach the goal, $\theta \to 0$ and $\mathcal{V}_b \to 0$, while $\mathcal{S}$ can swing wildly because it's $\mathcal{V}_b / \theta$ — dividing by a vanishing magnitude amplifies noise. **The convergence test must use $\|\mathcal{V}_b\|$, never $\theta$ or $\mathcal{S}$ alone.**
 - **"Body or space — does the choice matter for convergence?"** Both converge in the same neighborhood. Body twist is more common because (a) the log lands there naturally, (b) the body Jacobian is constant when expressed in the EE frame (only the joint screws transform), simplifying code.
 - **"This looks like gradient descent on a Lie group."** Close — it *is* Newton-Raphson on a Lie group. The connection to retraction-based optimization on manifolds is exact: $\log$ is the retraction's inverse, $\exp$ is the retraction. (See Boumal, *An Introduction to Optimization on Smooth Manifolds*, if you want the full Riemannian optimization framing later.)
 

@@ -308,3 +308,14 @@ Tutor-mode explainer triggered by the user reading ahead from the queued Ch. 3 t
 - `index.md` — added [[Numerical Inverse Kinematics]] under Concepts.
 
 Curriculum note: Ch. 3 ([[Twist]], [[Exponential Coordinates of Rigid-Body Motion]]) and Ch. 5 ([[Body Jacobian]]) remain the rigorous prerequisites for the matrix-log derivation; this page covers enough for the user to follow §6.2.2 without first finishing Ch. 3, but Ch. 3 is still the recommended next chapter under [[learning-tracker]].
+
+## [2026-05-28] query | /tutor — Socratic follow-up on numerical IK
+
+User answered the three Socratic questions on [[Numerical Inverse Kinematics]]:
+
+1. *Why direct $T_{sd} - T_{sb}$ fails* — correct on the main point (SE(3) not a vector space, $R^TR=I$ destroyed). Asked for clarification on "units and frames wouldn't match": concrete explanation given (mixed-units 12-vector, unit-dependent pseudoinverse step, no natural frame on $R - R'$, contrasted with twist's frame-consistent body-Jacobian mapping).
+2. *Where the 6-vector comes from* — got angular R³ + linear R³ = R⁶, but the deeper question they raised was why the log produces $[\mathcal{V}]$ rather than $[\mathcal{S}]\theta$. Clarified that these are the **same matrix** in two factorings: Ch. 3 PoE uses normalized $\mathcal{S}$ + scalar magnitude $\theta$ because each joint has a fixed screw axis and a variable joint coordinate; §6.2.2 uses the lumped $\mathcal{V}_b$ because the IK iteration just needs a tangent-space error vector. Also noted the convergence-test caveat ($\|\mathcal{V}_b\|$ goes to zero, but $\mathcal{S} = \mathcal{V}_b/\theta$ can swing wildly).
+3. *Space twist equivalence* — correct intuition; gave the explicit formula $[\mathcal{V}_s] = \log(T_{sd}\,T_{sb}^{-1})$, $\theta^{i+1} = \theta^i + J_s^\dagger\,\mathcal{V}_s$, with the adjoint equivalence $J_s = \mathrm{Ad}_{T_{sb}} J_b$.
+
+- `wiki/concepts/Numerical Inverse Kinematics.md` — added the $[\mathcal{V}]$ vs $[\mathcal{S}]\theta$ clarification to Common Confusions (with the convergence-test caveat), and a new "Space-frame equivalent (via adjoint)" section after the body-frame derivation.
+- `wiki/syntheses/learning-tracker.md` — appended session log entry recording the Socratic outcome and the refinement.
