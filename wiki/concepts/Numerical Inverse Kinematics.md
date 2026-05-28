@@ -110,23 +110,39 @@ $$
 
 Iterate until $\|\mathcal{V}_b\|$ falls below a tolerance (typically split into angular tolerance $\|\omega_b\| < \epsilon_\omega$ and linear tolerance $\|v_b\| < \epsilon_v$, because they have different units).
 
-## Side-by-side flow
+## Flow comparison
 
 ```mermaid
 flowchart TB
-    subgraph S["Simplified — x ∈ ℝᵐ"]
-        A1["x_d"] --> E1["e = x_d − f(θ)"]
-        F1["f(θ)"] --> E1
-        E1 --> U1["Δθ = J† e"]
-    end
-    subgraph SE3["SE(3) — T ∈ SE(3)"]
-        A2["T_sd"] --> D2["T_bd = T_sb⁻¹ T_sd"]
-        F2["T_sb(θ)"] --> D2
-        D2 --> L2["log(T_bd) = [V_b]"]
-        L2 --> V2["V_b ∈ ℝ⁶ (body twist)"]
-        V2 --> U2["Δθ = J_b† V_b"]
-    end
+    A1["desired vector"] --> E1["coordinate error"]
+    F1["current vector from FK"] --> E1
+    E1 --> U1["joint update"]
 ```
+
+For an ordinary vector-coordinate task:
+
+$$
+e = x_d - f(\theta), \qquad \Delta\theta = J^\dagger e
+$$
+
+```mermaid
+flowchart TB
+    A2["desired pose"] --> D2["body-frame pose gap"]
+    F2["current pose from FK"] --> D2
+    D2 --> L2["matrix logarithm"]
+    L2 --> V2["body-twist error"]
+    V2 --> U2["joint update"]
+```
+
+For the $SE(3)$ pose task:
+
+$$
+T_{bd} = T_{sb}^{-1}(\theta)\,T_{sd}
+$$
+
+$$
+[\mathcal{V}_b] = \log(T_{bd}), \qquad \Delta\theta = J_b^\dagger \mathcal{V}_b
+$$
 
 The skeleton is identical; only **"form the error"** changes. The change is structural: when the task space is a manifold rather than a vector space, you need a logarithm map to produce a tangent-space error.
 
@@ -161,7 +177,9 @@ The skeleton is identical; only **"form the error"** changes. The change is stru
 
 ## Space-frame equivalent (via adjoint)
 
-The body-frame update has a mirror-image space-frame version. Starting from "the space twist that for unit time advances current pose to desired":
+The body-frame update has a mirror-image space-frame version. The important point is that a Newton step needs the **relative displacement from the current pose to the desired pose**, not the absolute desired pose itself. Even though $T_{sd}$ is already expressed in the space frame, $\log(T_{sd})$ would describe the screw motion from the space-frame identity pose to the desired end-effector pose; it is only the right error if the current end-effector pose is $I$.
+
+Starting from "the space twist that for unit time advances current pose to desired":
 $$
 T_{sd} = e^{[\mathcal{V}_s]}\, T_{sb}(\theta^i)
 \;\;\Longrightarrow\;\;
@@ -175,7 +193,7 @@ The two iterations are numerically equivalent through the adjoint:
 $$
 \mathcal{V}_s = \mathrm{Ad}_{T_{sb}}\,\mathcal{V}_b, \qquad J_s = \mathrm{Ad}_{T_{sb}}\,J_b
 $$
-so $J_s^\dagger\,\mathcal{V}_s$ and $J_b^\dagger\,\mathcal{V}_b$ produce the same joint correction. Modern Robotics presents the body version because $\log(T_{sb}^{-1}T_{sd})$ is slightly cleaner to write and the body Jacobian admits a simple iterative construction (Ch. 5).
+so, when the instantaneous twist equation is exactly solvable, the body and space formulations describe the same feasible joint correction. With a Moore-Penrose pseudoinverse in a rank-deficient or inconsistent least-squares case, the two numerical corrections can differ because the Euclidean least-squares norm is being applied in different twist coordinates. Modern Robotics presents the body version because $\log(T_{sb}^{-1}T_{sd})$ is slightly cleaner to write and the body Jacobian admits a simple iterative construction (Ch. 5).
 
 ## When the Jacobian is near-singular
 
@@ -200,8 +218,55 @@ which interpolates between Newton-Raphson ($\lambda = 0$) and gradient descent (
   - *Lumped form* $[\mathcal{V}_b]$: one 6-vector, no factoring. Used in §6.2.2 because the IK iteration just wants a tangent-space error vector for $J_b^\dagger$; the normalized-axis-vs-magnitude split isn't useful here.
   
   Implementation note: the matrix-log algorithm in §3.3.3 actually computes $\theta$ first (from the trace of the rotation block) and *then* normalizes $\mathcal{S}$. The IK loop in §6.2.2 silently re-lumps them: $\mathcal{V}_b := \mathcal{S}\theta$. As you approach the goal, $\theta \to 0$ and $\mathcal{V}_b \to 0$, while $\mathcal{S}$ can swing wildly because it's $\mathcal{V}_b / \theta$ — dividing by a vanishing magnitude amplifies noise. **The convergence test must use $\|\mathcal{V}_b\|$, never $\theta$ or $\mathcal{S}$ alone.**
+- **"Since $T_{sd}$ is already in the space frame, can I just use $\log(T_{sd})$ for the space twist?"** No. $T_{sd}$ is the desired pose expressed in the space frame, but IK needs the **error from the current pose to that desired pose**. The space-frame error is $\log(T_{sd}T_{sb}^{-1})$ because it is defined by $T_{sd} = e^{[\mathcal{V}_s]}T_{sb}$. The body-frame error is $\log(T_{sb}^{-1}T_{sd})$ because it is defined by $T_{sd} = T_{sb}e^{[\mathcal{V}_b]}$. $\log(T_{sd})$ would only be correct if the current pose were the identity transform.
 - **"Body or space — does the choice matter for convergence?"** Both converge in the same neighborhood. Body twist is more common because (a) the log lands there naturally, (b) the body Jacobian is constant when expressed in the EE frame (only the joint screws transform), simplifying code.
 - **"This looks like gradient descent on a Lie group."** Close — it *is* Newton-Raphson on a Lie group. The connection to retraction-based optimization on manifolds is exact: $\log$ is the retraction's inverse, $\exp$ is the retraction. (See Boumal, *An Introduction to Optimization on Smooth Manifolds*, if you want the full Riemannian optimization framing later.)
+
+## Worked example — Example 6.1: why $v_{xb} > 0$ at iteration 0
+
+Modern Robotics §6.2.2's planar-2R example is the cleanest place to see how a body twist's linear component differs from a "go-toward-the-goal" displacement vector.
+
+**Setup** (each link = 1 m, $\theta_d = (30°, 90°)$, initial guess $\theta^0 = (0°, 30°)$):
+
+| | Space coords | Body-frame coords at $\theta^0$ |
+|---|---|---|
+| EE (body origin) | $(1.866,\, 0.500)$ | $(0,\,0)$ |
+| Goal origin | $(0.366,\, 1.366)$ | $(-0.866,\, +1.500)$ |
+| EE orientation in space | rotated by $30°$ | identity |
+| Goal orientation in space | rotated by $120°$ | rotated by $+90°$ |
+
+Translation block of $T_{bd} = T_{sb}^{-1}T_{sd}$: $(-0.866,\, 1.500,\, 0)^\top$. So **the goal origin is in the $-\hat{x}_b$ direction** (with a strong $+\hat{y}_b$ component). Naively one expects $v_{xb}$ to be negative. The textbook's printed table says $v_{xb} = +0.498$. The full body twist returned by $\log(T_{bd})$ is:
+
+$$
+\mathcal{V}_b = (\omega_{zb},\, v_{xb},\, v_{yb}) = (1.571,\, 0.498,\, 1.858)
+$$
+
+**The resolution**: $v_b$ is *not* a displacement vector to the goal — it is the **tangent to a screw-motion arc** at $t=0$. The motion that takes initial → goal in unit time is a $90°$ CCW rotation about a screw axis (the *instantaneous center of rotation*, ICR, for a planar problem), not a straight-line slide.
+
+**Locate the ICR.** Setting the rigid-body velocity to zero for a planar twist $\mathcal{V}_b = (\omega_z, v_x, v_y)$ gives
+$$
+\text{ICR}_b = \Bigl(-\tfrac{v_{yb}}{\omega_{zb}},\;\tfrac{v_{xb}}{\omega_{zb}}\Bigr)
+= \Bigl(-\tfrac{1.858}{1.571},\;\tfrac{0.498}{1.571}\Bigr)
+\approx (-1.183,\; +0.317)
+$$
+i.e. **behind and slightly above** the EE in body coords. This is the dot labeled "screw axis" in Fig. 6.8 (right panel).
+
+**Tangent at the body origin.** Radial vector from ICR to EE in body coords is $\vec r = (0,0) - (-1.183,\, 0.317) = (1.183,\, -0.317)$. For CCW rotation, the instantaneous velocity of any point is $\omega_z\, \hat z \times \vec r = \omega_z\,(-r_y,\, r_x)$:
+$$
+v_b = 1.571 \cdot (0.317,\, 1.183) \approx (0.498,\, 1.858) \;\;\checkmark
+$$
+Forward-and-up tangent → positive $v_{xb}$, large positive $v_{yb}$. The arc sweeps $90°$ CCW around the ICR on radius $\|\vec r\| \approx 1.225$ m and lands at the goal origin $(-0.866,\, 1.5)$ in body coords.
+
+![Body-frame view: ICR, arc, and the v_b tangent at iteration 0](../assets/numerical-ik/example-6-1-screw-axis.png)
+
+**Everyday analogy — a satellite in orbit.** A satellite's velocity is always tangent to its orbit, not pointed at where it will be next or at the planet's center. Even if the satellite is heading toward the dark side of Earth, its velocity right now is sideways. Same structure here: $v_b$ is the tangent at $t=0$ of an arc around the ICR (the "planet center"), not a vector pointing at the goal. *Breakdown:* an orbit is closed and curvature is set by gravity; here the arc is just a $90°$ sweep dictated by where the goal pose lies, and the radius is whatever makes the start and end tangents both encode the body's required rotation. The shared structure is just *tangent ≠ displacement under rotation*.
+
+**Re-read the textbook line.** Lynch & Park's one-sentence resolution — *"the constant body velocity $\mathcal{V}_b$ that takes the initial guess to {goal} in one second is a rotation about the screw axis indicated in the figure"* — decoded:
+- "rotation about the screw axis" → the motion is a screw, dominated by the rotation $\omega_{zb}$.
+- "screw axis indicated in the figure" → the ICR at $(-1.183, 0.317)$ in body coords (the small dot in Fig. 6.8 right panel).
+- $v_b$ is therefore the tangent of that rotation at the body origin, which points forward-and-up in body coords because the ICR sits behind-and-above the EE.
+
+**Pure-translation special case.** When the goal has the same orientation as the EE, $\omega_b = 0$, the ICR formula above blows up (division by zero), the screw degenerates to a pure translation, and $v_b$ *does* equal the displacement to the goal divided by unit time. The rotational case in Example 6.1 is the geometrically interesting one precisely because the screw is nondegenerate.
 
 ## Connection to current learning thread
 

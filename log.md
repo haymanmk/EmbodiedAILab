@@ -333,3 +333,17 @@ The two scalar contexts reconcile via $\int_0^1 \mathcal{S}\dot\theta\,dt = \mat
 
 - `wiki/concepts/Numerical Inverse Kinematics.md` — added a new Common Confusions entry untangling the three $\theta$ roles with a small table-style breakdown and the reconciling integral.
 - `wiki/syntheses/learning-tracker.md` — appended session log entry.
+
+## [2026-05-28] query | /tutor — Example 6.1 walkthrough: why $v_{xb}$ is positive at iteration 0
+
+User studying Modern Robotics Example 6.1 (planar 2R, p. 229–230) noticed that the printed iteration-0 table reports $v_{xb} = +0.498$ even though the goal origin in body coords is at $(-0.866, +1.5)$, i.e. in the $-\hat{x}_b$ direction. Asked for an unpacking of Lynch & Park's one-sentence resolution ("the constant body velocity that takes the initial guess to {goal} in one second is a rotation about the screw axis").
+
+Resolution: $v_b$ is not a displacement vector — it is the tangent to a screw-motion arc at $t=0$. The ICR (instantaneous center of rotation, same as the planar screw axis) sits at $(-v_{yb}/\omega_{zb}, v_{xb}/\omega_{zb}) = (-1.183, 0.317)$ in body coords, *behind and slightly above* the EE. CCW rotation about that point gives a forward-and-up tangent at the body origin — hence $v_{xb} > 0$. Reproduced the textbook numbers exactly via $\omega_z \hat z \times \vec r$.
+
+Everyday analogy: a satellite in orbit has velocity always tangent to its orbit, never toward the planet center or the destination point on the orbit. Breakdown: gravity sets orbit curvature, whereas the screw arc curvature here is set by the rotation magnitude $\omega_{zb}$ and where the goal pose lies.
+
+- `wiki/concepts/Numerical Inverse Kinematics.md` — new "Worked example — Example 6.1: why $v_{xb} > 0$ at iteration 0" section with the body-frame coordinate table, ICR derivation, tangent calculation matching the textbook numbers, embedded matplotlib figure, satellite analogy with breakdown, decoded textbook quote, and the pure-translation degenerate case ($\omega_b = 0$ → $v_b$ equals straight-line displacement).
+- `wiki/assets/numerical-ik/example-6-1-screw-axis.py` and `.png` — matplotlib script and rendered figure showing body origin, goal origin, ICR, the arc trajectory, the $v_b$ tangent arrow, and the naive straight-line displacement line for contrast (rendered with `genesis_env` Python, which has matplotlib 3.10.9; base `miniforge3` does not).
+- `wiki/syntheses/learning-tracker.md` — appended session log entry.
+
+Also captured a feedback memory at `/home/hayman/.claude/projects/-home-hayman-Workspace-EmbodiedAILab/memory/feedback_mermaid_short_labels.md` (indexed in `MEMORY.md`): Mermaid block labels should be short plain text; put formulas in display-math blocks outside the diagram. Reason: long math-in-label nodes overflow horizontally and become unreadable. This caused the user to rewrite the "Side-by-side flow" section of [[Numerical Inverse Kinematics]] manually after the original tutor commit; the rule is now persisted.
