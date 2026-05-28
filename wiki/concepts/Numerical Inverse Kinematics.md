@@ -12,16 +12,18 @@ tags: [robotics, kinematics, inverse-kinematics, SE3, lie-groups, newton-raphson
 # Numerical Inverse Kinematics
 
 > Newton-Raphson on a Lie group. The matrix logarithm is what lets you treat "the gap between two poses" as a 6-vector that an inverse Jacobian can consume.
+>
+> **Reading angle**: think of $\mathcal{V}_b$ (or $\mathcal{V}_s$) as a **task-space guidance signal** — the direction and rate at which the end-effector wants to move to close the gap between the current pose (from FK) and the desired pose. The Jacobian pseudoinverse then translates that guidance into the actual joint-angle correction $\Delta\theta$. The chain is: *current pose & target pose → task-space guidance ($\mathcal{V}$) → joint-space correction ($J^\dagger \mathcal{V}$)*.
 
 ## Explain like I'm 5
 
-You're standing somewhere on a globe; your friend is somewhere else. Subtracting their latitude/longitude from yours is not a useful "how to walk there" instruction — near the poles those numbers lie about distances and directions. What you actually want is **a little arrow on the ground at your feet** that says "head this way, this far."
+You're standing somewhere on a globe; your friend is somewhere else. Subtracting their latitude/longitude from yours is not a useful "how to walk there" instruction — near the poles those numbers lie about distances and directions. What you actually want is **a little arrow on the ground at your feet** that says "head this way, this far." That arrow is your **guidance signal** — the direction and rate at which you should move to close the gap.
 
 The procedure that turns a *point on the globe* into an *arrow at your feet* is called a **logarithm map**.
 
-A robot end-effector pose is the same kind of object, just in a bigger space. You can't subtract two poses to get the "error." You ask for the arrow at your feet — except now the arrow is a **6-vector** (3 for which axis to spin around + 3 for the linear motion along it), and the procedure that produces it is the **matrix logarithm on SE(3)**. That 6-vector is the **body twist** $\mathcal{V}_b$.
+A robot end-effector pose is the same kind of object, just in a bigger space. You can't subtract two poses to get the "error." You ask for the arrow at your feet — except now the arrow is a **6-vector** (3 for which axis to spin around + 3 for the linear motion along it), and the procedure that produces it is the **matrix logarithm on SE(3)**. That 6-vector is the **body twist** $\mathcal{V}_b$, and its role is exactly the same as the arrow on the globe: *task-space guidance toward the target*.
 
-Once the error is a vector, the rest of Newton-Raphson goes through unchanged.
+Once the guidance is a vector, the rest of Newton-Raphson goes through unchanged — the inverse Jacobian translates that task-space guidance into the joint-angle correction the robot can actually execute.
 
 ## Bridges from
 
@@ -81,12 +83,15 @@ A few words on what's happening here:
 - The output $[\mathcal{V}_b]$ is a $4\times 4$ matrix in the Lie algebra $\mathfrak{se}(3)$, but it is parameterized by **only 6 numbers** — call them $(\omega_b, v_b) \in \mathbb{R}^6$, the angular and linear components of the **body twist** $\mathcal{V}_b$.
 - The bracket $[\cdot]$ is the "hat" operator that packs the 6 numbers back into the $4\times 4$ Lie-algebra form. The thing you actually use downstream is the 6-vector $\mathcal{V}_b \in \mathbb{R}^6$.
 - Interpretation: $\mathcal{V}_b$ is the **constant body twist** that, if applied for one unit of time, would slide your EE along a screw path from current pose to desired pose. By Chasles' theorem, every rigid-body displacement *can* be realized by exactly one such screw — so this representation is well-defined (modulo the $\pi$-rotation ambiguity).
+- **Guidance reading**: $\mathcal{V}_b$ is a task-space *guidance signal* — it tells the EE which screw motion would close the gap. The angular part $\omega_b$ says "spin around this axis at this rate"; the linear part $v_b$ says "translate along this screw at this rate." Together they answer "**in what direction and how fast should the EE move right now?**" — expressed in the EE's own body frame.
 
-This 6-vector is your error vector. It lives in a vector space (the Lie algebra $\mathfrak{se}(3) \cong \mathbb{R}^6$), so Newton-Raphson goes through.
+This 6-vector is your error vector (or equivalently, your task-space guidance signal). It lives in a vector space (the Lie algebra $\mathfrak{se}(3) \cong \mathbb{R}^6$), so Newton-Raphson goes through.
 
 ## Why **body** twist, not space twist
 
-Because the **body Jacobian** $J_b(\theta) \in \mathbb{R}^{6\times n}$ satisfies
+The body twist is the **EE-centered** version of the guidance — expressed in the frame the end-effector itself sees. The space twist is the same guidance described from the world-fixed observer's perspective. Both encode the *same physical screw motion*; only the coordinate frame in which the 6-vector lives differs.
+
+The reason §6.2.2 uses the body version specifically is that the **body Jacobian** $J_b(\theta) \in \mathbb{R}^{6\times n}$ satisfies
 $$
 \mathcal{V}_b = J_b(\theta)\, \dot\theta
 $$
@@ -94,21 +99,26 @@ i.e. joint rates map to *body* twists. So when you invert,
 $$
 \Delta\theta \;\approx\; J_b^\dagger(\theta)\, \mathcal{V}_b
 $$
-the frames match. If you used a space twist $\mathcal{V}_s$ here, you'd have to pair it with the space Jacobian $J_s$ instead. Both versions are valid; Modern Robotics presents the body version because $\log(T_{sb}^{-1}T_{sd})$ naturally lands in the body frame.
+the frames match. This is the step where **task-space guidance ($\mathcal{V}_b$) becomes a joint-space correction ($\Delta\theta$)** — $J_b^\dagger$ is the translator. If you used a space twist $\mathcal{V}_s$ here, you'd have to pair it with the space Jacobian $J_s$ instead; that's the equivalent body↔space pairing. Modern Robotics presents the body version because $\log(T_{sb}^{-1}T_{sd})$ naturally lands in the body frame.
 
-The two are related by the adjoint map:
+The two guidance representations are related by the adjoint map:
 $$
 \mathcal{V}_s = \mathrm{Ad}_{T_{sb}}\,\mathcal{V}_b, \qquad J_s = \mathrm{Ad}_{T_{sb}}\,J_b
 $$
-(Ch. 5 territory.)
+(Ch. 5 territory.) So picking $\{b\}$ or $\{s\}$ doesn't change the physical guidance, only the coordinates you write it in — and the matched Jacobian inverse on the other side produces the same joint correction either way.
 
 ## The full update equation
 
 $$
-\boxed{\;\theta^{i+1} = \theta^i + J_b^\dagger(\theta^i)\; \log\!\bigl(T_{sb}^{-1}(\theta^i)\, T_{sd}\bigr)\;}
+\boxed{\;\theta^{i+1} = \theta^i + \underbrace{J_b^\dagger(\theta^i)}_{\text{translator}}\; \underbrace{\log\!\bigl(T_{sb}^{-1}(\theta^i)\, T_{sd}\bigr)}_{\text{task-space guidance } \mathcal{V}_b}\;}
 $$
 
-Iterate until $\|\mathcal{V}_b\|$ falls below a tolerance (typically split into angular tolerance $\|\omega_b\| < \epsilon_\omega$ and linear tolerance $\|v_b\| < \epsilon_v$, because they have different units).
+Read this as two distinct roles meeting at one multiplication:
+
+- The **matrix log** produces the task-space guidance signal $\mathcal{V}_b$ — "the EE wants to slide along *this* screw at *this* rate to close the gap."
+- The **Jacobian pseudoinverse** $J_b^\dagger$ converts that task-space wish into the joint-angle correction that *actually* moves the manipulator: $\Delta\theta = J_b^\dagger\,\mathcal{V}_b$.
+
+Iterate until $\|\mathcal{V}_b\|$ falls below a tolerance — i.e., until the guidance signal vanishes, meaning the EE has nothing left to ask the joints to do. Typically the threshold is split into angular tolerance $\|\omega_b\| < \epsilon_\omega$ and linear tolerance $\|v_b\| < \epsilon_v$, because they have different units.
 
 ## Flow comparison
 
@@ -130,7 +140,7 @@ flowchart TB
     A2["desired pose"] --> D2["body-frame pose gap"]
     F2["current pose from FK"] --> D2
     D2 --> L2["matrix logarithm"]
-    L2 --> V2["body-twist error"]
+    L2 --> V2["body-twist guidance"]
     V2 --> U2["joint update"]
 ```
 
@@ -141,10 +151,12 @@ T_{bd} = T_{sb}^{-1}(\theta)\,T_{sd}
 $$
 
 $$
-[\mathcal{V}_b] = \log(T_{bd}), \qquad \Delta\theta = J_b^\dagger \mathcal{V}_b
+\underbrace{[\mathcal{V}_b] = \log(T_{bd})}_{\text{produce task-space guidance}},
+\qquad
+\underbrace{\Delta\theta = J_b^\dagger \mathcal{V}_b}_{\text{translate to joint-space correction}}
 $$
 
-The skeleton is identical; only **"form the error"** changes. The change is structural: when the task space is a manifold rather than a vector space, you need a logarithm map to produce a tangent-space error.
+The skeleton is identical to the vector-coordinate version; only **"form the guidance"** changes. The change is structural: when the task space is a manifold rather than a vector space, you need a logarithm map to produce a tangent-space guidance signal. After that, the inverse-Jacobian step works the same way it does in any Newton-Raphson scheme — translating task-space corrections into joint-space corrections.
 
 ## Visualization: log map on a sphere (the analogy)
 
@@ -337,9 +349,10 @@ Forward-and-up tangent → positive $v_{xb}$, large positive $v_{yb}$. The arc s
 
 ## Connection to current learning thread
 
-- The matrix log is the SE(3) analog of "tangent vector at the current point" — same role as $\nabla h(x)$ does in [[Constraint Gradients and Tangent Spaces]] (a vector in the tangent space, used to take a feasible step).
+- **Guidance signal interpretation** (the reading angle in the tagline): everywhere in this page that says "error vector" you can also read "task-space guidance signal." The matrix log produces it; the inverse Jacobian consumes it; iteration drives it to zero. This framing transfers cleanly to other Newton-style controllers — e.g. Whitney's resolved motion rate control reads $\mathcal{V}_b$ as a *commanded* end-effector velocity and integrates $\dot\theta = J_b^\dagger \mathcal{V}_b$ in real time, which is exactly the same task-space-to-joint-space translation, just streamed instead of iterated.
+- The matrix log is the SE(3) analog of "tangent vector at the current point" — same role as $\nabla h(x)$ does in [[Constraint Gradients and Tangent Spaces]] (a vector in the tangent space, used to take a feasible step). In both cases the tangent vector is *task-space guidance*; the surrounding machinery (constraint projection, Jacobian inverse) is what turns guidance into a feasible update.
 - The body Jacobian extends the linear-algebra Jacobian used in the simplified IK to the Lie-group setting. Real preliminaries live in Ch. 3 ([[Twist]], [[Exponential Coordinates of Rigid-Body Motion]]) and Ch. 5 ([[Body Jacobian]], [[Space Jacobian]]) — both of which are queued.
-- For teleoperation pipelines surveyed in [[VR Teleoperation in Simulation]], a damped-least-squares variant of this iteration is what actually runs inside Isaac Lab's IK controllers (and what cuRobo accelerates on GPU).
+- For teleoperation pipelines surveyed in [[VR Teleoperation in Simulation]], a damped-least-squares variant of this iteration is what actually runs inside Isaac Lab's IK controllers (and what cuRobo accelerates on GPU). At runtime, the operator's wrist pose is the *desired* $T_{sd}$ that changes every frame, $\mathcal{V}_b$ becomes the live guidance signal, and the manipulator joints chase it — the same structure as the IK loop here, just driven by a moving target.
 
 ## Origins
 

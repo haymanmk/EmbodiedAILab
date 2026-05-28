@@ -366,3 +366,17 @@ User shared a photo of their manual derivation. They started from $\vec v = \vec
 
 - `wiki/concepts/Numerical Inverse Kinematics.md` — added "Pitfall: deriving the ICR from $\vec v = \vec\omega \times \vec r$ gives the wrong sign" subsection with the correct setup, the expansion that produces $\vec p_{\text{ICR}}$ directly without a sign flip, and the "your $\vec r$ is the radial-from-ICR" alternative interpretation.
 - `wiki/syntheses/learning-tracker.md` — appended session log entry.
+
+## [2026-05-28] query | /tutor — weave task-space-guidance reading into Numerical IK page
+
+User articulated a unifying reading of the IK iteration: "$e^{[\mathcal{V}_b]}$ / $e^{[\mathcal{V}_s]}$ is the guidance for the transition from current pose (from FK) to desired pose; the body twist represents the rate and direction that guides the EE toward the target." Affirmed with one refinement — the body twist is *task-space* guidance (describes EE motion, not joint angles), and the Jacobian pseudoinverse $J_b^\dagger$ is what translates that task-space guidance into the joint-space correction $\Delta\theta$.
+
+Wove the framing into [[Numerical Inverse Kinematics]]:
+
+- Added "Reading angle" callout to the opening tagline naming the *task-space guidance signal → joint-space correction* chain.
+- Expanded ELI5 to call the globe arrow a "guidance signal."
+- Added a "Guidance reading" bullet under "The fix — matrix log gives you the body twist."
+- Rewrote the "Why body twist, not space twist" intro to lead with "EE-centered guidance" vs space twist as "world-fixed-observer's view of the same guidance"; emphasized $J_b^\dagger$ as the "translator" from task-space guidance to joint-space correction.
+- Annotated the boxed update equation with `translator` and `task-space guidance` underbraces.
+- Updated the second flow-chart node label "body-twist error" → "body-twist guidance" and added underbraces to the post-flow equations.
+- Added a "guidance signal interpretation" bullet to "Connection to current learning thread" tying Whitney's resolved motion rate control and Isaac Lab/cuRobo teleop IK to the same task-space-guidance → joint-space-correction chain (real-time vs iterative streaming of the same translation).
