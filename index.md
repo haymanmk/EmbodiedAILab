@@ -12,9 +12,11 @@ Content catalog for this vault. Every wiki page is listed here under its categor
 
 - [[Constraint gradient perpendicular to tangent - Claude explanation]] — Self-contained AI explanation of why $\nabla h \perp$ tangent of $h(x)=0$, contributing the chain-rule proof now merged into the concept page.
 - [[Deriving the Pseudoinverse Where the Formulas Come From - Heptabase AI Tutor]] — Heptabase AI Tutor lesson deriving Jacobian pseudoinverse formulas from optimization and KKT/Lagrange stationarity.
+- [[Generative Modeling by Estimating Gradients of the Data Distribution - Yang Song]] — Yang Song's blog: score-first treatment of diffusion (score matching → Langevin → NCSN → SDE → probability-flow ODE → Bayes-on-scores for inverse problems); explicit DDPM ↔ score-based unification.
 - [[Integrated Learning and Planning - Mao]] — Stanford Robotics Seminar on neuro-symbolic concepts for data-efficient robot learning, planning, contact-rich manipulation, spatial reasoning, and closed-loop agents.
 - [[Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware - Zhao et al]] — Primary ACT/ALOHA paper introducing action chunking, temporal ensembling, and low-cost bimanual imitation learning.
 - [[Modern Robotics - Lynch & Park]] — Lynch & Park textbook (Cambridge, 2017): geometric/PoE treatment of kinematics, dynamics, planning, control, grasping, and mobile robots; backbone of the foundation thread.
+- [[What are Diffusion Models - Lilian Weng]] — Lilian Weng's blog: DDPM-first survey of diffusion (forward kernel → ELBO → ε-loss → guidance → DDIM → distillation/consistency → LDM → unCLIP/Imagen → U-Net/ControlNet/DiT).
 
 ## Ingestion indices
 

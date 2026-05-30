@@ -2,9 +2,12 @@
 type: concept
 domain: research
 created: 2026-05-27
-updated: 2026-05-27
+updated: 2026-05-30
 aliases: ["diffusion model", "DDPM", "denoising diffusion", "score-based generative model"]
 tags: [generative-models, deep-learning, diffusion, score-matching, sampling]
+sources:
+  - "[[What are Diffusion Models - Lilian Weng]]"
+  - "[[Generative Modeling by Estimating Gradients of the Data Distribution - Yang Song]]"
 ---
 
 # Diffusion Models
@@ -176,19 +179,30 @@ A reasonable mental shortcut: **anywhere a robotics paper says "sample from a le
 
 - **"Diffusion" vs. "denoising autoencoder."** A denoising autoencoder learns to remove noise at *one* fixed noise level. A diffusion model learns to remove noise at *all* noise levels (timestep $t$ is a model input). That generalization is what enables sampling from pure noise.
 - **"Noise prediction" vs. "data prediction."** $\epsilon$-parameterization is most common; $x_0$-parameterization predicts the clean signal directly. They are algebraically interconvertible via $x_0 = (x_t - \sqrt{1-\bar\alpha_t}\,\epsilon)/\sqrt{\bar\alpha_t}$. $v$-parameterization mixes the two and is more stable at extreme timesteps.
-- **"DDPM" vs. "score-based SDE" vs. "diffusion."** DDPM is the discrete-time formulation (Ho et al. 2020). Score-based SDEs (Song et al. 2021) are the continuous-time view: forward is an SDE, reverse is a learned reverse-SDE, and the score function is what you learn. They converge to the same algorithms; "diffusion model" is the umbrella term.
+- **"DDPM" vs. "score-based SDE" vs. "diffusion."** DDPM is the discrete-time formulation (Ho et al. 2020). Score-based SDEs (Song et al. 2021) are the continuous-time view: forward is an SDE, reverse is a learned reverse-SDE, and the score function is what you learn. They converge to the same algorithms; "diffusion model" is the umbrella term. Yang Song's framing ([[Generative Modeling by Estimating Gradients of the Data Distribution - Yang Song]]) is that the two are *"different perspectives of the same model family, like wave mechanics and matrix mechanics in quantum mechanics"* — the ELBO Ho derives is the same weighted Fisher divergence the score-matching view writes down. If a paper says "noise predictor $\epsilon_\theta$" or "score network $s_\theta$," they are the same network up to the scalar $-1/\sqrt{1-\bar\alpha_t}$.
 - **"Latent diffusion."** Stable Diffusion and friends run the diffusion process not on pixels but on a VAE-compressed latent. This is an efficiency trick (smaller tensors, faster inference); the math is unchanged. Robotics policies usually run diffusion directly on raw action chunks because they're low-dimensional already.
 
 ## Origins / sources
+
+Primary papers:
 
 - **Sohl-Dickstein et al. 2015**, *Deep Unsupervised Learning using Nonequilibrium Thermodynamics* — original idea.
 - **Ho, Jain, Abbeel 2020**, *Denoising Diffusion Probabilistic Models (DDPM)* — the clean modern formulation, MSE noise-prediction loss.
 - **Song & Ermon 2019** + **Song et al. 2021** — score-matching view; SDE/ODE formulation.
 - **Nichol & Dhariwal 2021** — improved schedules (cosine), classifier guidance.
 - **Ho & Salimans 2022** — classifier-free guidance.
+- **Salimans & Ho 2022**, *Progressive Distillation* — halving sampling steps per iteration.
+- **Song et al. 2023**, *Consistency Models* — single-step generation via the consistency function.
+- **Rombach et al. 2022**, *Latent Diffusion (LDM)* — diffusion on VAE latents; Stable Diffusion's architecture.
+- **Peebles & Xie 2023**, *DiT* — transformer backbone for diffusion (the modern scale-up choice).
 - **Chi et al. 2023**, *Diffusion Policy: Visuomotor Policy Learning via Action Diffusion* — the robotics adaptation that matters here.
 
 (External links — paper PDFs not in `raw/assets/papers/` yet; queued under `[[Diffusion Policy]]` deep-read.)
+
+Canonical secondary surveys (both ingested into this vault, both worth reading end-to-end):
+
+- [[What are Diffusion Models - Lilian Weng]] — DDPM-first treatment: forward kernel → ELBO → ε-loss → guidance → DDIM → distillation → consistency models → LDM → unCLIP / Imagen → U-Net / ControlNet / DiT. The reference for "what equation does the network actually optimize."
+- [[Generative Modeling by Estimating Gradients of the Data Distribution - Yang Song]] — score-first treatment: score function → Langevin → NCSN → annealed Langevin → SDE generalization (VE / VP / sub-VP) → probability-flow ODE for exact likelihoods → Bayes-on-scores for inverse problems. The reference for "why is the score the right thing to model" and the unification with DDPM.
 
 ## Socratic check
 
@@ -210,4 +224,6 @@ A reasonable mental shortcut: **anywhere a robotics paper says "sample from a le
 
 ## Mentions
 
-- (none yet — to be cited from [[Diffusion Policy]] and [[Compositional Diffusion Constraint Solvers]] on the next pass)
+- [[What are Diffusion Models - Lilian Weng]] — ingested 2026-05-30; canonical secondary source for the DDPM-first derivation.
+- [[Generative Modeling by Estimating Gradients of the Data Distribution - Yang Song]] — ingested 2026-05-30; canonical secondary source for the score-based / SDE-first derivation.
+- (still queued: inbound from [[Diffusion Policy]] and [[Compositional Diffusion Constraint Solvers]] on the next pass)
