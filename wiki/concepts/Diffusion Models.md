@@ -37,7 +37,7 @@ A generative model is anything that, after training on a dataset, can produce ne
 |---|---|
 | **GANs** | One forward pass through a generator; trained adversarially against a discriminator. Fast at inference, notoriously unstable to train. |
 | **VAEs / autoregressive / normalizing flows** | Explicit probability models (likelihood-based), trained by maximum likelihood. Generally simpler to train than GANs, but sample quality historically lagged. |
-| **Diffusion** | Iterative denoising. Likelihood-based (well-defined training loss = MSE between predicted and actual noise), high sample quality, slow at inference (many denoising steps). |
+| **Diffusion** | Iterative denoising. Likelihood-based (well-defined training loss = MSE between predicted and actual noise), high sample quality, slow at inference (many denoising steps). Sidesteps the [[Normalizing Constant]] problem that hobbles direct density modeling. |
 
 Diffusion's appeal is **training stability + quality**: the loss is plain MSE on noise prediction; there is no minimax, no mode-collapse trap, no tricky normalization constant. The cost is paid at inference, where you need many (10–1000) denoising steps per sample. Most modern image generators (Stable Diffusion, Imagen, DALL·E 3) are diffusion-based; in robotics, the same recipe powers **Diffusion Policy** for action generation.
 
@@ -215,6 +215,7 @@ Canonical secondary surveys (both ingested into this vault, both worth reading e
 
 - [[Compositional Diffusion Constraint Solvers]] — exploits score additivity directly.
 - [[Constraint Gradients and Tangent Spaces]] — same gradient-field mental model, different target.
+- [[Normalizing Constant]] — the $Z_\theta$ that score-based / diffusion training avoids. Why "noise predictor" parameterizations exist at all.
 - [[Action Chunking Transformer]] — the regression baseline Diffusion Policy displaces on multimodal tasks.
 - [[Imitation Learning]] — the broader algorithmic context.
 - (red link) [[Diffusion Policy]] — application to robot action generation; the next deep-read.
