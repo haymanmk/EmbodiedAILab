@@ -2,7 +2,7 @@
 type: concept
 domain: research
 created: 2026-05-31
-updated: 2026-05-31
+updated: 2026-06-01
 aliases: ["basis function", "feature function", "fixed features", "feature extractor"]
 tags: [machine-learning, linear-models, foundations, bishop]
 sources:
@@ -73,6 +73,62 @@ The cost: you have to pick the basis functions yourself, *before* seeing the dat
 That paragraph is the conceptual bridge to Ch 6. **A hidden layer in a deep network IS a learned basis function** — one per hidden unit. The output layer is then a linear-in-$w$ combination of those learned features. Every modern deep network is the basis-function template with the basis functions trained jointly with the output weights.
 
 **Concretely:** when you see a 1-hidden-layer MLP $y(x, w, W) = w^T h(W x)$, read it as "linear regression in the basis $\phi_j(x) = h(W_j^T x)$ — except $W_j$ is learnable too." Stack more layers → richer learned features. The basis-function template never goes away; it just gets recursive.
+
+## Basis function vs activation function — a precise distinction
+
+A common conflation: are "basis function" and "activation function" the same thing? Almost — but not quite. The right mental model:
+
+> **A basis function = a linear projection + an activation function.**
+
+A neural-network *hidden unit* IS a basis function. The activation function is one *ingredient* inside it.
+
+Compare Bishop's standard sigmoidal basis function from §4.1.1 (generalized to multi-dim input):
+
+$$
+\phi_j(x) \;=\; \sigma\!\bigl(\underbrace{w_j^T x + b_j}_{\text{linear projection}}\bigr)
+$$
+
+with a single hidden unit in an MLP with sigmoid activation:
+
+$$
+h_j \;=\; \sigma\!\bigl(w_j^T x + b_j\bigr).
+$$
+
+**Identical expression.** A sigmoid hidden unit literally IS a sigmoidal basis function. The activation $\sigma$ is the **shape** (the fixed nonlinearity); the basis function is **shape + position + orientation** — i.e., the activation wrapped around a parametrized linear projection $(w_j, b_j)$.
+
+So the activation function is a *strictly smaller* concept than the basis function. It's the nonlinearity *without* the linear projection.
+
+### Translation table
+
+| Bishop Ch 4–5 vocab | Modern neural-network vocab | What it is |
+|---|---|---|
+| **Basis function** $\phi_j(x)$ | **Hidden unit** | Activation applied to a linear projection: $f(w_j^T x + b_j)$ |
+| **Feature vector** $\phi(x) = (\phi_1(x), \ldots, \phi_{M-1}(x))^T$ | **Hidden-layer activations** $h$ | The stacked outputs of all units in a layer |
+| **Activation function** $f$ (Bishop §5.4.1) | **Activation function** $f$ | Just the nonlinearity — $\sigma$, ReLU, GELU, etc. |
+| **Fixed basis functions** (Ch 4) | **Frozen layer** (uncommon) | The $(w_j, b_j)$ of each $\phi_j$ not trained |
+| **Learned basis functions** (Ch 6 motivation) | **Trainable hidden layer** (default) | $(w_j, b_j)$ trained jointly with the output weights |
+
+### A 1-hidden-layer MLP, rewritten in Bishop's language
+
+A standard 1-hidden-layer MLP for regression:
+
+$$
+y(x) \;=\; \sum_{j=1}^{M} v_j\,\underbrace{f(w_j^T x + b_j)}_{\text{hidden unit } h_j} \;+\; v_0.
+$$
+
+In Bishop's basis-function notation, this is just
+
+$$
+y(x) \;=\; \sum_{j=0}^{M-1} v_j\,\phi_j(x), \qquad \phi_j(x) = f(w_j^T x + b_j),\quad \phi_0(x) \equiv 1.
+$$
+
+— **a linear model with $M$ basis functions, where each basis function happens to be parametrized**. The output layer ($v$) does ordinary linear regression on top of the learned features. Deep networks just stack this recursively: each layer's hidden units become the basis functions for the next.
+
+### Why this distinction matters in practice
+
+It's why the activation-function literature is much smaller than the basis-function literature. There are ~10 activation functions in common use (sigmoid, tanh, ReLU, Leaky ReLU, ELU, GELU, SiLU, Swish, GLU, softplus). There are *infinitely many* basis functions you could construct from any of them by choosing different $(w_j, b_j)$. Picking the activation = picking the *shape* of every hidden unit in the layer; the network then learns *where to place* and *how to orient* each one via $(w_j, b_j)$.
+
+It's also why **"what activation should I use?"** has a small, mostly-settled answer (default: ReLU/GELU in hidden layers; sigmoid/softmax at output; see [[Generalized Linear Models]] for the canonical-link rule on the output side) — while **"what hidden units should I learn?"** has effectively no analytical answer. That's what training is for.
 
 ## Single-layer network diagram
 
