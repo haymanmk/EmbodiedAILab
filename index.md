@@ -16,6 +16,8 @@ Content catalog for this vault. Every wiki page is listed here under its categor
 - [[Integrated Learning and Planning - Mao]] — Stanford Robotics Seminar on neuro-symbolic concepts for data-efficient robot learning, planning, contact-rich manipulation, spatial reasoning, and closed-loop agents.
 - [[Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware - Zhao et al]] — Primary ACT/ALOHA paper introducing action chunking, temporal ensembling, and low-cost bimanual imitation learning.
 - [[Modern Robotics - Lynch & Park]] — Lynch & Park textbook (Cambridge, 2017): geometric/PoE treatment of kinematics, dynamics, planning, control, grasping, and mobile robots; backbone of the foundation thread.
+- [[Normalizing Flows Tutorial Part 1 - Eric Jang]] — Eric Jang's intuition-first NF tutorial: 1D → multivariate change of variables, Jacobian determinant as local volume distortion, TensorFlow `TransformedDistribution` / `Bijector` API, toy 2D MLP-bijector training example.
+- [[Normalizing Flows Tutorial Part 2 - Eric Jang]] — Eric Jang's NF architecture menu: MAF (fast train / slow sample), IAF (fast sample / slow train), Real-NVP (fast both ways, less expressive), Parallel WaveNet (MAF teacher → IAF student distillation, deployed in Google Assistant), BatchNorm bijector.
 - [[What are Diffusion Models - Lilian Weng]] — Lilian Weng's blog: DDPM-first survey of diffusion (forward kernel → ELBO → ε-loss → guidance → DDIM → distillation/consistency → LDM → unCLIP/Imagen → U-Net/ControlNet/DiT).
 
 ## Ingestion indices
@@ -56,6 +58,7 @@ Content catalog for this vault. Every wiki page is listed here under its categor
 
 ## Syntheses
 
+- [[Diffusion Crash Course - synthesis]] — Weekend (~12–16h) curriculum to acquire the diffusion-models map: probability fundamentals → score matching → DDPM derivation → modern variations (DDIM/CFG/LDM/DiT) → Diffusion Policy; with textbook chapters, papers, and a depth-dive matrix for after the weekend.
 - [[LeRobot Documentation Index]] — Searchable local map of the official LeRobot docs and a recommended reading path.
 - [[Modern Robotics Development - synthesis]] — Whole-picture overview of modern robotics development, core tools, and realistic self-researcher paths.
 - [[learning-tracker]] — curriculum, coverage map, recommendations, session log (agent-maintained)

@@ -4,7 +4,7 @@ domain: research
 created: 2026-05-30
 updated: 2026-05-30
 source_url: https://lilianweng.github.io/posts/2021-07-11-diffusion-models/
-source_path: raw/What are Diffusion Models?.md
+source_path: raw/diffusion-model/What are Diffusion Models?.md
 source_format: web
 author: Lilian Weng
 published: 2021-07-11

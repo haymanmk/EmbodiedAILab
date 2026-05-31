@@ -4,7 +4,7 @@ domain: research
 created: 2026-05-30
 updated: 2026-05-30
 source_url: https://yang-song.net/blog/2021/score/
-source_path: raw/Generative Modeling by Estimating Gradients of the Data Distribution.md
+source_path: raw/diffusion-model/Generative Modeling by Estimating Gradients of the Data Distribution.md
 source_format: web
 author: Yang Song
 published: 2021-05
