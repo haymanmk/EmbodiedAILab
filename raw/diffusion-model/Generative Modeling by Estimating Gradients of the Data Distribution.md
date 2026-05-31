@@ -221,7 +221,7 @@ In order to build such a generative model, we first need a way to represent a pr
 
 via 
 $$
-(\text{1}) p_{\theta} \left(\right. \mathbf{x} \left.\right) = \frac{e^{- f_{\theta} \left(\right. \mathbf{x} \left.\right)}}{Z_{\theta}} ,
+(\text{1}) p_{\theta} \left( \mathbf{x} \right) = \frac{e^{- f_{\theta} \left( \mathbf{x} \right)}}{Z_{\theta}} ,
 $$
  where $Z_{\theta} > 0$ is a normalizing constant dependent on $\theta$, such that $\int p_{\theta} \left(\right. \mathbf{x} \left.\right) \text{d} \mathbf{x} = 1$. Here the function $f_{\theta} \left(\right. \mathbf{x} \left.\right)$ is often called an unnormalized probabilistic model, or energy-based model
 
@@ -235,7 +235,7 @@ $$
 
 We can train $p_{\theta} \left(\right. \mathbf{x} \left.\right)$ by maximizing the log-likelihood of the data 
 $$
-(\text{2}) \underset{\theta}{max} \sum_{i = 1}^{N} log ⁡ p_{\theta} \left(\right. \mathbf{x}_{i} \left.\right) .
+(\text{2}) \underset{\theta}{max} \sum_{i = 1}^{N} \log  p_{\theta} \left( \mathbf{x}_{i} \right) .
 $$
  However, equation $(\text{2})$ requires $p_{\theta} \left(\right. \mathbf{x} \left.\right)$ to be a normalized probability density function. This is undesirable because in order to compute $p_{\theta} \left(\right. \mathbf{x} \left.\right)$, we must evaluate the normalizing constant $Z_{\theta}$ —a typically intractable quantity for any general $f_{\theta} \left(\right. \mathbf{x} \left.\right)$. Thus to make maximum likelihood training feasible, likelihood-based models must either restrict their model architectures (e.g., causal convolutions in autoregressive models, invertible networks in normalizing flow models) to make $Z_{\theta}$ tractable, or approximate the normalizing constant (e.g., variational inference in VAEs, or MCMC sampling used in contrastive divergence
 
@@ -249,7 +249,7 @@ $$
 
 By modeling the score function instead of the density function, we can sidestep the difficulty of intractable normalizing constants. The **score function** of a distribution $p \left(\right. \mathbf{x} \left.\right)$ is defined as 
 $$
-\nabla_{\mathbf{x}} log ⁡ p \left(\right. \mathbf{x} \left.\right) ,
+\nabla_{\mathbf{x}} \log  p \left( \mathbf{x} \right) ,
 $$
  and a model for the score function is called a **score-based model**
 
@@ -262,7 +262,7 @@ $$
 , which we denote as $\mathbf{s}_{\theta} \left(\right. \mathbf{x} \left.\right)$. The score-based model is learned such that $\mathbf{s}_{\theta} \left(\right. \mathbf{x} \left.\right) \approx \nabla_{\mathbf{x}} log ⁡ p \left(\right. \mathbf{x} \left.\right)$, and can be parameterized without worrying about the normalizing constant. For example, we can easily parameterize a score-based model with the energy-based model defined in equation $(\text{1})$, via
 
 $$
-(\text{3}) \mathbf{s}_{\theta} \left(\right. \mathbf{x} \left.\right) = \nabla_{\mathbf{x}} log ⁡ p_{\theta} \left(\right. \mathbf{x} \left.\right) = - \nabla_{\mathbf{x}} f_{\theta} \left(\right. \mathbf{x} \left.\right) - \underset{= 0}{\underbrace{\nabla_{\mathbf{x}} log ⁡ Z_{\theta}}} = - \nabla_{\mathbf{x}} f_{\theta} \left(\right. \mathbf{x} \left.\right) .
+(\text{3}) \mathbf{s}_{\theta} \left( \mathbf{x} \right) = \nabla_{\mathbf{x}} \log  p_{\theta} \left( \mathbf{x} \right) = - \nabla_{\mathbf{x}} f_{\theta} \left( \mathbf{x} \right) - \underset{= 0}{\underbrace{\nabla_{\mathbf{x}} \log  Z_{\theta}}} = - \nabla_{\mathbf{x}} f_{\theta} \left( \mathbf{x} \right) .
 $$
 
 Note that the score-based model $\mathbf{s}_{\theta} \left(\right. \mathbf{x} \left.\right)$ is independent of the normalizing constant $Z_{\theta}$! This significantly expands the family of models that we can tractably use, since we don’t need any special architectures to make the normalizing constant tractable.
@@ -321,7 +321,7 @@ to draw samples from it.
 Langevin dynamics provides an MCMC procedure to sample from a distribution $p \left(\right. \mathbf{x} \left.\right)$ using only its score function $\nabla_{\mathbf{x}} log ⁡ p \left(\right. \mathbf{x} \left.\right)$. Specifically, it initializes the chain from an arbitrary prior distribution $\mathbf{x}_{0} sim \pi \left(\right. \mathbf{x} \left.\right)$, and then iterates the following
 
 $$
-(\text{6}) \mathbf{x}_{i + 1} \leftarrow \mathbf{x}_{i} + \epsilon \nabla_{\mathbf{x}} log ⁡ p \left(\right. \mathbf{x} \left.\right) + \sqrt{2 \epsilon} \mathbf{z}_{i} , i = 0 , 1 , \hdots , K ,
+(\text{6}) \mathbf{x}_{i + 1} \leftarrow \mathbf{x}_{i} + \epsilon \nabla_{\mathbf{x}} \log  p \left( \mathbf{x} \right) + \sqrt{2 \epsilon} \mathbf{z}_{i} , i = 0 , 1 , \hdots , K ,
 $$
 
 where $\mathbf{z}_{i} sim \mathcal{N} \left(\right. 0 , I \left.\right)$. When $\epsilon \rightarrow 0$ and $K \rightarrow \infty$, $\mathbf{x}_{K}$ obtained from the procedure in $(\text{6})$ converges to a sample from $p \left(\right. \mathbf{x} \left.\right)$ under some regularity conditions. In practice, the error is negligible when $\epsilon$ is sufficiently small and $K$ is sufficiently large.
@@ -351,7 +351,7 @@ Score-based generative modeling with score matching + Langevin dynamics.
 The key challenge is the fact that the estimated score functions are inaccurate in low density regions, where few data points are available for computing the score matching objective. This is expected as score matching minimizes the Fisher divergence
 
 $$
-\mathbb{E}_{p \left(\right. \mathbf{x} \left.\right)} \left[\right. \parallel \nabla_{\mathbf{x}} log ⁡ p \left(\right. \mathbf{x} \left.\right) - \mathbf{s}_{\theta} \left(\right. \mathbf{x} \left.\right) \parallel_{2}^{2} \left]\right. = \int p \left(\right. \mathbf{x} \left.\right) \parallel \nabla_{\mathbf{x}} log ⁡ p \left(\right. \mathbf{x} \left.\right) - \mathbf{s}_{\theta} \left(\right. \mathbf{x} \left.\right) \parallel_{2}^{2} d \mathbf{x} .
+\mathbb{E}_{p \left( \mathbf{x} \right)} \left[ \parallel \nabla_{\mathbf{x}} \log  p \left( \mathbf{x} \right) - \mathbf{s}_{\theta} \left( \mathbf{x} \right) \parallel_{2}^{2} \left]\right. = \int p \left( \mathbf{x} \right) \parallel \nabla_{\mathbf{x}} \log  p \left( \mathbf{x} \right) - \mathbf{s}_{\theta} \left( \mathbf{x} \right) \parallel_{2}^{2} d \mathbf{x} .
 $$
 
 Since the $ℓ_{2}$ differences between the true data score function and score-based model are weighted by $p \left(\right. \mathbf{x} \left.\right)$, they are largely ignored in low density regions where $p \left(\right. \mathbf{x} \left.\right)$ is small. This behavior can lead to subpar results, as illustrated by the figure below:
@@ -386,7 +386,7 @@ To achieve the best of both worlds, we use multiple scales of noise perturbation
 . Suppose we always perturb the data with isotropic Gaussian noise, and let there be a total of $L$ increasing standard deviations $\sigma_{1} < \sigma_{2} < \hdots < \sigma_{L}$. We first perturb the data distribution $p \left(\right. \mathbf{x} \left.\right)$ with each of the Gaussian noise $\mathcal{N} \left(\right. 0 , \sigma_{i}^{2} I \left.\right) , i = 1 , 2 , \hdots , L$ to obtain a noise-perturbed distribution
 
 $$
-p_{\sigma_{i}} \left(\right. \mathbf{x} \left.\right) = \int p \left(\right. \mathbf{y} \left.\right) \mathcal{N} \left(\right. \mathbf{x} ; \mathbf{y} , \sigma_{i}^{2} I \left.\right) d \mathbf{y} .
+p_{\sigma_{i}} \left( \mathbf{x} \right) = \int p \left( \mathbf{y} \right) \mathcal{N} \left( \mathbf{x} ; \mathbf{y} , \sigma_{i}^{2} I \right) d \mathbf{y} .
 $$
 
 Note that we can easily draw samples from $p_{\sigma_{i}} \left(\right. \mathbf{x} \left.\right)$ by sampling $\mathbf{x} sim p \left(\right. \mathbf{x} \left.\right)$ and computing $\mathbf{x} + \sigma_{i} \mathbf{z}$, with $\mathbf{z} sim \mathcal{N} \left(\right. 0 , I \left.\right)$.
@@ -418,7 +418,7 @@ Perturbing an image with multiple scales of Gaussian noise.
 The training objective for $\mathbf{s}_{\theta} \left(\right. \mathbf{x} , i \left.\right)$ is a weighted sum of Fisher divergences for all noise scales. In particular, we use the objective below:
 
 $$
-(\text{7}) \sum_{i = 1}^{L} \lambda \left(\right. i \left.\right) \mathbb{E}_{p_{\sigma_{i}} \left(\right. \mathbf{x} \left.\right)} \left[\right. \parallel \nabla_{\mathbf{x}} log ⁡ p_{\sigma_{i}} \left(\right. \mathbf{x} \left.\right) - \mathbf{s}_{\theta} \left(\right. \mathbf{x} , i \left.\right) \parallel_{2}^{2} \left]\right. ,
+(\text{7}) \sum_{i = 1}^{L} \lambda \left( i \right) \mathbb{E}_{p_{\sigma_{i}} \left( \mathbf{x} \right)} \left[ \parallel \nabla_{\mathbf{x}} \log  p_{\sigma_{i}} \left( \mathbf{x} \right) - \mathbf{s}_{\theta} \left( \mathbf{x} , i \right) \parallel_{2}^{2} \left]\right. ,
 $$
 
 where $\lambda \left(\right. i \left.\right) \in \mathbb{R}_{> 0}$ is a positive weighting function, often chosen to be $\lambda \left(\right. i \left.\right) = \sigma_{i}^{2}$. The objective $(\text{7})$ can be optimized with score matching, exactly as in optimizing the naive (unconditional) score-based model $\mathbf{s}_{\theta} \left(\right. \mathbf{x} \left.\right)$.
@@ -535,7 +535,7 @@ Perturbing data to noise with a continuous-time stochastic process.
 How can we represent a stochastic process in a concise way? Many stochastic processes ([diffusion processes](https://en.wikipedia.org/wiki/Diffusion_process) in particular) are solutions of stochastic differential equations (SDEs). In general, an SDE possesses the following form:
 
 $$
-(\text{8}) d \mathbf{x} = \mathbf{f} \left(\right. \mathbf{x} , t \left.\right) d t + g \left(\right. t \left.\right) d \mathbf{w} ,
+(\text{8}) d \mathbf{x} = \mathbf{f} \left( \mathbf{x} , t \right) d t + g \left( t \right) d \mathbf{w} ,
 $$
 
 where $\mathbf{f} \left(\right. \cdot , t \left.\right) : \mathbb{R}^{d} \rightarrow \mathbb{R}^{d}$ is a vector-valued function called the drift coefficient, $g \left(\right. t \left.\right) \in \mathbb{R}$ is a real-valued function called the diffusion coefficient, $\mathbf{w}$ denotes a standard [Brownian motion](https://en.wikipedia.org/wiki/Brownian_motion), and $d \mathbf{w}$ can be viewed as infinitesimal white noise. The solution of a stochastic differential equation is a continuous collection of random variables $\left{\right. \mathbf{x} \left(\right. t \left.\right) \left.\right}_{t \in \left[\right. 0 , T \left]\right.}$. These random variables trace stochastic trajectories as the time index $t$ grows from the start time $0$ to the end time $T$. Let $p_{t} \left(\right. \mathbf{x} \left.\right)$ denote the (marginal) probability density function of $\mathbf{x} \left(\right. t \left.\right)$. Here $t \in \left[\right. 0 , T \left]\right.$ is analogous to $i = 1 , 2 , \hdots , L$ when we had a finite number of noise scales, and $p_{t} \left(\right. \mathbf{x} \left.\right)$ is analogous to $p_{\sigma_{i}} \left(\right. \mathbf{x} \left.\right)$. Clearly, $p_{0} \left(\right. \mathbf{x} \left.\right) = p \left(\right. \mathbf{x} \left.\right)$ is the data distribution since no perturbation is applied to data at $t = 0$. After perturbing $p \left(\right. \mathbf{x} \left.\right)$ with the stochastic process for a sufficiently long time $T$, $p_{T} \left(\right. \mathbf{x} \left.\right)$ becomes close to a tractable noise distribution $\pi \left(\right. \mathbf{x} \left.\right)$, called a **prior distribution**. We note that $p_{T} \left(\right. \mathbf{x} \left.\right)$ is analogous to $p_{\sigma_{L}} \left(\right. \mathbf{x} \left.\right)$ in the case of finite noise scales, which corresponds to applying the largest noise perturbation $\sigma_{L}$ to the data.
@@ -575,7 +575,7 @@ Importantly, any SDE has a corresponding reverse SDE
 , whose closed form is given by
 
 $$
-(\text{10}) d \mathbf{x} = \left[\right. \mathbf{f} \left(\right. \mathbf{x} , t \left.\right) - g^{2} \left(\right. t \left.\right) \nabla_{\mathbf{x}} log ⁡ p_{t} \left(\right. \mathbf{x} \left.\right) \left]\right. d t + g \left(\right. t \left.\right) d \mathbf{w} .
+(\text{10}) d \mathbf{x} = \left[ \mathbf{f} \left( \mathbf{x} , t \right) - g^{2} \left( t \right) \nabla_{\mathbf{x}} \log  p_{t} \left( \mathbf{x} \right) \left]\right. d t + g \left( t \right) d \mathbf{w} .
 $$
 
 Here $d t$ represents a negative infinitesimal time step, since the SDE $(\text{10})$ needs to be solved backwards in time (from $t = T$ to $t = 0$). In order to compute the reverse SDE, we need to estimate $\nabla_{\mathbf{x}} log ⁡ p_{t} \left(\right. \mathbf{x} \left.\right)$, which is exactly the **score function** of $p_{t} \left(\right. \mathbf{x} \left.\right)$.
@@ -591,7 +591,7 @@ Solving the reverse SDE requires us to know the terminal distribution $p_{T} \le
 Our training objective for $\mathbf{s}_{\theta} \left(\right. \mathbf{x} , t \left.\right)$ is a continuous weighted combination of Fisher divergences, given by
 
 $$
-(\text{11}) \mathbb{E}_{t \in \mathcal{U} \left(\right. 0 , T \left.\right)} \mathbb{E}_{p_{t} \left(\right. \mathbf{x} \left.\right)} \left[\right. \lambda \left(\right. t \left.\right) \parallel \nabla_{\mathbf{x}} log ⁡ p_{t} \left(\right. \mathbf{x} \left.\right) - \mathbf{s}_{\theta} \left(\right. \mathbf{x} , t \left.\right) \parallel_{2}^{2} \left]\right. ,
+(\text{11}) \mathbb{E}_{t \in \mathcal{U} \left( 0 , T \right)} \mathbb{E}_{p_{t} \left( \mathbf{x} \right)} \left[ \lambda \left( t \right) \parallel \nabla_{\mathbf{x}} \log  p_{t} \left( \mathbf{x} \right) - \mathbf{s}_{\theta} \left( \mathbf{x} , t \right) \parallel_{2}^{2} \left]\right. ,
 $$
 
 where $\mathcal{U} \left(\right. 0 , T \left.\right)$ denotes a uniform distribution over the time interval $\left[\right. 0 , T \left]\right.$, and $\lambda : \mathbb{R} \rightarrow \mathbb{R}_{> 0}$ is a positive weighting function. Typically we use $\lambda \left(\right. t \left.\right) \propto 1 / \mathbb{E} \left[\right. \parallel \nabla_{\mathbf{x} \left(\right. t \left.\right)} log ⁡ p \left(\right. \mathbf{x} \left(\right. t \left.\right) \mid \mathbf{x} \left(\right. 0 \left.\right) \left.\right) \parallel_{2}^{2} \left]\right.$ to balance the magnitude of different score matching losses across time.
@@ -615,7 +615,7 @@ and sliced score matching
 . Once our score-based model $\mathbf{s}_{\theta} \left(\right. \mathbf{x} , t \left.\right)$ is trained to optimality, we can plug it into the expression of the reverse SDE in $(\text{10})$ to obtain an estimated reverse SDE.
 
 $$
-(\text{12}) d \mathbf{x} = \left[\right. \mathbf{f} \left(\right. \mathbf{x} , t \left.\right) - g^{2} \left(\right. t \left.\right) \mathbf{s}_{\theta} \left(\right. \mathbf{x} , t \left.\right) \left]\right. d t + g \left(\right. t \left.\right) d \mathbf{w} .
+(\text{12}) d \mathbf{x} = \left[ \mathbf{f} \left( \mathbf{x} , t \right) - g^{2} \left( t \right) \mathbf{s}_{\theta} \left( \mathbf{x} , t \right) \left]\right. d t + g \left( t \right) d \mathbf{w} .
 $$
 
 We can start with $\mathbf{x} \left(\right. T \left.\right) sim \pi$, and solve the above reverse SDE to obtain a sample $\mathbf{x} \left(\right. 0 \left.\right)$. Let us denote the distribution of $\mathbf{x} \left(\right. 0 \left.\right)$ obtained in such way as $p_{\theta}$. When the score-based model $\mathbf{s}_{\theta} \left(\right. \mathbf{x} , t \left.\right)$ is well-trained, we have $p_{\theta} \approx p_{0}$, in which case $\mathbf{x} \left(\right. 0 \left.\right)$ is an approximate sample from the data distribution $p_{0}$.
@@ -631,7 +631,7 @@ When $\lambda \left(\right. t \left.\right) = g^{2} \left(\right. t \left.\right
 :
 
 $$
-KL ⁡ \left(\right. p_{0} \left(\right. \mathbf{x} \left.\right) \parallel p_{\theta} \left(\right. \mathbf{x} \left.\right) \left.\right) \leq \frac{T}{2} \mathbb{E}_{t \in \mathcal{U} \left(\right. 0 , T \left.\right)} \mathbb{E}_{p_{t} \left(\right. \mathbf{x} \left.\right)} \left[\right. \lambda \left(\right. t \left.\right) \parallel \nabla_{\mathbf{x}} log ⁡ p_{t} \left(\right. \mathbf{x} \left.\right) - \mathbf{s}_{\theta} \left(\right. \mathbf{x} , t \left.\right) \parallel_{2}^{2} \left]\right. \\ (\text{13}) + KL ⁡ \left(\right. p_{T} \parallel \pi \left.\right) .
+KL  \left( p_{0} \left( \mathbf{x} \right) \parallel p_{\theta} \left( \mathbf{x} \right) \right) \leq \frac{T}{2} \mathbb{E}_{t \in \mathcal{U} \left( 0 , T \right)} \mathbb{E}_{p_{t} \left( \mathbf{x} \right)} \left[ \lambda \left( t \right) \parallel \nabla_{\mathbf{x}} \log  p_{t} \left( \mathbf{x} \right) - \mathbf{s}_{\theta} \left( \mathbf{x} , t \right) \parallel_{2}^{2} \left]\right. \\ (\text{13}) + KL  \left( p_{T} \parallel \pi \right) .
 $$
 
 Due to this special connection to the KL divergence and the equivalence between minimizing KL divergences and maximizing likelihood for model training, we call $\lambda \left(\right. t \left.\right) = g \left(\right. t \left.\right)^{2}$ the **likelihood weighting function**. Using this likelihood weighting function, we can train score-based generative models to achieve very high likelihoods, comparable or even superior to state-of-the-art autoregressive models
@@ -649,7 +649,9 @@ Due to this special connection to the KL divergence and the equivalence between 
 By solving the estimated reverse SDE with numerical SDE solvers, we can simulate the reverse stochastic process for sample generation. Perhaps the simplest numerical SDE solver is the [Euler-Maruyama method](https://en.wikipedia.org/wiki/Euler%E2%80%93Maruyama_method). When applied to our estimated reverse SDE, it discretizes the SDE using finite time steps and small Gaussian noise. Specifically, it chooses a small negative time step $\Delta t \approx 0$, initializes $t \leftarrow T$, and iterates the following procedure until $t \approx 0$:
 
 $$
-\Delta \mathbf{x} & \leftarrow \left[\right. \mathbf{f} \left(\right. \mathbf{x} , t \left.\right) - g^{2} \left(\right. t \left.\right) \mathbf{s}_{\theta} \left(\right. \mathbf{x} , t \left.\right) \left]\right. \Delta t + g \left(\right. t \left.\right) \sqrt{\left|\right. \Delta t \left|\right.} \mathbf{z}_{t} \\ \mathbf{x} & \leftarrow \mathbf{x} + \Delta \mathbf{x} \\ t & \leftarrow t + \Delta t ,
+\begin{aligned}
+\Delta \mathbf{x} & \leftarrow \left[ \mathbf{f} \left( \mathbf{x} , t \right) - g^{2} \left( t \right) \mathbf{s}_{\theta} \left( \mathbf{x} , t \right) \left]\right. \Delta t + g \left( t \right) \sqrt{\mid  \Delta t \mid } \mathbf{z}_{t} \\ \mathbf{x} & \leftarrow \mathbf{x} + \Delta \mathbf{x} \\ t & \leftarrow t + \Delta t ,
+\end{aligned}
 $$
 
 Here $\mathbf{z}_{t} sim \mathcal{N} \left(\right. 0 , I \left.\right)$. The Euler-Maruyama method is qualitatively similar to Langevin dynamics—both update $\mathbf{x}$ by following score functions perturbed with Gaussian noise.
@@ -751,7 +753,7 @@ In
 , given by
 
 $$
-(\text{14}) d \mathbf{x} = \left[\right. \mathbf{f} \left(\right. \mathbf{x} , t \left.\right) - \frac{1}{2} g^{2} \left(\right. t \left.\right) \nabla_{\mathbf{x}} log ⁡ p_{t} \left(\right. \mathbf{x} \left.\right) \left]\right. d t .
+(\text{14}) d \mathbf{x} = \left[ \mathbf{f} \left( \mathbf{x} , t \right) - \frac{1}{2} g^{2} \left( t \right) \nabla_{\mathbf{x}} \log  p_{t} \left( \mathbf{x} \right) \left]\right. d t .
 $$
 
 The following figure depicts trajectories of both SDEs and probability flow ODEs. Although ODE trajectories are noticeably smoother than SDE trajectories, they convert the same data distribution to the same prior distribution and vice versa, sharing the same set of marginal distributions $\left{\right. p_{t} \left(\right. \mathbf{x} \left.\right) \left.\right}_{t \in \left[\right. 0 , T \left]\right.}$. In other words, trajectories obtained by solving the probability flow ODE have the same marginal distributions as the SDE trajectories.
@@ -842,7 +844,7 @@ When training score-based models with the **likelihood weighting** we discussed 
 Score-based generative models are particularly suitable for solving inverse problems. At its core, inverse problems are same as Bayesian inference problems. Let $\mathbf{x}$ and $\mathbf{y}$ be two random variables, and suppose we know the forward process of generating $\mathbf{y}$ from $\mathbf{x}$, represented by the transition probability distribution $p \left(\right. \mathbf{y} \mid \mathbf{x} \left.\right)$. The inverse problem is to compute $p \left(\right. \mathbf{x} \mid \mathbf{y} \left.\right)$. From Bayes’ rule, we have $p \left(\right. \mathbf{x} \mid \mathbf{y} \left.\right) = p \left(\right. \mathbf{x} \left.\right) p \left(\right. \mathbf{y} \mid \mathbf{x} \left.\right) / \int p \left(\right. \mathbf{x} \left.\right) p \left(\right. \mathbf{y} \mid \mathbf{x} \left.\right) d \mathbf{x}$. This expression can be greatly simplified by taking gradients with respect to $\mathbf{x}$ on both sides, leading to the following Bayes’ rule for score functions:
 
 $$
-(\text{15}) \nabla_{\mathbf{x}} log ⁡ p \left(\right. \mathbf{x} \mid \mathbf{y} \left.\right) = \nabla_{\mathbf{x}} log ⁡ p \left(\right. \mathbf{x} \left.\right) + \nabla_{\mathbf{x}} log ⁡ p \left(\right. \mathbf{y} \mid \mathbf{x} \left.\right) .
+(\text{15}) \nabla_{\mathbf{x}} \log  p \left( \mathbf{x} \mid \mathbf{y} \right) = \nabla_{\mathbf{x}} \log  p \left( \mathbf{x} \right) + \nabla_{\mathbf{x}} \log  p \left( \mathbf{y} \mid \mathbf{x} \right) .
 $$
 
 Through score matching, we can train a model to estimate the score function of the unconditional data distribution, i.e., $\mathbf{s}_{\theta} \left(\right. \mathbf{x} \left.\right) \approx \nabla_{\mathbf{x}} log ⁡ p \left(\right. \mathbf{x} \left.\right)$. This will allow us to easily compute the posterior score function $\nabla_{\mathbf{x}} log ⁡ p \left(\right. \mathbf{x} \mid \mathbf{y} \left.\right)$ from the known forward process $p \left(\right. \mathbf{y} \mid \mathbf{x} \left.\right)$ via equation $(\text{15})$, and sample from it with Langevin-type sampling
@@ -1070,7 +1072,7 @@ It is my conviction that these challenges will soon be solved with the joint eff
 1. Hereafter we only consider probability density functions. Probability mass functions are similar.
 2. Fisher divergence is typically between two distributions p and q, defined as 
 	$$
-	(\text{4}) \mathbb{E}_{p \left(\right. \mathbf{x} \left.\right)} \left[\right. \parallel \nabla_{\mathbf{x}} log ⁡ p \left(\right. \mathbf{x} \left.\right) - \nabla_{\mathbf{x}} log ⁡ q \left(\right. \mathbf{x} \left.\right) \parallel_{2}^{2} \left]\right. .
+	(\text{4}) \mathbb{E}_{p \left( \mathbf{x} \right)} \left[ \parallel \nabla_{\mathbf{x}} \log  p \left( \mathbf{x} \right) - \nabla_{\mathbf{x}} \log  q \left( \mathbf{x} \right) \parallel_{2}^{2} \left]\right. .
 	$$
 	 Here we slightly abuse the term as the name of a closely related expression for score-based models.
 3. Commonly used score matching methods include denoising score matching

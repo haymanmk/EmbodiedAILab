@@ -20,7 +20,7 @@ Cross-domain links are encouraged when they serve this focus. For example, a tex
 
 ## Three Layers
 
-1. **Raw sources** (`raw/`) — immutable. The user adds these (e.g. via Obsidian Web Clipper). You read but never modify.
+1. **Raw sources** (`raw/`) — substantively immutable. The user adds these (e.g. via Obsidian Web Clipper). You may apply **rendering-only fixes** (LaTeX escapes, malformed `\left(\right.` pairs, stripped function macros like `sim`/`log` without their backslash, invisible-function-application U+2061 unicode characters, broken alignment environments). Never alter substance — content, claims, attributions, structure, examples must stay verbatim. Every rendering-fix pass must be logged in `log.md` so the diff is reviewable.
 2. **The wiki** (`wiki/`) — yours to write and maintain. Summary pages, entity pages, concept pages, syntheses, comparisons.
 3. **The schema** (this file) — co-evolved with the user. If conventions need updating, propose the change here first; don't silently diverge.
 
@@ -243,7 +243,7 @@ Append-only. Every entry: `## [YYYY-MM-DD] {op} | {subject}` (greppable: `grep "
 
 ## Hard Rules
 
-- **Never modify files in `raw/`** — including typos. Raw is immutable.
+- **Never alter substance of files in `raw/`** — content, claims, attributions, examples, and structure must stay verbatim. **Rendering-only fixes are allowed and must be logged in `log.md`**: malformed LaTeX delimiter pairs (e.g., `\left(\right.` → `\left(`), function macros stripped of their backslash (`sim`/`log`/`exp` → `\sim`/`\log`/`\exp`), invisible-function-application U+2061 characters, broken alignment environments — i.e., format-only repairs that change appearance but not meaning. If in doubt, leave alone or ask.
 - **Never write wiki content without reading this file first** — conventions can drift.
 - **Never skip the index update** during ingest — a page not in `index.md` is invisible to future queries.
 - **Never auto-fix during lint** — report findings, let the user decide.
